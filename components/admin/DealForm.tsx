@@ -385,7 +385,7 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel }:
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block mb-1">优惠码</label>
+          <label className="block mb-1">特价码</label>
           <input
             type="text"
             name="couponCode"
