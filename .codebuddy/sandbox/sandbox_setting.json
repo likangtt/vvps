@@ -1,0 +1,20 @@
+{
+  "path": "c:\\Users\\Administrator\\Desktop\\112",
+  "desc": "这是一个现代化的VPS优惠信息展示网站，采用科技风暗色主题设计，支持中英文双语切换。主要功能包括：优惠信息展示、智能筛选、管理员后台、Markdown编辑器、响应式设计等。技术栈：Next.js 14 + TypeScript + Tailwind CSS",
+  "id": "b2e244ec872146be83e3469fa564021f",
+  "data": {
+    "spaceKey": "b2e244ec872146be83e3469fa564021f",
+    "connections": {
+      "webIDE": "https://b2e244ec872146be83e3469fa564021f.ap-singapore.cloudstudio.club",
+      "preview": "https://b2e244ec872146be83e3469fa564021f--{port}.ap-singapore.cloudstudio.club",
+      "api": "https://b2e244ec872146be83e3469fa564021f--api.ap-singapore.cloudstudio.club",
+      "pty": "https://b2e244ec872146be83e3469fa564021f--pty.ap-singapore.cloudstudio.club"
+    }
+  },
+  "config": {
+    "api": "https://b2e244ec872146be83e3469fa564021f--api.ap-singapore.cloudstudio.club",
+    "pty": "https://b2e244ec872146be83e3469fa564021f--pty.ap-singapore.cloudstudio.club",
+    "region": "ap-shanghai",
+    "spaceKey": "b2e244ec872146be83e3469fa564021f"
+  }
+}
