@@ -4,35 +4,43 @@ import React, { useState, useEffect } from 'react';
 import AdminHeader from '../../../components/admin/AdminHeader';
 import AdminSidebar from '../../../components/admin/AdminSidebar';
 
-export default function AdminProvidersPage() {
-  interface Provider {
-    id: string;
-    name: string;
-    logo: string;
-    website: string;
-    description: string;
-    tags?: string[];
-  }
+// 将接口定义移到组件外部
+interface Provider {
+  id?: string;
+  name: string;
+  logo?: string;
+  website?: string;
+  description?: string;
+  tags?: string[];
+}
 
-  interface Deal {
-    id: string;
-    provider: Provider;
-    title: string;
-    description: string;
-    price: number;
-    originalPrice?: number;
-    currency: string;
-    location: string;
-    cpu: string;
-    ram: string;
-    storage: string;
-    bandwidth: string;
-    tags: string[];
-    features: string[];
-    link: string;
-    couponCode?: string;
-    expiryDate?: string;
-  }
+interface Specs {
+  cpu: string;
+  ram: string;
+  storage: string;
+  bandwidth: string;
+}
+
+interface Deal {
+  id: string;
+  title: string;
+  provider: string | Provider;
+  price: string | number;
+  originalPrice?: string | number;
+  discount: string;
+  location: string;
+  specs: Specs;
+  tags: string[];
+  affiliateLink: string;
+  logo?: string;
+  featured: boolean;
+  expiryDate?: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export default function AdminProvidersPage() {
 
   const [providers, setProviders] = useState<Provider[]>([]);
   const [loading, setLoading] = useState(true);
@@ -70,14 +78,27 @@ export default function AdminProvidersPage() {
       import('../../../data/deals.json')
         .then(module => {
           // 从deals.json中提取唯一的提供商
-          const dealsData = module.default as Deal[];
+          const rawData = module.default;
+          const dealsData = Array.isArray(rawData) ? rawData as Deal[] : [];
           const uniqueProviders: Provider[] = [];
-          const providerIds = new Set<string>();
+          const providerNames = new Set<string>();
           
           dealsData.forEach((deal: Deal) => {
-            if (!providerIds.has(deal.provider.id)) {
-              providerIds.add(deal.provider.id);
-              uniqueProviders.push(deal.provider);
+            const providerName = typeof deal.provider === 'string' ? deal.provider : deal.provider.name;
+            if (!providerNames.has(providerName)) {
+              providerNames.add(providerName);
+              
+              // 创建Provider对象
+              const provider: Provider = {
+                id: typeof deal.provider === 'string' ? deal.provider : (deal.provider.id || providerName),
+                name: providerName,
+                logo: typeof deal.provider === 'object' && deal.provider.logo ? deal.provider.logo : (deal.logo || ''),
+                website: deal.affiliateLink || '',
+                description: '',
+                tags: deal.tags || []
+              };
+              
+              uniqueProviders.push(provider);
             }
           });
           
@@ -107,7 +128,7 @@ export default function AdminProvidersPage() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (editingId) {
       // 更新现有提供商

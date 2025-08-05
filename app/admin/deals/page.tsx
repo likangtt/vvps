@@ -5,35 +5,43 @@ import AdminHeader from '../../../components/admin/AdminHeader';
 import AdminSidebar from '../../../components/admin/AdminSidebar';
 import DealForm from '../../../components/admin/DealForm';
 
-export default function AdminDealsPage() {
-  interface Provider {
-    id: string;
-    name: string;
-    logo: string;
-    website: string;
-    description: string;
-    tags?: string[];
-  }
+// 将接口定义移到组件外部
+interface Provider {
+  id?: string;
+  name: string;
+  logo?: string;
+  website?: string;
+  description?: string;
+  tags?: string[];
+}
 
-  interface Deal {
-    id: string;
-    title: string;
-    description: string;
-    price: number;
-    originalPrice?: number;
-    currency: string;
-    location: string;
-    cpu: string;
-    ram: string;
-    storage: string;
-    bandwidth: string;
-    provider: Provider;
-    tags: string[];
-    features: string[];
-    link: string;
-    couponCode?: string;
-    expiryDate?: string;
-  }
+interface Specs {
+  cpu: string;
+  ram: string;
+  storage: string;
+  bandwidth: string;
+}
+
+interface Deal {
+  id: string;
+  title: string;
+  provider: string | Provider;
+  price: string | number;
+  originalPrice?: string | number;
+  discount: string;
+  location: string;
+  specs: Specs;
+  tags: string[];
+  affiliateLink: string;
+  logo?: string;
+  featured: boolean;
+  expiryDate?: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export default function AdminDealsPage() {
 
   const [deals, setDeals] = useState<Deal[]>([]);
   const [loading, setLoading] = useState(true);
@@ -47,16 +55,22 @@ export default function AdminDealsPage() {
       try {
         // 模拟API调用
         const dealsModule = await import('../../../data/deals.json');
-        const dealsData = dealsModule.default as Deal[];
+        // 使用类型断言，但先进行类型检查和转换
+        const rawData = dealsModule.default;
+        const dealsData = Array.isArray(rawData) ? rawData as Deal[] : [];
         
         // 提取唯一的提供商
         const uniqueProviders: Provider[] = [];
         const providerIds = new Set<string>();
         
         dealsData.forEach((deal: Deal) => {
-          if (!providerIds.has(deal.provider.id)) {
-            providerIds.add(deal.provider.id);
-            uniqueProviders.push(deal.provider);
+          // 检查provider是否为字符串或对象
+          if (typeof deal.provider === 'object' && deal.provider !== null) {
+            const providerId = deal.provider.id || '';
+            if (providerId && !providerIds.has(providerId)) {
+              providerIds.add(providerId);
+              uniqueProviders.push(deal.provider as Provider);
+            }
           }
         });
         
@@ -155,10 +169,10 @@ export default function AdminDealsPage() {
                         <td className="py-3 px-4">{deal.id}</td>
                         <td className="py-3 px-4">
                           <div className="flex items-center">
-                            {deal.provider.logo && (
+                            {typeof deal.provider === 'object' && deal.provider.logo && (
                               <img 
                                 src={deal.provider.logo} 
-                                alt={deal.provider.name} 
+                                alt={typeof deal.provider === 'object' ? deal.provider.name : '提供商'}
                                 className="h-6 w-auto mr-2"
                                 onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                                   const img = e.target as HTMLImageElement;
@@ -167,7 +181,7 @@ export default function AdminDealsPage() {
                                 }}
                               />
                             )}
-                            {deal.provider.name}
+                            {typeof deal.provider === 'object' ? deal.provider.name : deal.provider}
                           </div>
                         </td>
                         <td className="py-3 px-4">{deal.title}</td>
