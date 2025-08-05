@@ -21,8 +21,8 @@ export default function AdminDealsPage() {
         const dealsData = dealsModule.default;
         
         // 提取唯一的提供商
-        const uniqueProviders = [];
-        const providerIds = new Set();
+        const uniqueProviders: Array<{id: string, name: string, logo: string, website: string, description: string, tags?: string[]}> = [];
+        const providerIds = new Set<string>();
         
         dealsData.forEach(deal => {
           if (!providerIds.has(deal.provider.id)) {
@@ -93,7 +93,7 @@ export default function AdminDealsPage() {
               providers={providers}
               initialData={editingDeal || {}}
               onSubmit={editingDeal ? handleUpdateDeal : handleAddDeal}
-              onCancel={editingDeal ? handleCancelEdit : null}
+              onCancel={editingDeal ? handleCancelEdit : undefined}
             />
           </div>
           
