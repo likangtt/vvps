@@ -26,7 +26,7 @@ export default function AdminSidebar() {
       active: pathname === '/admin'
     },
     {
-      name: '优惠管理',
+      name: '特价VPS管理',
       href: '/admin/deals',
       icon: Server,
       active: pathname === '/admin/deals'

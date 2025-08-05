@@ -16,7 +16,7 @@ export default function AdminHeader({ onLogout }: AdminHeaderProps) {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <input
               type="text"
-              placeholder="搜索优惠信息..."
+              placeholder="搜索特价VPS信息..."
               className="cyber-input pl-10 w-full"
             />
           </div>
