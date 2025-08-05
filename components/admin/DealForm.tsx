@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from 'react';
 
 interface Provider {
-  id: string;
+  id?: string;
   name: string;
-  logo: string;
-  website: string;
-  description: string;
+  logo?: string;
+  website?: string;
+  description?: string;
   tags?: string[];
 }
 
