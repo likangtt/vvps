@@ -3,7 +3,7 @@
 import { Bell, Search, User, LogOut, Settings } from 'lucide-react'
 
 interface AdminHeaderProps {
-  onLogout: () => void
+  onLogout?: () => void
 }
 
 export default function AdminHeader({ onLogout }: AdminHeaderProps) {
@@ -48,7 +48,7 @@ export default function AdminHeader({ onLogout }: AdminHeaderProps) {
             </div>
 
             <button
-              onClick={onLogout}
+              onClick={() => onLogout && onLogout()}
               className="p-2 text-gray-400 hover:text-red-400 hover:bg-dark-700 rounded-lg transition-colors"
               title="退出登录"
             >
