@@ -5,9 +5,38 @@ import AdminHeader from '../../../components/admin/AdminHeader';
 import AdminSidebar from '../../../components/admin/AdminSidebar';
 
 export default function AdminProvidersPage() {
-  const [providers, setProviders] = useState([]);
+  interface Provider {
+    id: string;
+    name: string;
+    logo: string;
+    website: string;
+    description: string;
+    tags?: string[];
+  }
+
+  interface Deal {
+    id: string;
+    provider: Provider;
+    title: string;
+    description: string;
+    price: number;
+    originalPrice?: number;
+    currency: string;
+    location: string;
+    cpu: string;
+    ram: string;
+    storage: string;
+    bandwidth: string;
+    tags: string[];
+    features: string[];
+    link: string;
+    couponCode?: string;
+    expiryDate?: string;
+  }
+
+  const [providers, setProviders] = useState<Provider[]>([]);
   const [loading, setLoading] = useState(true);
-  const [newProvider, setNewProvider] = useState({
+  const [newProvider, setNewProvider] = useState<Provider>({
     id: '',
     name: '',
     logo: '',
@@ -15,7 +44,7 @@ export default function AdminProvidersPage() {
     description: '',
     tags: []
   });
-  const [editingId, setEditingId] = useState(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   useEffect(() => {
     // 在实际应用中，这里会从API获取数据
@@ -41,11 +70,11 @@ export default function AdminProvidersPage() {
       import('../../../data/deals.json')
         .then(module => {
           // 从deals.json中提取唯一的提供商
-          const dealsData = module.default;
-          const uniqueProviders = [];
-          const providerIds = new Set();
+          const dealsData = module.default as Deal[];
+          const uniqueProviders: Provider[] = [];
+          const providerIds = new Set<string>();
           
-          dealsData.forEach(deal => {
+          dealsData.forEach((deal: Deal) => {
             if (!providerIds.has(deal.provider.id)) {
               providerIds.add(deal.provider.id);
               uniqueProviders.push(deal.provider);
@@ -62,7 +91,7 @@ export default function AdminProvidersPage() {
     }, 500);
   }, []);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setNewProvider(prev => ({
       ...prev,
@@ -70,8 +99,8 @@ export default function AdminProvidersPage() {
     }));
   };
 
-  const handleTagsChange = (e) => {
-    const tags = e.target.value.split(',').map(tag => tag.trim());
+  const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const tags = e.target.value.split(',').map((tag: string) => tag.trim());
     setNewProvider(prev => ({
       ...prev,
       tags
@@ -105,7 +134,7 @@ export default function AdminProvidersPage() {
     });
   };
 
-  const handleEdit = (provider) => {
+  const handleEdit = (provider: Provider) => {
     setNewProvider({
       ...provider,
       tags: provider.tags || []
@@ -113,7 +142,7 @@ export default function AdminProvidersPage() {
     setEditingId(provider.id);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     if (window.confirm('确定要删除这个提供商吗？')) {
       setProviders(prev => prev.filter(provider => provider.id !== id));
     }
@@ -267,9 +296,10 @@ export default function AdminProvidersPage() {
                               src={provider.logo} 
                               alt={provider.name} 
                               className="h-8 w-auto"
-                              onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = 'https://via.placeholder.com/150x50?text=Logo';
+                              onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                                const img = e.target as HTMLImageElement;
+                                img.onerror = null;
+                                img.src = 'https://via.placeholder.com/150x50?text=Logo';
                               }}
                             />
                           )}

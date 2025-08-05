@@ -6,10 +6,39 @@ import AdminSidebar from '../../../components/admin/AdminSidebar';
 import DealForm from '../../../components/admin/DealForm';
 
 export default function AdminDealsPage() {
-  const [deals, setDeals] = useState([]);
+  interface Provider {
+    id: string;
+    name: string;
+    logo: string;
+    website: string;
+    description: string;
+    tags?: string[];
+  }
+
+  interface Deal {
+    id: string;
+    title: string;
+    description: string;
+    price: number;
+    originalPrice?: number;
+    currency: string;
+    location: string;
+    cpu: string;
+    ram: string;
+    storage: string;
+    bandwidth: string;
+    provider: Provider;
+    tags: string[];
+    features: string[];
+    link: string;
+    couponCode?: string;
+    expiryDate?: string;
+  }
+
+  const [deals, setDeals] = useState<Deal[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editingDeal, setEditingDeal] = useState(null);
-  const [providers, setProviders] = useState([]);
+  const [editingDeal, setEditingDeal] = useState<Deal | null>(null);
+  const [providers, setProviders] = useState<Provider[]>([]);
 
   useEffect(() => {
     // 在实际应用中，这里会从API获取数据
@@ -18,13 +47,13 @@ export default function AdminDealsPage() {
       try {
         // 模拟API调用
         const dealsModule = await import('../../../data/deals.json');
-        const dealsData = dealsModule.default;
+        const dealsData = dealsModule.default as Deal[];
         
         // 提取唯一的提供商
-        const uniqueProviders: Array<{id: string, name: string, logo: string, website: string, description: string, tags?: string[]}> = [];
+        const uniqueProviders: Provider[] = [];
         const providerIds = new Set<string>();
         
-        dealsData.forEach(deal => {
+        dealsData.forEach((deal: Deal) => {
           if (!providerIds.has(deal.provider.id)) {
             providerIds.add(deal.provider.id);
             uniqueProviders.push(deal.provider);
@@ -43,7 +72,7 @@ export default function AdminDealsPage() {
     loadData();
   }, []);
 
-  const handleAddDeal = (newDeal) => {
+  const handleAddDeal = (newDeal: Partial<Deal>) => {
     // 在实际应用中，这里会调用API保存数据
     const dealWithId = {
       ...newDeal,
@@ -52,7 +81,7 @@ export default function AdminDealsPage() {
     setDeals(prev => [...prev, dealWithId]);
   };
 
-  const handleUpdateDeal = (updatedDeal) => {
+  const handleUpdateDeal = (updatedDeal: Deal) => {
     // 在实际应用中，这里会调用API更新数据
     setDeals(prev => 
       prev.map(deal => 
@@ -62,14 +91,14 @@ export default function AdminDealsPage() {
     setEditingDeal(null);
   };
 
-  const handleDeleteDeal = (id) => {
+  const handleDeleteDeal = (id: string) => {
     if (window.confirm('确定要删除这个特价VPS吗？')) {
       // 在实际应用中，这里会调用API删除数据
       setDeals(prev => prev.filter(deal => deal.id !== id));
     }
   };
 
-  const handleEditDeal = (deal) => {
+  const handleEditDeal = (deal: Deal) => {
     setEditingDeal(deal);
   };
 
@@ -131,9 +160,10 @@ export default function AdminDealsPage() {
                                 src={deal.provider.logo} 
                                 alt={deal.provider.name} 
                                 className="h-6 w-auto mr-2"
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = 'https://via.placeholder.com/150x50?text=Logo';
+                                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                                  const img = e.target as HTMLImageElement;
+                                  img.onerror = null;
+                                  img.src = 'https://via.placeholder.com/150x50?text=Logo';
                                 }}
                               />
                             )}
