@@ -27,17 +27,24 @@ interface Deal {
   provider: string | Provider;
   price: string | number;
   originalPrice?: string | number;
-  discount: string;
+  currency?: string;
+  discount?: string;
   location: string;
-  specs: Specs;
+  cpu: string;
+  ram: string;
+  storage: string;
+  bandwidth: string;
   tags: string[];
-  affiliateLink: string;
+  features?: string[];
+  link?: string;
+  couponCode?: string;
+  affiliateLink?: string;
   logo?: string;
-  featured: boolean;
+  featured?: boolean;
   expiryDate?: string;
   description: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export default function AdminProvidersPage() {
@@ -93,7 +100,7 @@ export default function AdminProvidersPage() {
                 id: typeof deal.provider === 'string' ? deal.provider : (deal.provider.id || providerName),
                 name: providerName,
                 logo: typeof deal.provider === 'object' && deal.provider.logo ? deal.provider.logo : (deal.logo || ''),
-                website: deal.affiliateLink || '',
+                website: deal.link || deal.affiliateLink || '',
                 description: '',
                 tags: deal.tags || []
               };
