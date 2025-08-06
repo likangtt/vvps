@@ -98,7 +98,9 @@ export default function SearchBar({ onSearch, onFilter }: SearchBarProps) {
         deal.title.toLowerCase().includes(query.toLowerCase()) ||
         (typeof deal.provider === 'string' 
           ? deal.provider.toLowerCase().includes(query.toLowerCase())
-          : deal.provider.name.toLowerCase().includes(query.toLowerCase()))
+          : deal.provider && typeof deal.provider === 'object' && 'name' in deal.provider 
+            ? deal.provider.name.toLowerCase().includes(query.toLowerCase())
+            : false)
       )
       setSuggestions(mockSuggestions)
       setShowSuggestions(true)
@@ -181,7 +183,11 @@ export default function SearchBar({ onSearch, onFilter }: SearchBarProps) {
                 className="w-full text-left px-3 py-2 hover:bg-gray-700/50 rounded-lg transition-colors"
               >
                 <div className="text-white font-medium">{suggestion.title}</div>
-                <div className="text-sm text-gray-400">{suggestion.provider} • {suggestion.price}</div>
+                <div className="text-sm text-gray-400">
+                  {typeof suggestion.provider === 'string' 
+                    ? suggestion.provider 
+                    : suggestion.provider?.name || '未知提供商'} • {suggestion.price}
+                </div>
               </button>
             ))}
           </div>
