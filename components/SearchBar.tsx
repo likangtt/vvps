@@ -3,13 +3,41 @@
 import { useState, useEffect, useRef } from 'react'
 import { Search, X, Filter } from 'lucide-react'
 
+interface Provider {
+  id: string;
+  name: string;
+  logo?: string;
+  website?: string;
+  description?: string;
+}
+
 interface Deal {
-  id: string
-  title: string
-  provider: string
-  price: string
-  location: string
-  tags: string[]
+  id: string;
+  title: string;
+  provider: string | Provider;
+  price: string | number;
+  originalPrice?: string | number;
+  currency?: string;
+  description?: string;
+  features?: string[];
+  tags?: string[];
+  location?: string;
+  specs?: {
+    cpu?: string;
+    ram?: string;
+    storage?: string;
+    bandwidth?: string;
+  };
+  cpu?: string;
+  ram?: string;
+  storage?: string;
+  bandwidth?: string;
+  link?: string;
+  affiliateLink?: string;
+  discount?: number;
+  expiryDate?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 interface SearchBarProps {
@@ -50,11 +78,27 @@ export default function SearchBar({ onSearch, onFilter }: SearchBarProps) {
     if (query.length > 1) {
       // 模拟搜索建议
       const mockSuggestions: Deal[] = [
-        { id: '1', title: 'Vultr 高性能云服务器', provider: 'Vultr', price: '$2.50/月', location: '美国', tags: ['SSD'] },
-        { id: '2', title: 'DigitalOcean 开发者首选', provider: 'DigitalOcean', price: '$4.00/月', location: '美国', tags: ['开发者友好'] }
+        { 
+          id: '1', 
+          title: 'Vultr 高性能云服务器', 
+          provider: 'Vultr', 
+          price: '$2.50/月', 
+          location: '美国', 
+          tags: ['SSD'] 
+        },
+        { 
+          id: '2', 
+          title: 'DigitalOcean 开发者首选', 
+          provider: 'DigitalOcean', 
+          price: '$4.00/月', 
+          location: '美国', 
+          tags: ['开发者友好'] 
+        }
       ].filter(deal => 
         deal.title.toLowerCase().includes(query.toLowerCase()) ||
-        deal.provider.toLowerCase().includes(query.toLowerCase())
+        (typeof deal.provider === 'string' 
+          ? deal.provider.toLowerCase().includes(query.toLowerCase())
+          : deal.provider.name.toLowerCase().includes(query.toLowerCase()))
       )
       setSuggestions(mockSuggestions)
       setShowSuggestions(true)
