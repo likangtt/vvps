@@ -91,7 +91,8 @@ export default function DealDetailPage() {
     // 这里可以添加保存到本地存储或发送到服务器的逻辑
   }
 
-  const calculateDaysLeft = (expiryDate: string) => {
+  const calculateDaysLeft = (expiryDate?: string) => {
+    if (!expiryDate) return 0
     const expiry = new Date(expiryDate)
     const now = new Date()
     const diffTime = expiry.getTime() - now.getTime()
