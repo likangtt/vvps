@@ -1,57 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import AdminHeader from '../../../components/admin/AdminHeader';
-import AdminSidebar from '../../../components/admin/AdminSidebar';
-
-// 将接口定义移到组件外部
-interface Provider {
-  id?: string;
-  name: string;
-  logo?: string;
-  website?: string;
-  description?: string;
-  tags?: string[];
-}
-
-interface Specs {
-  cpu: string;
-  ram: string;
-  storage: string;
-  bandwidth: string;
-}
-
-interface Deal {
-  id: string;
-  title: string;
-  provider: string | Provider;
-  price: string | number;
-  originalPrice?: string | number;
-  currency?: string;
-  discount?: string;
-  location: string;
-  specs?: {
-    cpu: string;
-    ram: string;
-    storage: string;
-    bandwidth: string;
-  };
-  cpu?: string;
-  ram?: string;
-  storage?: string;
-  bandwidth?: string;
-  tags: string[];
-  features?: string[];
-  link?: string;
-  couponCode?: string;
-  affiliateLink?: string;
-  logo?: string;
-  featured?: boolean;
-  expiryDate?: string;
-  description: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
+import AdminHeader from '@/components/admin/AdminHeader';
+import AdminSidebar from '@/components/admin/AdminSidebar';
+import { Provider, Deal } from '@/types';
 
 export default function AdminProvidersPage() {
 
@@ -88,7 +40,7 @@ export default function AdminProvidersPage() {
 
     // 模拟API调用
     setTimeout(() => {
-      import('../../../data/deals.json')
+      import('@/data/deals.json')
         .then(module => {
           // 从deals.json中提取唯一的提供商
           const rawData = module.default;

@@ -4,8 +4,12 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import DealForm from '@/components/admin/DealForm';
-import { Deal } from '@/types';
+import { Deal, Provider } from '@/types';
 import deals from '@/data/deals.json';
+import providersData from '@/data/providers.json';
+
+// 类型断言确保providers是Provider[]类型
+const providers = providersData as Provider[];
 
 export default function AdminDealsPage() {
   const router = useRouter();
@@ -36,7 +40,12 @@ export default function AdminDealsPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">添加新优惠</h1>
-      <DealForm onSubmit={handleSubmit} isLoading={isLoading} />
+      <DealForm 
+        providers={providers} 
+        initialData={{}} 
+        onSubmit={handleSubmit} 
+        isLoading={isLoading} 
+      />
     </div>
   );
 }
