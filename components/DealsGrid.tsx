@@ -5,27 +5,39 @@ import DealCard from './DealCard'
 import FilterTabs from './FilterTabs'
 import SearchBar from './SearchBar'
 
+interface Provider {
+  id?: string;
+  name: string;
+  logo?: string;
+  website?: string;
+  description?: string;
+  tags?: string[];
+}
+
 interface Deal {
-  id: string
-  title: string
-  provider: string
-  price: string
-  originalPrice: string
-  discount: string
-  location: string
-  specs: {
-    cpu: string
-    ram: string
-    storage: string
-    bandwidth: string
-  }
-  tags: string[]
-  affiliateLink: string
-  featured: boolean
-  expiryDate: string
-  description: string
-  createdAt: string
-  updatedAt: string
+  id: string;
+  title: string;
+  provider: string | Provider;
+  price: string | number;
+  originalPrice?: string | number;
+  currency?: string;
+  discount?: string;
+  location: string;
+  cpu: string;
+  ram: string;
+  storage: string;
+  bandwidth: string;
+  tags: string[];
+  features?: string[];
+  link?: string;
+  couponCode?: string;
+  affiliateLink?: string;
+  logo?: string;
+  featured?: boolean;
+  expiryDate?: string;
+  description: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export default function DealsGrid() {
@@ -40,10 +52,26 @@ export default function DealsGrid() {
     // 模拟从API或JSON文件加载数据
     const loadDeals = async () => {
       try {
-        const response = await fetch('/data/deals.json')
-        const data = await response.json()
-        setDeals(data)
-        setFilteredDeals(data)
+        // 模拟API调用
+        const dealsModule = await import('../data/deals.json')
+        // 使用类型断言，但先进行类型检查和转换
+        const rawData = dealsModule.default
+        const dealsData = Array.isArray(rawData) ? rawData.map((deal: any) => {
+          // 处理specs对象，将其扁平化
+          const specs = deal.specs || {}
+          return {
+            ...deal,
+            cpu: specs.cpu || '',
+            ram: specs.ram || '',
+            storage: specs.storage || '',
+            bandwidth: specs.bandwidth || '',
+            link: deal.affiliateLink || '',  // 将affiliateLink映射到link
+            features: deal.features || []
+          };
+        }) : [];
+        
+        setDeals(dealsData)
+        setFilteredDeals(dealsData)
       } catch (error) {
         console.error('加载优惠信息失败:', error)
         // 如果无法加载JSON文件，使用默认数据
@@ -52,17 +80,17 @@ export default function DealsGrid() {
             id: "1",
             title: "Vultr 高性能云服务器",
             provider: "Vultr",
-            price: "$2.50/月",
-            originalPrice: "$5.00/月",
+            price: "2.50",
+            originalPrice: "5.00",
+            currency: "$",
             discount: "50%",
             location: "美国/日本/新加坡",
-            specs: {
-              cpu: "1 vCPU",
-              ram: "512MB",
-              storage: "10GB SSD",
-              bandwidth: "500GB"
-            },
+            cpu: "1 vCPU",
+            ram: "512MB",
+            storage: "10GB SSD",
+            bandwidth: "500GB",
             tags: ["美国机房", "SSD", "按小时计费"],
+            link: "https://vultr.com",
             affiliateLink: "https://vultr.com",
             featured: true,
             expiryDate: "2024-12-31",
@@ -88,7 +116,10 @@ export default function DealsGrid() {
     if (searchQuery) {
       filtered = filtered.filter(deal =>
         deal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        deal.provider.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (typeof deal.provider === 'string' 
+          ? deal.provider.toLowerCase().includes(searchQuery.toLowerCase())
+          : deal.provider.name.toLowerCase().includes(searchQuery.toLowerCase())
+        ) ||
         deal.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
         deal.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
       )
