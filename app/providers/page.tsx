@@ -4,11 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import providersData from '@/data/providers.json';
+import { Provider } from '@/types';
 
 export default function ProvidersPage() {
   const router = useRouter();
   const [filter, setFilter] = useState('全部');
-  const [providers, setProviders] = useState([]);
+  const [providers, setProviders] = useState<Provider[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
