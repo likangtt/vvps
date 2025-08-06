@@ -1,16 +1,13 @@
 'use client'
 
 import { Suspense } from 'react'
-import SimpleHeader from '@/components/SimpleHeader'
 import Hero from '@/components/Hero'
 import DealsGrid from '@/components/DealsGrid'
-import Footer from '@/components/Footer'
 import LoadingSpinner from '@/components/LoadingSpinner'
-export default function Home() {
 
+export default function Home() {
   return (
-    <main className="min-h-screen">
-      <SimpleHeader />
+    <>
       <Hero />
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
@@ -27,7 +24,6 @@ export default function Home() {
           </Suspense>
         </div>
       </section>
-      <Footer />
-    </main>
+    </>
   )
 }

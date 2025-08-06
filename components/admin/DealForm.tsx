@@ -19,7 +19,27 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel, i
   const [formTouched, setFormTouched] = useState(false);
   
   // 表单数据状态
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    id: string;
+    title: string;
+    description: string;
+    price: string | number;
+    originalPrice: string | number;
+    currency: string;
+    location: string;
+    specs: {
+      cpu: string;
+      ram: string;
+      storage: string;
+      bandwidth: string;
+    };
+    providerId: string;
+    tags: string[];
+    features: string[];
+    link: string;
+    couponCode: string;
+    expiryDate: string;
+  }>({
     id: '',
     title: '',
     description: '',
