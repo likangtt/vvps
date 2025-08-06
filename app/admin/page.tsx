@@ -3,44 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Plus, Edit, Trash2, Eye, TrendingUp, Users, Server, Clock } from 'lucide-react'
 import DealForm from '@/components/admin/DealForm'
-
-interface Provider {
-  id?: string;
-  name: string;
-  logo?: string;
-  website?: string;
-  description?: string;
-  tags?: string[];
-}
-
-interface Specs {
-  cpu: string;
-  ram: string;
-  storage: string;
-  bandwidth: string;
-}
-
-interface Deal {
-  id: string;
-  title: string;
-  description: string;
-  price: string | number;
-  originalPrice?: string | number;
-  currency: string;
-  location: string;
-  specs: Specs;
-  providerId: string;
-  provider?: Provider;
-  tags: string[];
-  features: string[];
-  link: string;
-  couponCode?: string;
-  discount?: string;
-  featured?: boolean;
-  expiryDate?: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
+import { Deal, Provider } from '@/types'
 
 export default function AdminDashboard() {
   const [deals, setDeals] = useState<Deal[]>([])
@@ -310,7 +273,7 @@ export default function AdminDashboard() {
       {showForm && (
         <DealForm
           providers={[]}
-          initialData={editingDeal as Partial<Deal> || {
+          initialData={editingDeal || {
             id: '',
             title: '',
             description: '',
