@@ -109,7 +109,7 @@ export default function ProvidersPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <span className="text-yellow-500 mr-1">★</span>
-                  <span className="font-medium">{provider.rating}</span>
+                  <span className="font-medium">4.5</span>
                 </div>
                 
                 <button 
