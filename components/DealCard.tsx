@@ -5,27 +5,39 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { ExternalLink, Clock, Star, Cpu, HardDrive, Wifi, Database } from 'lucide-react'
 
+interface Provider {
+  id?: string;
+  name: string;
+  logo?: string;
+  website?: string;
+  description?: string;
+  tags?: string[];
+}
+
 interface Deal {
-  id: string
-  title: string
-  provider: string
-  price: string
-  originalPrice: string
-  discount: string
-  location: string
-  specs: {
-    cpu: string
-    ram: string
-    storage: string
-    bandwidth: string
-  }
-  tags: string[]
-  affiliateLink: string
-  featured: boolean
-  expiryDate: string
-  description: string
-  createdAt: string
-  updatedAt: string
+  id: string;
+  title: string;
+  provider: string | Provider;
+  price: string | number;
+  originalPrice?: string | number;
+  currency?: string;
+  discount?: string;
+  location: string;
+  cpu: string;
+  ram: string;
+  storage: string;
+  bandwidth: string;
+  tags: string[];
+  features?: string[];
+  link?: string;
+  couponCode?: string;
+  affiliateLink?: string;
+  logo?: string;
+  featured?: boolean;
+  expiryDate?: string;
+  description: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 interface DealCardProps {
@@ -41,6 +53,7 @@ export default function DealCard({ deal }: DealCardProps) {
   }
 
   const isExpiringSoon = () => {
+    if (!deal.expiryDate) return false
     const expiryDate = new Date(deal.expiryDate)
     const today = new Date()
     const diffTime = expiryDate.getTime() - today.getTime()
@@ -59,7 +72,9 @@ export default function DealCard({ deal }: DealCardProps) {
               <Star className="w-4 h-4 text-yellow-500 fill-current" />
             )}
           </div>
-          <p className="text-sm text-gray-400">{deal.provider}</p>
+          <p className="text-sm text-gray-400">
+            {typeof deal.provider === 'string' ? deal.provider : deal.provider.name}
+          </p>
         </div>
         
         {isExpiringSoon() && (
@@ -73,11 +88,19 @@ export default function DealCard({ deal }: DealCardProps) {
       {/* Price */}
       <div className="mb-4">
         <div className="flex items-baseline gap-2 mb-1">
-          <span className="text-2xl font-bold text-primary-400">{deal.price}</span>
-          <span className="text-sm text-gray-500 line-through">{deal.originalPrice}</span>
-          <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-medium">
-            -{deal.discount}
+          <span className="text-2xl font-bold text-primary-400">
+            {deal.currency || '$'}{deal.price}
           </span>
+          {deal.originalPrice && (
+            <span className="text-sm text-gray-500 line-through">
+              {deal.currency || '$'}{deal.originalPrice}
+            </span>
+          )}
+          {deal.discount && (
+            <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-medium">
+              -{deal.discount}
+            </span>
+          )}
         </div>
         <p className="text-sm text-gray-400">{deal.location}</p>
       </div>
@@ -86,19 +109,19 @@ export default function DealCard({ deal }: DealCardProps) {
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div className="flex items-center gap-2 text-sm text-gray-300">
           <Cpu className="w-4 h-4 text-primary-500" />
-          <span>{deal.specs.cpu}</span>
+          <span>{deal.cpu}</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-300">
           <Database className="w-4 h-4 text-primary-500" />
-          <span>{deal.specs.ram}</span>
+          <span>{deal.ram}</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-300">
           <HardDrive className="w-4 h-4 text-primary-500" />
-          <span>{deal.specs.storage}</span>
+          <span>{deal.storage}</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-300">
           <Wifi className="w-4 h-4 text-primary-500" />
-          <span>{deal.specs.bandwidth}</span>
+          <span>{deal.bandwidth}</span>
         </div>
       </div>
 
@@ -124,7 +147,7 @@ export default function DealCard({ deal }: DealCardProps) {
         </button>
         
         <a
-          href={deal.affiliateLink}
+          href={deal.link || deal.affiliateLink}
           target="_blank"
           rel="noopener noreferrer"
           className="glow-button w-full flex items-center justify-center gap-2 text-sm"
@@ -157,14 +180,14 @@ export default function DealCard({ deal }: DealCardProps) {
               
               <div className="mt-6 pt-4 border-t border-dark-700">
                 <div className="flex items-center justify-between text-sm text-gray-400">
-                  <span>到期时间: {formatDate(deal.expiryDate)}</span>
-                  <span>更新时间: {formatDate(deal.updatedAt)}</span>
+                  <span>到期时间: {deal.expiryDate ? formatDate(deal.expiryDate) : '无限期'}</span>
+                  <span>更新时间: {deal.updatedAt ? formatDate(deal.updatedAt) : '未知'}</span>
                 </div>
               </div>
               
               <div className="mt-4">
                 <a
-                  href={deal.affiliateLink}
+                  href={deal.link || deal.affiliateLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="glow-button w-full flex items-center justify-center gap-2"
