@@ -23,10 +23,16 @@ interface Deal {
   currency?: string;
   discount?: string;
   location: string;
-  cpu: string;
-  ram: string;
-  storage: string;
-  bandwidth: string;
+  specs?: {
+    cpu: string;
+    ram: string;
+    storage: string;
+    bandwidth: string;
+  };
+  cpu?: string;
+  ram?: string;
+  storage?: string;
+  bandwidth?: string;
   tags: string[];
   features?: string[];
   link?: string;
@@ -137,7 +143,9 @@ export default function DealsGrid() {
             case 'europe':
               return deal.location.includes('德国') || deal.location.includes('法国') || deal.location.includes('英国') || deal.tags.some(tag => tag.includes('欧洲'))
             case 'ssd':
-              return deal.tags.some(tag => tag.includes('SSD')) || deal.specs.storage.includes('SSD')
+              return deal.tags.some(tag => tag.includes('SSD')) || 
+                     (deal.specs && deal.specs.storage && deal.specs.storage.includes('SSD')) || 
+                     (deal.storage && deal.storage.includes('SSD'))
             case 'high-performance':
               return deal.tags.some(tag => tag.includes('高性能') || tag.includes('高速'))
             case 'budget':
