@@ -94,7 +94,7 @@ export default function ProviderDetailPage() {
             <div className="flex items-center mb-4">
               <div className="flex items-center mr-4">
                 <span className="text-yellow-500 mr-1">★</span>
-                <span className="font-medium">{provider.rating}</span>
+                <span className="font-medium">4.5</span>
                 <span className="text-gray-500 ml-1">/5</span>
               </div>
               <div className="text-gray-600">
@@ -219,7 +219,7 @@ export default function ProviderDetailPage() {
                       <svg 
                         key={star}
                         xmlns="http://www.w3.org/2000/svg" 
-                        className={`h-5 w-5 ${star <= Math.round(provider.rating) ? 'text-yellow-400' : 'text-gray-300'}`}
+                        className={`h-5 w-5 ${star <= Math.round(4.5) ? 'text-yellow-400' : 'text-gray-300'}`}
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -227,7 +227,7 @@ export default function ProviderDetailPage() {
                       </svg>
                     ))}
                   </div>
-                  <span className="ml-2 text-gray-700">{provider.rating}/5</span>
+                  <span className="ml-2 text-gray-700">4.5/5</span>
                 </div>
               </div>
             </div>
