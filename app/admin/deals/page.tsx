@@ -109,8 +109,16 @@ export default function AdminDealsPage() {
     // 在实际应用中，这里会调用API保存数据
     const dealWithId = {
       ...newDeal,
-      id: `deal-${Date.now()}`
-    };
+      id: `deal-${Date.now()}`,
+      title: newDeal.title || '',
+      description: newDeal.description || '',
+      location: newDeal.location || '',
+      cpu: newDeal.cpu || '',
+      ram: newDeal.ram || '',
+      storage: newDeal.storage || '',
+      bandwidth: newDeal.bandwidth || '',
+      tags: newDeal.tags || []
+    } as Deal;
     setDeals(prev => [...prev, dealWithId]);
   };
 
