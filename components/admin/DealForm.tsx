@@ -49,7 +49,7 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel }:
 
   useEffect(() => {
     if (initialData) {
-      setFormData(prev => ({
+      setFormData((prev: typeof formData) => ({
         ...prev,
         ...initialData,
         providerId: initialData.provider?.id || ''
