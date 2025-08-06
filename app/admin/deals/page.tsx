@@ -22,28 +22,29 @@ interface Specs {
   bandwidth: string;
 }
 
-interface Deal {
-  id: string;
-  title: string;
-  provider: string | Provider;
-  price: string | number;
-  originalPrice?: string | number;
-  currency?: string;
-  discount?: string;
-  location: string;
+interface Specs {
   cpu: string;
   ram: string;
   storage: string;
   bandwidth: string;
-  tags: string[];
-  features?: string[];
-  link?: string;
-  couponCode?: string;
-  affiliateLink?: string;
-  logo?: string;
-  featured?: boolean;
-  expiryDate?: string;
+}
+
+interface Deal {
+  id: string;
+  title: string;
   description: string;
+  price: string | number;
+  originalPrice?: string | number;
+  currency: string;
+  location: string;
+  specs: Specs;
+  providerId: string;
+  provider?: Provider;
+  tags: string[];
+  features: string[];
+  link: string;
+  couponCode?: string;
+  expiryDate?: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -65,16 +66,21 @@ export default function AdminDealsPage() {
         // 使用类型断言，但先进行类型检查和转换
         const rawData = dealsModule.default;
         const dealsData = Array.isArray(rawData) ? rawData.map((deal: any) => {
-          // 处理specs对象，将其扁平化
-          const specs = deal.specs || {};
+          // 确保specs对象存在
+          const specs = deal.specs || {
+            cpu: deal.cpu || '',
+            ram: deal.ram || '',
+            storage: deal.storage || '',
+            bandwidth: deal.bandwidth || ''
+          };
+          
           return {
             ...deal,
-            cpu: specs.cpu || '',
-            ram: specs.ram || '',
-            storage: specs.storage || '',
-            bandwidth: specs.bandwidth || '',
-            link: deal.affiliateLink || '',  // 将affiliateLink映射到link
-            features: deal.features || []
+            specs: specs,
+            link: deal.affiliateLink || deal.link || '',  // 将affiliateLink映射到link
+            features: deal.features || [],
+            providerId: typeof deal.provider === 'object' ? deal.provider.id || '' : '',
+            currency: deal.currency || 'USD'
           };
         }) : [];
         
@@ -105,20 +111,12 @@ export default function AdminDealsPage() {
     loadData();
   }, []);
 
-  const handleAddDeal = (newDeal: Partial<Deal>) => {
+  const handleAddDeal = (newDeal: Deal) => {
     // 在实际应用中，这里会调用API保存数据
     const dealWithId = {
       ...newDeal,
-      id: `deal-${Date.now()}`,
-      title: newDeal.title || '',
-      description: newDeal.description || '',
-      location: newDeal.location || '',
-      cpu: newDeal.cpu || '',
-      ram: newDeal.ram || '',
-      storage: newDeal.storage || '',
-      bandwidth: newDeal.bandwidth || '',
-      tags: newDeal.tags || []
-    } as Deal;
+      id: `deal-${Date.now()}`
+    };
     setDeals(prev => [...prev, dealWithId]);
   };
 
@@ -161,7 +159,24 @@ export default function AdminDealsPage() {
             </h2>
             <DealForm 
               providers={providers}
-              initialData={editingDeal || {}}
+              initialData={editingDeal as Partial<Deal> || {
+                id: '',
+                title: '',
+                description: '',
+                price: '',
+                location: '',
+                tags: [],
+                features: [],
+                currency: 'USD',
+                link: '',
+                providerId: '',
+                specs: {
+                  cpu: '',
+                  ram: '',
+                  storage: '',
+                  bandwidth: ''
+                }
+              }}
               onSubmit={editingDeal ? handleUpdateDeal : handleAddDeal}
               onCancel={editingDeal ? handleCancelEdit : undefined}
             />
