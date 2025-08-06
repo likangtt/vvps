@@ -3,43 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Plus, AlertCircle, Info, Check, Calendar, Globe, Tag, Zap } from 'lucide-react';
 import { toast } from 'react-hot-toast';
-
-// 定义接口
-interface Provider {
-  id?: string;
-  name: string;
-  logo?: string;
-  website?: string;
-  description?: string;
-  tags?: string[];
-}
-
-interface Specs {
-  cpu: string;
-  ram: string;
-  storage: string;
-  bandwidth: string;
-}
-
-interface Deal {
-  id: string;
-  title: string;
-  description: string;
-  price: string | number;
-  originalPrice?: string | number;
-  currency: string;
-  location: string;
-  specs: Specs;
-  providerId: string;
-  provider?: Provider;
-  tags: string[];
-  features: string[];
-  link: string;
-  couponCode?: string;
-  expiryDate?: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
+import { Deal, Provider } from '@/types';
 
 interface DealFormProps {
   providers: Provider[];
@@ -261,15 +225,25 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel, i
       const selectedProvider = providers.find(p => p.id === formData.providerId);
       
       // 准备提交的数据
-      const submitData = {
+      const submitData: Deal = {
         ...formData,
+        id: formData.id || '',
+        title: formData.title,
+        description: formData.description,
         tags: selectedTags,
         features: selectedFeatures,
-        provider: selectedProvider,
+        provider: selectedProvider ? {
+          id: selectedProvider.id || '',
+          name: selectedProvider.name,
+          logo: selectedProvider.logo
+        } : undefined,
         price: typeof formData.price === 'string' ? parseFloat(formData.price || '0') : formData.price,
         originalPrice: formData.originalPrice && formData.originalPrice !== '' 
           ? (typeof formData.originalPrice === 'string' ? parseFloat(formData.originalPrice) : formData.originalPrice) 
           : undefined,
+        currency: formData.currency,
+        location: formData.location,
+        link: formData.link,
         specs: {
           cpu: formData.specs?.cpu || '',
           ram: formData.specs?.ram || '',
@@ -279,7 +253,7 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel, i
       };
       
       // 提交数据
-      onSubmit(submitData as Deal);
+      onSubmit(submitData);
       
       // 显示成功提示
       toast.success(initialData.id ? '特价VPS更新成功！' : '特价VPS添加成功！');
