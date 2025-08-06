@@ -28,17 +28,24 @@ interface Deal {
   provider: string | Provider;
   price: string | number;
   originalPrice?: string | number;
-  discount: string;
+  currency?: string;
+  discount?: string;
   location: string;
-  specs: Specs;
+  cpu: string;
+  ram: string;
+  storage: string;
+  bandwidth: string;
   tags: string[];
-  affiliateLink: string;
+  features?: string[];
+  link?: string;
+  couponCode?: string;
+  affiliateLink?: string;
   logo?: string;
-  featured: boolean;
+  featured?: boolean;
   expiryDate?: string;
   description: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export default function AdminDealsPage() {
@@ -57,7 +64,19 @@ export default function AdminDealsPage() {
         const dealsModule = await import('../../../data/deals.json');
         // 使用类型断言，但先进行类型检查和转换
         const rawData = dealsModule.default;
-        const dealsData = Array.isArray(rawData) ? rawData as Deal[] : [];
+        const dealsData = Array.isArray(rawData) ? rawData.map((deal: any) => {
+          // 处理specs对象，将其扁平化
+          const specs = deal.specs || {};
+          return {
+            ...deal,
+            cpu: specs.cpu || '',
+            ram: specs.ram || '',
+            storage: specs.storage || '',
+            bandwidth: specs.bandwidth || '',
+            link: deal.affiliateLink || '',  // 将affiliateLink映射到link
+            features: deal.features || []
+          };
+        }) : [];
         
         // 提取唯一的提供商
         const uniqueProviders: Provider[] = [];
