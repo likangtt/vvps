@@ -27,10 +27,12 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel }:
     originalPrice: '',
     currency: 'USD',
     location: '',
-    cpu: '',
-    ram: '',
-    storage: '',
-    bandwidth: '',
+    specs: {
+      cpu: '',
+      ram: '',
+      storage: '',
+      bandwidth: ''
+    },
     providerId: '',
     tags: [],
     features: [],
@@ -59,10 +61,23 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel }:
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData((prev: any) => {
+      // 处理specs对象内的属性
+      if (['cpu', 'ram', 'storage', 'bandwidth'].includes(name)) {
+        return {
+          ...prev,
+          specs: {
+            ...prev.specs,
+            [name]: value
+          }
+        };
+      }
+      // 处理其他属性
+      return {
+        ...prev,
+        [name]: value
+      };
+    });
   };
 
   const handleAddTag = () => {
@@ -100,7 +115,13 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel }:
       features: selectedFeatures,
       provider: selectedProvider,
       price: parseFloat(formData.price || '0'),
-      originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : undefined
+      originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : undefined,
+      specs: {
+        cpu: formData.specs?.cpu || '',
+        ram: formData.specs?.ram || '',
+        storage: formData.specs?.storage || '',
+        bandwidth: formData.specs?.bandwidth || ''
+      }
     };
     
     onSubmit(submitData);
@@ -115,10 +136,12 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel }:
         originalPrice: '',
         currency: 'USD',
         location: '',
-        cpu: '',
-        ram: '',
-        storage: '',
-        bandwidth: '',
+        specs: {
+          cpu: '',
+          ram: '',
+          storage: '',
+          bandwidth: ''
+        },
         providerId: '',
         tags: [],
         features: [],
@@ -261,7 +284,7 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel }:
           <input
             type="text"
             name="cpu"
-            value={formData.cpu}
+            value={formData.specs?.cpu || ''}
             onChange={handleInputChange}
             required
             placeholder="例如：2核"
@@ -274,7 +297,7 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel }:
           <input
             type="text"
             name="ram"
-            value={formData.ram}
+            value={formData.specs?.ram || ''}
             onChange={handleInputChange}
             required
             placeholder="例如：4GB"
@@ -287,7 +310,7 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel }:
           <input
             type="text"
             name="storage"
-            value={formData.storage}
+            value={formData.specs?.storage || ''}
             onChange={handleInputChange}
             required
             placeholder="例如：80GB SSD"
@@ -300,7 +323,7 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel }:
           <input
             type="text"
             name="bandwidth"
-            value={formData.bandwidth}
+            value={formData.specs?.bandwidth || ''}
             onChange={handleInputChange}
             required
             placeholder="例如：1TB/月"
