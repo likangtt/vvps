@@ -52,7 +52,7 @@ export default function AdminDashboard() {
   const loadDeals = async () => {
     try {
       // 模拟API调用
-      const dealsModule = await import('../data/deals.json')
+      const dealsModule = await import('../../data/deals.json')
       // 使用类型断言，但先进行类型检查和转换
       const rawData = dealsModule.default
       const dealsData = Array.isArray(rawData) ? rawData.map((deal: any) => {
@@ -119,6 +119,7 @@ export default function AdminDashboard() {
     totalDeals: deals.length,
     featuredDeals: deals.filter(deal => deal.featured).length,
     expiringSoon: deals.filter(deal => {
+      if (!deal.expiryDate) return false;
       const expiryDate = new Date(deal.expiryDate)
       const today = new Date()
       const diffTime = expiryDate.getTime() - today.getTime()
@@ -126,6 +127,7 @@ export default function AdminDashboard() {
       return diffDays <= 7 && diffDays > 0
     }).length,
     recentDeals: deals.filter(deal => {
+      if (!deal.createdAt) return false;
       const createdDate = new Date(deal.createdAt)
       const today = new Date()
       const diffTime = today.getTime() - createdDate.getTime()
