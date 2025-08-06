@@ -30,10 +30,16 @@ interface Deal {
   currency?: string;
   discount?: string;
   location: string;
-  cpu: string;
-  ram: string;
-  storage: string;
-  bandwidth: string;
+  specs?: {
+    cpu: string;
+    ram: string;
+    storage: string;
+    bandwidth: string;
+  };
+  cpu?: string;
+  ram?: string;
+  storage?: string;
+  bandwidth?: string;
   tags: string[];
   features?: string[];
   link?: string;
@@ -86,7 +92,7 @@ export default function AdminProvidersPage() {
         .then(module => {
           // 从deals.json中提取唯一的提供商
           const rawData = module.default;
-          const dealsData = Array.isArray(rawData) ? rawData as Deal[] : [];
+          const dealsData = Array.isArray(rawData) ? rawData as unknown as Deal[] : [];
           const uniqueProviders: Provider[] = [];
           const providerNames = new Set<string>();
           
@@ -167,7 +173,7 @@ export default function AdminProvidersPage() {
       ...provider,
       tags: provider.tags || []
     });
-    setEditingId(provider.id);
+    setEditingId(provider.id || null);
   };
 
   const handleDelete = (id: string) => {
@@ -254,7 +260,7 @@ export default function AdminProvidersPage() {
                 <input
                   type="text"
                   name="tags"
-                  value={newProvider.tags.join(', ')}
+                  value={newProvider.tags?.join(', ') || ''}
                   onChange={handleTagsChange}
                   placeholder="例如: 高性价比, 亚洲优化, 支持支付宝"
                   className="w-full bg-gray-700 p-2 rounded"
@@ -363,7 +369,7 @@ export default function AdminProvidersPage() {
                             编辑
                           </button>
                           <button
-                            onClick={() => handleDelete(provider.id)}
+                            onClick={() => handleDelete(provider.id || '')}
                             className="bg-red-600 text-white px-3 py-1 rounded text-sm"
                           >
                             删除
