@@ -4,27 +4,39 @@ import { useState, useEffect } from 'react'
 import { Plus, Edit, Trash2, Eye, TrendingUp, Users, Server, Clock } from 'lucide-react'
 import DealForm from '@/components/admin/DealForm'
 
+interface Provider {
+  id?: string;
+  name: string;
+  logo?: string;
+  website?: string;
+  description?: string;
+  tags?: string[];
+}
+
 interface Deal {
-  id: string
-  title: string
-  provider: string
-  price: string
-  originalPrice: string
-  discount: string
-  location: string
-  specs: {
-    cpu: string
-    ram: string
-    storage: string
-    bandwidth: string
-  }
-  tags: string[]
-  affiliateLink: string
-  featured: boolean
-  expiryDate: string
-  description: string
-  createdAt: string
-  updatedAt: string
+  id: string;
+  title: string;
+  provider: string | Provider;
+  price: string | number;
+  originalPrice?: string | number;
+  currency?: string;
+  discount?: string;
+  location: string;
+  cpu: string;
+  ram: string;
+  storage: string;
+  bandwidth: string;
+  tags: string[];
+  features?: string[];
+  link?: string;
+  couponCode?: string;
+  affiliateLink?: string;
+  logo?: string;
+  featured?: boolean;
+  expiryDate?: string;
+  description: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export default function AdminDashboard() {
@@ -39,9 +51,25 @@ export default function AdminDashboard() {
 
   const loadDeals = async () => {
     try {
-      const response = await fetch('/data/deals.json')
-      const data = await response.json()
-      setDeals(data)
+      // 模拟API调用
+      const dealsModule = await import('../data/deals.json')
+      // 使用类型断言，但先进行类型检查和转换
+      const rawData = dealsModule.default
+      const dealsData = Array.isArray(rawData) ? rawData.map((deal: any) => {
+        // 处理specs对象，将其扁平化
+        const specs = deal.specs || {}
+        return {
+          ...deal,
+          cpu: specs.cpu || '',
+          ram: specs.ram || '',
+          storage: specs.storage || '',
+          bandwidth: specs.bandwidth || '',
+          link: deal.affiliateLink || '',  // 将affiliateLink映射到link
+          features: deal.features || []
+        }
+      }) : []
+      
+      setDeals(dealsData)
     } catch (error) {
       console.error('加载优惠信息失败:', error)
     } finally {
@@ -216,11 +244,17 @@ export default function AdminDashboard() {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                    {deal.provider}
+                    {typeof deal.provider === 'object' ? deal.provider.name : deal.provider}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-primary-400 font-medium">{deal.price}</div>
-                    <div className="text-sm text-gray-500 line-through">{deal.originalPrice}</div>
+                    <div className="text-sm text-primary-400 font-medium">
+                      {deal.currency || '$'}{deal.price}
+                    </div>
+                    {deal.originalPrice && (
+                      <div className="text-sm text-gray-500 line-through">
+                        {deal.currency || '$'}{deal.originalPrice}
+                      </div>
+                    )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
@@ -229,13 +263,15 @@ export default function AdminDashboard() {
                           热门
                         </span>
                       )}
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/20 text-green-400">
-                        -{deal.discount}
-                      </span>
+                      {deal.discount && (
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/20 text-green-400">
+                          -{deal.discount}
+                        </span>
+                      )}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                    {new Date(deal.expiryDate).toLocaleDateString('zh-CN')}
+                    {deal.expiryDate ? new Date(deal.expiryDate).toLocaleDateString('zh-CN') : '无限期'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex items-center space-x-2">
