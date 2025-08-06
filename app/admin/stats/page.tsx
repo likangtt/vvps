@@ -28,7 +28,12 @@ export default function StatsPage() {
       try {
         // 基础统计
         const totalDeals = deals.length;
-        const featuredDeals = deals.filter(deal => deal.featured).length;
+        // 将原价比当前价格高20%以上的优惠视为精选优惠
+        const featuredDeals = deals.filter(deal => 
+          deal.originalPrice && 
+          deal.price && 
+          deal.originalPrice > deal.price * 1.2
+        ).length;
         
         // 提供商统计
         const providers = new Map();
@@ -50,9 +55,9 @@ export default function StatsPage() {
         const regions = new Map();
         deals.forEach(deal => {
           const location = deal.location;
-          const regions = location.split('/');
+          const locationRegions = location.split('/');
           
-          regions.forEach(region => {
+          locationRegions.forEach(region => {
             const trimmedRegion = region.trim();
             if (!regions.has(trimmedRegion)) {
               regions.set(trimmedRegion, 1);
