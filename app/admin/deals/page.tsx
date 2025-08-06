@@ -1,264 +1,42 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import AdminHeader from '../../../components/admin/AdminHeader';
-import AdminSidebar from '../../../components/admin/AdminSidebar';
-import DealForm from '../../../components/admin/DealForm';
-
-// 将接口定义移到组件外部
-interface Provider {
-  id?: string;
-  name: string;
-  logo?: string;
-  website?: string;
-  description?: string;
-  tags?: string[];
-}
-
-interface Specs {
-  cpu: string;
-  ram: string;
-  storage: string;
-  bandwidth: string;
-}
-
-interface Specs {
-  cpu: string;
-  ram: string;
-  storage: string;
-  bandwidth: string;
-}
-
-interface Deal {
-  id: string;
-  title: string;
-  description: string;
-  price: string | number;
-  originalPrice?: string | number;
-  currency: string;
-  location: string;
-  specs: Specs;
-  providerId: string;
-  provider?: Provider;
-  tags: string[];
-  features: string[];
-  link: string;
-  couponCode?: string;
-  expiryDate?: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
+import DealForm from '@/components/admin/DealForm';
+import { Deal } from '@/types';
+import deals from '@/data/deals.json';
 
 export default function AdminDealsPage() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [deals, setDeals] = useState<Deal[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [editingDeal, setEditingDeal] = useState<Deal | null>(null);
-  const [providers, setProviders] = useState<Provider[]>([]);
-
-  useEffect(() => {
-    // 在实际应用中，这里会从API获取数据
-    // 这里我们从本地JSON文件加载数据作为示例
-    const loadData = async () => {
-      try {
-        // 模拟API调用
-        const dealsModule = await import('../../../data/deals.json');
-        // 使用类型断言，但先进行类型检查和转换
-        const rawData = dealsModule.default;
-        const dealsData = Array.isArray(rawData) ? rawData.map((deal: any) => {
-          // 确保specs对象存在
-          const specs = deal.specs || {
-            cpu: deal.cpu || '',
-            ram: deal.ram || '',
-            storage: deal.storage || '',
-            bandwidth: deal.bandwidth || ''
-          };
-          
-          return {
-            ...deal,
-            specs: specs,
-            link: deal.affiliateLink || deal.link || '',  // 将affiliateLink映射到link
-            features: deal.features || [],
-            providerId: typeof deal.provider === 'object' ? deal.provider.id || '' : '',
-            currency: deal.currency || 'USD'
-          };
-        }) : [];
-        
-        // 提取唯一的提供商
-        const uniqueProviders: Provider[] = [];
-        const providerIds = new Set<string>();
-        
-        dealsData.forEach((deal: Deal) => {
-          // 检查provider是否为字符串或对象
-          if (typeof deal.provider === 'object' && deal.provider !== null) {
-            const providerId = deal.provider.id || '';
-            if (providerId && !providerIds.has(providerId)) {
-              providerIds.add(providerId);
-              uniqueProviders.push(deal.provider as Provider);
-            }
-          }
-        });
-        
-        setDeals(dealsData);
-        setProviders(uniqueProviders);
-      } catch (error) {
-        console.error('Error loading data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
-
-  const handleAddDeal = (newDeal: Deal) => {
-    // 在实际应用中，这里会调用API保存数据
-    const dealWithId = {
-      ...newDeal,
-      id: `deal-${Date.now()}`
-    };
-    setDeals(prev => [...prev, dealWithId]);
-  };
-
-  const handleUpdateDeal = (updatedDeal: Deal) => {
-    // 在实际应用中，这里会调用API更新数据
-    setDeals(prev => 
-      prev.map(deal => 
-        deal.id === updatedDeal.id ? updatedDeal : deal
-      )
-    );
-    setEditingDeal(null);
-  };
-
-  const handleDeleteDeal = (id: string) => {
-    if (window.confirm('确定要删除这个特价VPS吗？')) {
-      // 在实际应用中，这里会调用API删除数据
-      setDeals(prev => prev.filter(deal => deal.id !== id));
+  const handleSubmit = async (dealData: Deal) => {
+    setIsLoading(true);
+    try {
+      // 这里应该是API调用，但现在我们只是模拟
+      console.log('提交的优惠数据:', dealData);
+      
+      // 模拟API延迟
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // 添加成功提示
+      toast.success('优惠添加成功！');
+      
+      // 成功后重定向到管理面板
+      router.push('/admin');
+    } catch (error) {
+      console.error('提交优惠失败:', error);
+      toast.error('提交失败，请重试');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleEditDeal = (deal: Deal) => {
-    setEditingDeal(deal);
-  };
-
-  const handleCancelEdit = () => {
-    setEditingDeal(null);
-  };
-
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <AdminHeader />
-      <div className="flex">
-        <AdminSidebar />
-        <main className="flex-1 p-6">
-          <h1 className="text-3xl font-bold mb-6">特价VPS管理</h1>
-          
-          <div className="bg-gray-800 p-6 rounded-lg mb-8">
-            <h2 className="text-xl font-semibold mb-4">
-              {editingDeal ? '编辑特价VPS' : '添加新特价VPS'}
-            </h2>
-            <DealForm 
-              providers={providers}
-              initialData={editingDeal as Partial<Deal> || {
-                id: '',
-                title: '',
-                description: '',
-                price: '',
-                location: '',
-                tags: [],
-                features: [],
-                currency: 'USD',
-                link: '',
-                providerId: '',
-                specs: {
-                  cpu: '',
-                  ram: '',
-                  storage: '',
-                  bandwidth: ''
-                }
-              }}
-              onSubmit={editingDeal ? handleUpdateDeal : handleAddDeal}
-              onCancel={editingDeal ? handleCancelEdit : undefined}
-            />
-          </div>
-          
-          <div className="bg-gray-800 p-6 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4">特价VPS列表</h2>
-            
-            {loading ? (
-              <div className="text-center py-8">
-                <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
-                <p className="mt-2">加载中...</p>
-              </div>
-            ) : deals.length === 0 ? (
-              <p className="text-center py-8 text-gray-400">暂无特价VPS数据</p>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-700">
-                      <th className="py-2 px-4 text-left">ID</th>
-                      <th className="py-2 px-4 text-left">提供商</th>
-                      <th className="py-2 px-4 text-left">标题</th>
-                      <th className="py-2 px-4 text-left">价格</th>
-                      <th className="py-2 px-4 text-left">位置</th>
-                      <th className="py-2 px-4 text-right">操作</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {deals.map(deal => (
-                      <tr key={deal.id} className="border-b border-gray-700">
-                        <td className="py-3 px-4">{deal.id}</td>
-                        <td className="py-3 px-4">
-                          <div className="flex items-center">
-                            {typeof deal.provider === 'object' && deal.provider.logo && (
-                              <img 
-                                src={deal.provider.logo} 
-                                alt={typeof deal.provider === 'object' ? deal.provider.name : '提供商'}
-                                className="h-6 w-auto mr-2"
-                                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                                  const img = e.target as HTMLImageElement;
-                                  img.onerror = null;
-                                  img.src = 'https://via.placeholder.com/150x50?text=Logo';
-                                }}
-                              />
-                            )}
-                            {typeof deal.provider === 'object' ? deal.provider.name : deal.provider}
-                          </div>
-                        </td>
-                        <td className="py-3 px-4">{deal.title}</td>
-                        <td className="py-3 px-4">
-                          <span className="text-green-400">${deal.price}/月</span>
-                          {deal.originalPrice && (
-                            <span className="text-gray-400 line-through ml-2">
-                              ${deal.originalPrice}
-                            </span>
-                          )}
-                        </td>
-                        <td className="py-3 px-4">{deal.location}</td>
-                        <td className="py-3 px-4 text-right">
-                          <button
-                            onClick={() => handleEditDeal(deal)}
-                            className="bg-yellow-600 text-white px-3 py-1 rounded text-sm mr-2"
-                          >
-                            编辑
-                          </button>
-                          <button
-                            onClick={() => handleDeleteDeal(deal.id)}
-                            className="bg-red-600 text-white px-3 py-1 rounded text-sm"
-                          >
-                            删除
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        </main>
-      </div>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-6">添加新优惠</h1>
+      <DealForm onSubmit={handleSubmit} isLoading={isLoading} />
     </div>
   );
 }

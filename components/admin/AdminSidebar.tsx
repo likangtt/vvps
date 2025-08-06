@@ -32,16 +32,16 @@ export default function AdminSidebar() {
       active: pathname === '/admin/deals'
     },
     {
-      name: '数据统计',
-      href: '/admin/analytics',
-      icon: BarChart3,
-      active: pathname === '/admin/analytics'
+      name: '提供商管理',
+      href: '/admin/providers',
+      icon: Server,
+      active: pathname === '/admin/providers'
     },
     {
-      name: '用户管理',
-      href: '/admin/users',
-      icon: Users,
-      active: pathname === '/admin/users'
+      name: '数据统计',
+      href: '/admin/stats',
+      icon: BarChart3,
+      active: pathname === '/admin/stats'
     },
     {
       name: '内容管理',
