@@ -49,16 +49,20 @@ export default function AdminProvidersPage() {
           const providerNames = new Set<string>();
           
           dealsData.forEach((deal: Deal) => {
+            // 确保deal.provider存在
+            if (!deal.provider) {
+              return; // 跳过没有provider信息的deal
+            }
             const providerName = typeof deal.provider === 'string' ? deal.provider : deal.provider.name;
             if (!providerNames.has(providerName)) {
               providerNames.add(providerName);
               
               // 创建Provider对象
               const provider: Provider = {
-                id: typeof deal.provider === 'string' ? deal.provider : (deal.provider.id || providerName),
+                id: typeof deal.provider === 'string' ? deal.provider : (deal.provider?.id || providerName),
                 name: providerName,
-                logo: typeof deal.provider === 'object' && deal.provider.logo ? deal.provider.logo : (deal.logo || ''),
-                website: deal.link || deal.affiliateLink || '',
+                logo: typeof deal.provider === 'object' && deal.provider.logo ? deal.provider.logo : '',
+                website: deal.link || '',
                 description: '',
                 tags: deal.tags || []
               };
