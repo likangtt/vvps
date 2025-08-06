@@ -103,7 +103,7 @@ export default function ProviderDetailPage() {
             </div>
             
             <div className="flex flex-wrap gap-2 mb-4">
-              {provider.tags.map((tag: string, index: number) => (
+              {provider.tags?.map((tag: string, index: number) => (
                 <span key={index} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
                   {tag}
                 </span>
@@ -136,7 +136,7 @@ export default function ProviderDetailPage() {
             
             <h3 className="text-lg font-medium mb-3">主要特点</h3>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
-              {provider.features.map((feature: string, index: number) => (
+              {provider.features?.map((feature: string, index: number) => (
                 <li key={index} className="flex items-start">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -236,7 +236,7 @@ export default function ProviderDetailPage() {
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-lg font-semibold mb-4">为什么选择 {provider.name}?</h2>
             <ul className="space-y-2">
-              {provider.features.slice(0, 5).map((feature: string, index: number) => (
+              {provider.features?.slice(0, 5).map((feature: string, index: number) => (
                 <li key={index} className="flex items-start">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-500 mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
