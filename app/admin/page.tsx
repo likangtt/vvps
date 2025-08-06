@@ -13,28 +13,31 @@ interface Provider {
   tags?: string[];
 }
 
-interface Deal {
-  id: string;
-  title: string;
-  provider: string | Provider;
-  price: string | number;
-  originalPrice?: string | number;
-  currency?: string;
-  discount?: string;
-  location: string;
+interface Specs {
   cpu: string;
   ram: string;
   storage: string;
   bandwidth: string;
+}
+
+interface Deal {
+  id: string;
+  title: string;
+  description: string;
+  price: string | number;
+  originalPrice?: string | number;
+  currency: string;
+  location: string;
+  specs: Specs;
+  providerId: string;
+  provider?: Provider;
   tags: string[];
-  features?: string[];
-  link?: string;
+  features: string[];
+  link: string;
   couponCode?: string;
-  affiliateLink?: string;
-  logo?: string;
+  discount?: string;
   featured?: boolean;
   expiryDate?: string;
-  description: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -56,17 +59,22 @@ export default function AdminDashboard() {
       // 使用类型断言，但先进行类型检查和转换
       const rawData = dealsModule.default
       const dealsData = Array.isArray(rawData) ? rawData.map((deal: any) => {
-        // 处理specs对象，将其扁平化
-        const specs = deal.specs || {}
+        // 确保specs对象存在
+        const specs = deal.specs || {
+          cpu: deal.cpu || '',
+          ram: deal.ram || '',
+          storage: deal.storage || '',
+          bandwidth: deal.bandwidth || ''
+        };
+        
         return {
           ...deal,
-          cpu: specs.cpu || '',
-          ram: specs.ram || '',
-          storage: specs.storage || '',
-          bandwidth: specs.bandwidth || '',
-          link: deal.affiliateLink || '',  // 将affiliateLink映射到link
-          features: deal.features || []
-        }
+          specs: specs,
+          link: deal.affiliateLink || deal.link || '',  // 将affiliateLink映射到link
+          features: deal.features || [],
+          providerId: typeof deal.provider === 'object' ? deal.provider.id || '' : '',
+          currency: deal.currency || 'USD'
+        };
       }) : []
       
       setDeals(dealsData)
@@ -93,12 +101,12 @@ export default function AdminDashboard() {
     }
   }
 
-  const handleSaveDeal = (dealData: any) => {
+  const handleSaveDeal = (dealData: Deal) => {
     if (editingDeal) {
       // 编辑现有优惠
       setDeals(deals.map(deal => 
         deal.id === editingDeal.id 
-          ? { ...deal, ...dealData, updatedAt: new Date().toISOString() }
+          ? { ...dealData, updatedAt: new Date().toISOString() }
           : deal
       ))
     } else {
@@ -302,7 +310,24 @@ export default function AdminDashboard() {
       {showForm && (
         <DealForm
           providers={[]}
-          initialData={editingDeal || {}}
+          initialData={editingDeal as Partial<Deal> || {
+            id: '',
+            title: '',
+            description: '',
+            price: '',
+            location: '',
+            tags: [],
+            features: [],
+            currency: 'USD',
+            link: '',
+            providerId: '',
+            specs: {
+              cpu: '',
+              ram: '',
+              storage: '',
+              bandwidth: ''
+            }
+          }}
           onSubmit={handleSaveDeal}
           onCancel={() => {
             setShowForm(false)
