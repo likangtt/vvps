@@ -32,7 +32,7 @@ export default function ProvidersPage() {
       filtered = filtered.filter(provider => 
         provider.name.toLowerCase().includes(term) || 
         provider.description.toLowerCase().includes(term) ||
-        provider.tags.some(tag => tag.toLowerCase().includes(term))
+        provider.tags?.some(tag => tag.toLowerCase().includes(term))
       );
     }
 
