@@ -15,19 +15,19 @@ export const translations = {
   'zh-CN': {
     // 导航
     'nav.home': '首页',
-    'nav.deals': '优惠',
+    'nav.deals': '特价VPS',
     'nav.providers': '提供商',
     'nav.about': '关于',
     'nav.contact': '联系',
-    'nav.getDeals': '获取优惠',
+    'nav.getDeals': '获取特价',
     
     // 首页
-    'home.title': '发现全球最优VPS优惠',
-    'home.subtitle': '汇聚全球最新VPS服务器优惠信息，帮您找到性价比最高的云服务器解决方案',
+    'home.title': '发现全球最优特价VPS',
+    'home.subtitle': '汇聚全球最新VPS服务器特价信息，帮您找到性价比最高的云服务器解决方案',
     
-    // 优惠页面
-    'deals.title': '所有优惠',
-    'deals.subtitle': '发现全球最优质的VPS云服务器优惠，找到最适合您需求的解决方案',
+    // 特价VPS页面
+    'deals.title': '所有特价VPS',
+    'deals.subtitle': '发现全球最优质的VPS云服务器特价，找到最适合您需求的解决方案',
     
     // 提供商页面
     'providers.title': 'VPS提供商',
@@ -35,7 +35,7 @@ export const translations = {
     
     // 关于页面
     'about.title': '关于我们',
-    'about.subtitle': '致力于为用户提供最优质的VPS优惠信息，帮助您找到最适合的云服务器解决方案',
+    'about.subtitle': '致力于为用户提供最优质的特价VPS信息，帮助您找到最适合的云服务器解决方案',
     
     // 联系页面
     'contact.title': '联系我们',

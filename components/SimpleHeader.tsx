@@ -102,7 +102,7 @@ export default function SimpleHeader() {
           fontWeight: 'bold',
           color: '#60a5fa !important'
         }}>
-          ⚡ VPS优惠
+          ⚡ 特价VPS
         </div>
 
         {/* Navigation */}
