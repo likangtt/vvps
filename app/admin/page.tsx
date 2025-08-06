@@ -65,7 +65,7 @@ export default function AdminDashboard() {
     }
   }
 
-  const handleSaveDeal = (dealData: Partial<Deal>) => {
+  const handleSaveDeal = (dealData: any) => {
     if (editingDeal) {
       // 编辑现有优惠
       setDeals(deals.map(deal => 
@@ -75,8 +75,8 @@ export default function AdminDashboard() {
       ))
     } else {
       // 添加新优惠
-      const newDeal: Deal = {
-        ...dealData as Deal,
+      const newDeal = {
+        ...dealData,
         id: Date.now().toString(),
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
@@ -263,8 +263,9 @@ export default function AdminDashboard() {
       {/* Deal Form Modal */}
       {showForm && (
         <DealForm
-          deal={editingDeal}
-          onSave={handleSaveDeal}
+          providers={[]}
+          initialData={editingDeal || {}}
+          onSubmit={handleSaveDeal}
           onCancel={() => {
             setShowForm(false)
             setEditingDeal(null)
