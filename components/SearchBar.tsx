@@ -98,8 +98,8 @@ export default function SearchBar({ onSearch, onFilter }: SearchBarProps) {
         deal.title.toLowerCase().includes(query.toLowerCase()) ||
         (typeof deal.provider === 'string' 
           ? deal.provider.toLowerCase().includes(query.toLowerCase())
-          : deal.provider && typeof deal.provider === 'object' && 'name' in deal.provider 
-            ? deal.provider.name.toLowerCase().includes(query.toLowerCase())
+          : deal.provider && typeof deal.provider === 'object' && deal.provider !== null && 'name' in deal.provider 
+            ? (deal.provider as Provider).name.toLowerCase().includes(query.toLowerCase())
             : false)
       )
       setSuggestions(mockSuggestions)
