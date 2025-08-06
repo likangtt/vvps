@@ -112,7 +112,7 @@ export default function StatsPage() {
   if (loading) {
     return (
       <div className="p-6">
-        <AdminHeader title="数据统计" />
+        <AdminHeader />
         <div className="flex items-center justify-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
         </div>
@@ -122,7 +122,7 @@ export default function StatsPage() {
 
   return (
     <div className="p-6">
-      <AdminHeader title="数据统计" />
+      <AdminHeader />
       
       {/* 概览卡片 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -185,7 +185,7 @@ export default function StatsPage() {
                   fill="#8884d8"
                   dataKey="count"
                   nameKey="name"
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  label={({ name, percent }) => `${name}: ${percent ? (percent * 100).toFixed(0) : 0}%`}
                 >
                   {stats.regionStats.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
