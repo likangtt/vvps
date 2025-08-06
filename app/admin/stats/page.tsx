@@ -5,7 +5,6 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   PieChart, Pie, Cell
 } from 'recharts';
-import AdminHeader from '@/components/admin/AdminHeader';
 import deals from '@/data/deals.json';
 
 // 颜色配置
@@ -111,59 +110,86 @@ export default function StatsPage() {
 
   if (loading) {
     return (
-      <div className="p-6">
-        <AdminHeader />
-        <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-        </div>
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="p-6">
-      <AdminHeader />
+    <div className="space-y-6">
+      {/* 标题 */}
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-white mb-2">数据统计</h1>
+          <p className="text-gray-400">VPS优惠数据分析</p>
+        </div>
+      </div>
       
       {/* 概览卡片 */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">总优惠数</h3>
-          <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">{stats.totalDeals}</p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="cyber-card p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-400 text-sm">总优惠数</p>
+              <p className="text-2xl font-bold text-white">{stats.totalDeals}</p>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+              <span className="text-blue-400 text-xl">📊</span>
+            </div>
+          </div>
         </div>
         
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">精选优惠</h3>
-          <p className="text-3xl font-bold text-green-600 dark:text-green-400">{stats.featuredDeals}</p>
+        <div className="cyber-card p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-400 text-sm">精选优惠</p>
+              <p className="text-2xl font-bold text-white">{stats.featuredDeals}</p>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+              <span className="text-green-400 text-xl">⭐</span>
+            </div>
+          </div>
         </div>
         
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">提供商数量</h3>
-          <p className="text-3xl font-bold text-purple-600 dark:text-purple-400">{stats.totalProviders}</p>
+        <div className="cyber-card p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-400 text-sm">提供商数量</p>
+              <p className="text-2xl font-bold text-white">{stats.totalProviders}</p>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+              <span className="text-purple-400 text-xl">🏢</span>
+            </div>
+          </div>
         </div>
       </div>
       
       {/* 图表区域 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* 提供商分布 */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">提供商优惠分布</h3>
+        <div className="cyber-card p-6">
+          <h3 className="text-lg font-semibold text-white mb-4">提供商优惠分布</h3>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={stats.providerStats}
                 margin={{ top: 5, right: 30, left: 20, bottom: 60 }}
               >
-                <CartesianGrid strokeDasharray="3 3" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#444" />
                 <XAxis 
                   dataKey="name" 
                   angle={-45} 
                   textAnchor="end"
                   height={70}
-                  tick={{ fontSize: 12 }}
+                  tick={{ fontSize: 12, fill: '#aaa' }}
                 />
-                <YAxis />
-                <Tooltip />
-                <Legend />
+                <YAxis tick={{ fill: '#aaa' }} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#222', border: '1px solid #444' }}
+                  labelStyle={{ color: '#fff' }}
+                />
+                <Legend wrapperStyle={{ color: '#aaa' }} />
                 <Bar dataKey="count" name="优惠数量" fill="#8884d8" />
               </BarChart>
             </ResponsiveContainer>
@@ -171,8 +197,8 @@ export default function StatsPage() {
         </div>
         
         {/* 地区分布 */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">地区分布</h3>
+        <div className="cyber-card p-6">
+          <h3 className="text-lg font-semibold text-white mb-4">地区分布</h3>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -191,16 +217,20 @@ export default function StatsPage() {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value, name, props) => [`${value} 个优惠`, props.payload.name]} />
-                <Legend />
+                <Tooltip 
+                  formatter={(value, name, props) => [`${value} 个优惠`, props.payload.name]}
+                  contentStyle={{ backgroundColor: '#222', border: '1px solid #444' }}
+                  labelStyle={{ color: '#fff' }}
+                />
+                <Legend wrapperStyle={{ color: '#aaa' }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
         
         {/* 标签分布 */}
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md col-span-1 lg:col-span-2">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">标签分布</h3>
+        <div className="cyber-card p-6 col-span-1 lg:col-span-2">
+          <h3 className="text-lg font-semibold text-white mb-4">标签分布</h3>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
@@ -208,16 +238,19 @@ export default function StatsPage() {
                 margin={{ top: 5, right: 30, left: 20, bottom: 60 }}
                 layout="vertical"
               >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                <XAxis type="number" tick={{ fill: '#aaa' }} />
                 <YAxis 
                   dataKey="name" 
                   type="category" 
                   width={150}
-                  tick={{ fontSize: 12 }}
+                  tick={{ fontSize: 12, fill: '#aaa' }}
                 />
-                <Tooltip />
-                <Legend />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#222', border: '1px solid #444' }}
+                  labelStyle={{ color: '#fff' }}
+                />
+                <Legend wrapperStyle={{ color: '#aaa' }} />
                 <Bar dataKey="count" name="使用次数" fill="#82ca9d" />
               </BarChart>
             </ResponsiveContainer>

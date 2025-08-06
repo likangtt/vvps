@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { 
@@ -17,6 +17,14 @@ import {
 export default function AdminSidebar() {
   const [collapsed, setCollapsed] = useState(false)
   const pathname = usePathname()
+  
+  // 当侧边栏状态改变时，更新主内容区域的边距
+  useEffect(() => {
+    const mainContent = document.querySelector('.admin-main-content') as HTMLElement;
+    if (mainContent) {
+      mainContent.style.marginLeft = collapsed ? '4rem' : '16rem'; // 64px or 256px
+    }
+  }, [collapsed]);
 
   const menuItems = [
     {
@@ -58,7 +66,7 @@ export default function AdminSidebar() {
   ]
 
   return (
-    <div className={`bg-dark-800 border-r border-dark-700 transition-all duration-300 ${
+    <div className={`bg-dark-800 border-r border-dark-700 transition-all duration-300 h-screen fixed top-0 left-0 ${
       collapsed ? 'w-16' : 'w-64'
     }`}>
       <div className="flex flex-col h-full">

@@ -1,12 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import AdminHeader from '@/components/admin/AdminHeader';
-import AdminSidebar from '@/components/admin/AdminSidebar';
 import { Provider, Deal } from '@/types';
 
 export default function AdminProvidersPage() {
-
   const [providers, setProviders] = useState<Provider[]>([]);
   const [loading, setLoading] = useState(true);
   const [newProvider, setNewProvider] = useState<Provider>({
@@ -20,24 +17,6 @@ export default function AdminProvidersPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
 
   useEffect(() => {
-    // 在实际应用中，这里会从API获取数据
-    // 这里我们从本地JSON文件加载数据作为示例
-    const loadProviders = async () => {
-      try {
-        const response = await fetch('/api/providers');
-        if (response.ok) {
-          const data = await response.json();
-          setProviders(data);
-        } else {
-          console.error('Failed to load providers');
-        }
-      } catch (error) {
-        console.error('Error loading providers:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     // 模拟API调用
     setTimeout(() => {
       import('@/data/deals.json')
@@ -139,206 +118,207 @@ export default function AdminProvidersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <AdminHeader />
-      <div className="flex">
-        <AdminSidebar />
-        <main className="flex-1 p-6">
-          <h1 className="text-3xl font-bold mb-6">提供商管理</h1>
-          
-          <div className="bg-gray-800 p-6 rounded-lg mb-8">
-            <h2 className="text-xl font-semibold mb-4">
-              {editingId ? '编辑提供商' : '添加新提供商'}
-            </h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block mb-1">提供商ID</label>
-                <input
-                  type="text"
-                  name="id"
-                  value={newProvider.id}
-                  onChange={handleInputChange}
-                  placeholder="自动生成，可选填"
-                  className="w-full bg-gray-700 p-2 rounded"
-                />
-              </div>
-              
-              <div>
-                <label className="block mb-1">名称 *</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={newProvider.name}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full bg-gray-700 p-2 rounded"
-                />
-              </div>
-              
-              <div>
-                <label className="block mb-1">Logo URL *</label>
-                <input
-                  type="url"
-                  name="logo"
-                  value={newProvider.logo}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full bg-gray-700 p-2 rounded"
-                />
-              </div>
-              
-              <div>
-                <label className="block mb-1">官网 *</label>
-                <input
-                  type="url"
-                  name="website"
-                  value={newProvider.website}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full bg-gray-700 p-2 rounded"
-                />
-              </div>
-              
-              <div>
-                <label className="block mb-1">描述 *</label>
-                <textarea
-                  name="description"
-                  value={newProvider.description}
-                  onChange={handleInputChange}
-                  required
-                  rows={4}
-                  className="w-full bg-gray-700 p-2 rounded"
-                />
-              </div>
-              
-              <div>
-                <label className="block mb-1">标签（用逗号分隔）</label>
-                <input
-                  type="text"
-                  name="tags"
-                  value={newProvider.tags?.join(', ') || ''}
-                  onChange={handleTagsChange}
-                  placeholder="例如: 高性价比, 亚洲优化, 支持支付宝"
-                  className="w-full bg-gray-700 p-2 rounded"
-                />
-              </div>
-              
-              <div className="flex justify-end">
-                {editingId && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setEditingId(null);
-                      setNewProvider({
-                        id: '',
-                        name: '',
-                        logo: '',
-                        website: '',
-                        description: '',
-                        tags: []
-                      });
-                    }}
-                    className="bg-gray-600 px-4 py-2 rounded mr-2"
-                  >
-                    取消
-                  </button>
-                )}
-                <button
-                  type="submit"
-                  className="bg-blue-600 px-4 py-2 rounded"
-                >
-                  {editingId ? '更新提供商' : '添加提供商'}
-                </button>
-              </div>
-            </form>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-white mb-2">提供商管理</h1>
+          <p className="text-gray-400">管理VPS服务提供商信息</p>
+        </div>
+      </div>
+      
+      <div className="cyber-card p-6">
+        <h2 className="text-xl font-semibold text-white mb-4">
+          {editingId ? '编辑提供商' : '添加新提供商'}
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block mb-1 text-gray-300">提供商ID</label>
+            <input
+              type="text"
+              name="id"
+              value={newProvider.id}
+              onChange={handleInputChange}
+              placeholder="自动生成，可选填"
+              className="cyber-input w-full"
+            />
           </div>
           
-          <div className="bg-gray-800 p-6 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4">提供商列表</h2>
-            
-            {loading ? (
-              <div className="text-center py-8">
-                <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
-                <p className="mt-2">加载中...</p>
-              </div>
-            ) : providers.length === 0 ? (
-              <p className="text-center py-8 text-gray-400">暂无提供商数据</p>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-700">
-                      <th className="py-2 px-4 text-left">ID</th>
-                      <th className="py-2 px-4 text-left">Logo</th>
-                      <th className="py-2 px-4 text-left">名称</th>
-                      <th className="py-2 px-4 text-left">官网</th>
-                      <th className="py-2 px-4 text-left">标签</th>
-                      <th className="py-2 px-4 text-right">操作</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {providers.map(provider => (
-                      <tr key={provider.id} className="border-b border-gray-700">
-                        <td className="py-3 px-4">{provider.id}</td>
-                        <td className="py-3 px-4">
-                          {provider.logo && (
-                            <img 
-                              src={provider.logo} 
-                              alt={provider.name} 
-                              className="h-8 w-auto"
-                              onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                                const img = e.target as HTMLImageElement;
-                                img.onerror = null;
-                                img.src = 'https://via.placeholder.com/150x50?text=Logo';
-                              }}
-                            />
-                          )}
-                        </td>
-                        <td className="py-3 px-4">{provider.name}</td>
-                        <td className="py-3 px-4">
-                          <a 
-                            href={provider.website} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-400 hover:underline"
-                          >
-                            {provider.website}
-                          </a>
-                        </td>
-                        <td className="py-3 px-4">
-                          <div className="flex flex-wrap gap-1">
-                            {provider.tags && provider.tags.map((tag, index) => (
-                              <span 
-                                key={index}
-                                className="bg-gray-700 text-xs px-2 py-1 rounded"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        </td>
-                        <td className="py-3 px-4 text-right">
-                          <button
-                            onClick={() => handleEdit(provider)}
-                            className="bg-yellow-600 text-white px-3 py-1 rounded text-sm mr-2"
-                          >
-                            编辑
-                          </button>
-                          <button
-                            onClick={() => handleDelete(provider.id || '')}
-                            className="bg-red-600 text-white px-3 py-1 rounded text-sm"
-                          >
-                            删除
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+          <div>
+            <label className="block mb-1 text-gray-300">名称 *</label>
+            <input
+              type="text"
+              name="name"
+              value={newProvider.name}
+              onChange={handleInputChange}
+              required
+              className="cyber-input w-full"
+            />
+          </div>
+          
+          <div>
+            <label className="block mb-1 text-gray-300">Logo URL</label>
+            <input
+              type="url"
+              name="logo"
+              value={newProvider.logo}
+              onChange={handleInputChange}
+              className="cyber-input w-full"
+            />
+          </div>
+          
+          <div>
+            <label className="block mb-1 text-gray-300">官网</label>
+            <input
+              type="url"
+              name="website"
+              value={newProvider.website}
+              onChange={handleInputChange}
+              className="cyber-input w-full"
+            />
+          </div>
+          
+          <div>
+            <label className="block mb-1 text-gray-300">描述</label>
+            <textarea
+              name="description"
+              value={newProvider.description}
+              onChange={handleInputChange}
+              rows={4}
+              className="cyber-input w-full"
+            />
+          </div>
+          
+          <div>
+            <label className="block mb-1 text-gray-300">标签（用逗号分隔）</label>
+            <input
+              type="text"
+              name="tags"
+              value={newProvider.tags?.join(', ') || ''}
+              onChange={handleTagsChange}
+              placeholder="例如: 高性价比, 亚洲优化, 支持支付宝"
+              className="cyber-input w-full"
+            />
+          </div>
+          
+          <div className="flex justify-end space-x-3">
+            {editingId && (
+              <button
+                type="button"
+                onClick={() => {
+                  setEditingId(null);
+                  setNewProvider({
+                    id: '',
+                    name: '',
+                    logo: '',
+                    website: '',
+                    description: '',
+                    tags: []
+                  });
+                }}
+                className="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded transition-colors"
+              >
+                取消
+              </button>
             )}
+            <button
+              type="submit"
+              className="glow-button"
+            >
+              {editingId ? '更新提供商' : '添加提供商'}
+            </button>
           </div>
-        </main>
+        </form>
+      </div>
+      
+      <div className="cyber-card">
+        <div className="p-6 border-b border-dark-700">
+          <h2 className="text-lg font-semibold text-white">提供商列表</h2>
+        </div>
+        
+        {loading ? (
+          <div className="text-center py-8">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>
+            <p className="mt-2 text-gray-400">加载中...</p>
+          </div>
+        ) : providers.length === 0 ? (
+          <p className="text-center py-8 text-gray-400">暂无提供商数据</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-dark-800/50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">ID</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Logo</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">名称</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">官网</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">标签</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">操作</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-dark-700">
+                {providers.map(provider => (
+                  <tr key={provider.id} className="hover:bg-dark-800/30">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{provider.id}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {provider.logo && (
+                        <img 
+                          src={provider.logo} 
+                          alt={provider.name} 
+                          className="h-8 w-auto"
+                          onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                            const img = e.target as HTMLImageElement;
+                            img.onerror = null;
+                            img.src = 'https://via.placeholder.com/150x50?text=Logo';
+                          }}
+                        />
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{provider.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                      <a 
+                        href={provider.website} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-primary-400 hover:text-primary-300"
+                      >
+                        {provider.website}
+                      </a>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex flex-wrap gap-1">
+                        {provider.tags && provider.tags.map((tag, index) => (
+                          <span 
+                            key={index}
+                            className="bg-primary-500/20 text-primary-400 text-xs px-2 py-1 rounded-full"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={() => handleEdit(provider)}
+                          className="text-yellow-400 hover:text-yellow-300 p-1 rounded"
+                        >
+                          编辑
+                        </button>
+                        <button
+                          onClick={() => handleDelete(provider.id || '')}
+                          className="text-red-400 hover:text-red-300 p-1 rounded"
+                        >
+                          删除
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -254,19 +254,25 @@ export default function ContentManagementPage() {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6 text-white">内容管理</h1>
+    <div className="space-y-6">
+      {/* 标题 */}
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-white mb-2">内容管理</h1>
+          <p className="text-gray-400">管理网站页面内容、FAQ和公告</p>
+        </div>
+      </div>
       
       {/* 页面内容管理 */}
       <div className="mb-10">
-        <h2 className="text-2xl font-semibold mb-4 text-white">页面内容管理</h2>
+        <h2 className="text-xl font-semibold mb-4 text-white">页面内容管理</h2>
         
         {pages.map(page => (
-          <div key={page.id} className="mb-8 bg-dark-800 p-6 rounded-xl border border-dark-700">
-            <h3 className="text-xl font-medium mb-4 text-white">{page.title} 页面</h3>
+          <div key={page.id} className="mb-6 cyber-card p-6">
+            <h3 className="text-lg font-medium mb-4 text-white">{page.title} 页面</h3>
             
             {page.sections.map(section => (
-              <div key={section.id} className="mb-4 p-4 bg-dark-900 rounded-lg">
+              <div key={section.id} className="mb-4 p-4 bg-dark-800/50 rounded-lg">
                 <div className="flex justify-between items-center mb-2">
                   <h4 className="text-lg font-medium text-white">{section.title}</h4>
                   
@@ -315,7 +321,7 @@ export default function ContentManagementPage() {
                         id={`${section.id}-content`}
                         defaultValue={section.content}
                         rows={2}
-                        className="w-full bg-dark-800 border border-dark-600 rounded p-2 text-white"
+                        className="cyber-input w-full"
                       />
                     </div>
                     <div>
@@ -326,7 +332,7 @@ export default function ContentManagementPage() {
                         id={`${section.id}-subtitle`}
                         defaultValue={section.subtitle}
                         rows={2}
-                        className="w-full bg-dark-800 border border-dark-600 rounded p-2 text-white"
+                        className="cyber-input w-full"
                       />
                     </div>
                   </div>
@@ -340,19 +346,19 @@ export default function ContentManagementPage() {
       {/* FAQ管理 */}
       <div className="mb-10">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold text-white">FAQ管理</h2>
+          <h2 className="text-xl font-semibold text-white">FAQ管理</h2>
           <button
             onClick={handleAddFaq}
-            className="flex items-center space-x-1 bg-primary-600 hover:bg-primary-700 text-white px-3 py-1 rounded-md transition-colors"
+            className="glow-button flex items-center space-x-1"
           >
             <Plus size={16} />
             <span>添加FAQ</span>
           </button>
         </div>
         
-        <div className="bg-dark-800 p-6 rounded-xl border border-dark-700">
+        <div className="cyber-card p-6">
           {faqs.map(faq => (
-            <div key={faq.id} className="mb-4 p-4 bg-dark-900 rounded-lg">
+            <div key={faq.id} className="mb-4 p-4 bg-dark-800/50 rounded-lg">
               <div className="flex justify-between items-center mb-2">
                 <h4 className="text-lg font-medium text-white">
                   {!faq.isEditing ? faq.question : '编辑FAQ'}
@@ -410,7 +416,7 @@ export default function ContentManagementPage() {
                       id={`${faq.id}-question`}
                       defaultValue={faq.question}
                       rows={2}
-                      className="w-full bg-dark-800 border border-dark-600 rounded p-2 text-white"
+                      className="cyber-input w-full"
                     />
                   </div>
                   <div>
@@ -421,7 +427,7 @@ export default function ContentManagementPage() {
                       id={`${faq.id}-answer`}
                       defaultValue={faq.answer}
                       rows={4}
-                      className="w-full bg-dark-800 border border-dark-600 rounded p-2 text-white"
+                      className="cyber-input w-full"
                     />
                   </div>
                 </div>
@@ -438,19 +444,19 @@ export default function ContentManagementPage() {
       {/* 公告管理 */}
       <div>
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold text-white">公告管理</h2>
+          <h2 className="text-xl font-semibold text-white">公告管理</h2>
           <button
             onClick={handleAddAnnouncement}
-            className="flex items-center space-x-1 bg-primary-600 hover:bg-primary-700 text-white px-3 py-1 rounded-md transition-colors"
+            className="glow-button flex items-center space-x-1"
           >
             <Plus size={16} />
             <span>添加公告</span>
           </button>
         </div>
         
-        <div className="bg-dark-800 p-6 rounded-xl border border-dark-700">
+        <div className="cyber-card p-6">
           {announcements.map(ann => (
-            <div key={ann.id} className="mb-4 p-4 bg-dark-900 rounded-lg">
+            <div key={ann.id} className="mb-4 p-4 bg-dark-800/50 rounded-lg">
               <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center">
                   <h4 className="text-lg font-medium text-white mr-3">
@@ -512,7 +518,7 @@ export default function ContentManagementPage() {
                         type="text"
                         id={`${ann.id}-title`}
                         defaultValue={ann.title}
-                        className="w-full bg-dark-800 border border-dark-600 rounded p-2 text-white"
+                        className="cyber-input w-full"
                       />
                     </div>
                     <div>
@@ -523,7 +529,7 @@ export default function ContentManagementPage() {
                         type="date"
                         id={`${ann.id}-date`}
                         defaultValue={ann.date}
-                        className="w-full bg-dark-800 border border-dark-600 rounded p-2 text-white"
+                        className="cyber-input w-full"
                       />
                     </div>
                   </div>
@@ -535,7 +541,7 @@ export default function ContentManagementPage() {
                       id={`${ann.id}-content`}
                       defaultValue={ann.content}
                       rows={3}
-                      className="w-full bg-dark-800 border border-dark-600 rounded p-2 text-white"
+                      className="cyber-input w-full"
                     />
                   </div>
                 </div>

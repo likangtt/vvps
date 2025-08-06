@@ -269,35 +269,41 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Deal Form Modal */}
-      {showForm && (
-        <DealForm
-          providers={[]}
-          initialData={editingDeal || {
-            id: '',
-            title: '',
-            description: '',
-            price: '',
-            location: '',
-            tags: [],
-            features: [],
-            currency: 'USD',
-            link: '',
-            providerId: '',
-            specs: {
-              cpu: '',
-              ram: '',
-              storage: '',
-              bandwidth: ''
-            }
-          }}
-          onSubmit={handleSaveDeal}
-          onCancel={() => {
-            setShowForm(false)
-            setEditingDeal(null)
-          }}
-        />
-      )}
+  {/* Deal Form Modal */}
+  {showForm && (
+    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 overflow-y-auto">
+      <div className="bg-dark-800 rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="p-6">
+          <DealForm
+            providers={[]}
+            initialData={editingDeal || {
+              id: '',
+              title: '',
+              description: '',
+              price: '',
+              location: '',
+              tags: [],
+              features: [],
+              currency: 'USD',
+              link: '',
+              providerId: '',
+              specs: {
+                cpu: '',
+                ram: '',
+                storage: '',
+                bandwidth: ''
+              }
+            }}
+            onSubmit={handleSaveDeal}
+            onCancel={() => {
+              setShowForm(false)
+              setEditingDeal(null)
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  )}
     </div>
   )
 }

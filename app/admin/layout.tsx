@@ -93,11 +93,11 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-dark-900 flex">
+    <div className="min-h-screen bg-dark-900">
       <AdminSidebar />
-      <div className="flex-1 flex flex-col">
+      <div className="admin-main-content ml-64 transition-all duration-300">
         <AdminHeader onLogout={handleLogout} />
-        <main className="flex-1 p-6">
+        <main className="p-6">
           {children}
         </main>
       </div>
