@@ -24,24 +24,27 @@ import ReactMarkdown from 'react-markdown'
 interface Deal {
   id: string
   title: string
-  provider: string
-  price: string
-  originalPrice: string
-  discount: string
+  provider: string | { id?: string; name: string; logo?: string }
+  price: string | number
+  originalPrice?: string | number
+  currency?: string
+  discount?: string
   location: string
-  specs: {
-    cpu: string
-    ram: string
-    storage: string
-    bandwidth: string
-  }
+  cpu: string
+  ram: string
+  storage: string
+  bandwidth: string
   tags: string[]
-  affiliateLink: string
-  featured: boolean
-  expiryDate: string
+  features?: string[]
+  link?: string
+  couponCode?: string
+  affiliateLink?: string
+  logo?: string
+  featured?: boolean
+  expiryDate?: string
   description: string
-  createdAt: string
-  updatedAt: string
+  createdAt?: string
+  updatedAt?: string
 }
 
 export default function DealDetailPage() {
@@ -227,7 +230,7 @@ export default function DealDetailPage() {
 
               {/* 购买按钮 */}
               <a
-                href={deal.affiliateLink}
+                href={deal.link || deal.affiliateLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="glow-button w-full flex items-center justify-center space-x-2 py-4 text-lg"
@@ -237,7 +240,7 @@ export default function DealDetailPage() {
               </a>
             </div>
 
-            {/* 配置详情 */}
+              {/* 配置详情 */}
             <div className="cyber-card p-8">
               <h2 className="text-2xl font-bold text-white mb-6">配置详情</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -246,7 +249,7 @@ export default function DealDetailPage() {
                     <Cpu className="w-6 h-6 text-primary-400" />
                   </div>
                   <div className="text-sm text-gray-400 mb-1">处理器</div>
-                  <div className="text-white font-medium">{deal.specs.cpu}</div>
+                  <div className="text-white font-medium">{deal.cpu || (deal.specs && deal.specs.cpu)}</div>
                 </div>
                 
                 <div className="text-center">
@@ -254,7 +257,7 @@ export default function DealDetailPage() {
                     <HardDrive className="w-6 h-6 text-primary-400" />
                   </div>
                   <div className="text-sm text-gray-400 mb-1">内存</div>
-                  <div className="text-white font-medium">{deal.specs.ram}</div>
+                  <div className="text-white font-medium">{deal.ram || (deal.specs && deal.specs.ram)}</div>
                 </div>
                 
                 <div className="text-center">
@@ -262,7 +265,7 @@ export default function DealDetailPage() {
                     <HardDrive className="w-6 h-6 text-primary-400" />
                   </div>
                   <div className="text-sm text-gray-400 mb-1">存储</div>
-                  <div className="text-white font-medium">{deal.specs.storage}</div>
+                  <div className="text-white font-medium">{deal.storage || (deal.specs && deal.specs.storage)}</div>
                 </div>
                 
                 <div className="text-center">
@@ -270,7 +273,7 @@ export default function DealDetailPage() {
                     <Wifi className="w-6 h-6 text-primary-400" />
                   </div>
                   <div className="text-sm text-gray-400 mb-1">带宽</div>
-                  <div className="text-white font-medium">{deal.specs.bandwidth}</div>
+                  <div className="text-white font-medium">{deal.bandwidth || (deal.specs && deal.specs.bandwidth)}</div>
                 </div>
               </div>
             </div>
@@ -311,7 +314,9 @@ export default function DealDetailPage() {
               <div className="space-y-3">
                 <div>
                   <div className="text-sm text-gray-400">提供商</div>
-                  <div className="text-white font-medium">{deal.provider}</div>
+                  <div className="text-white font-medium">
+                    {typeof deal.provider === 'string' ? deal.provider : deal.provider.name}
+                  </div>
                 </div>
                 <div>
                   <div className="text-sm text-gray-400">机房位置</div>
@@ -320,13 +325,13 @@ export default function DealDetailPage() {
                 <div>
                   <div className="text-sm text-gray-400">优惠到期</div>
                   <div className="text-white font-medium">
-                    {new Date(deal.expiryDate).toLocaleDateString('zh-CN')}
+                    {deal.expiryDate ? new Date(deal.expiryDate).toLocaleDateString('zh-CN') : '无限期'}
                   </div>
                 </div>
               </div>
               
               <a
-                href={deal.affiliateLink}
+                href={deal.link || deal.affiliateLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full mt-4 bg-primary-500/20 hover:bg-primary-500/30 text-primary-300 py-2 px-4 rounded-lg text-sm font-medium transition-colors flex items-center justify-center space-x-2"
