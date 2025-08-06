@@ -23,10 +23,16 @@ interface Deal {
   currency?: string;
   discount?: string;
   location: string;
-  cpu: string;
-  ram: string;
-  storage: string;
-  bandwidth: string;
+  specs?: {
+    cpu: string;
+    ram: string;
+    storage: string;
+    bandwidth: string;
+  };
+  cpu?: string;
+  ram?: string;
+  storage?: string;
+  bandwidth?: string;
   tags: string[];
   features?: string[];
   link?: string;
@@ -109,19 +115,19 @@ export default function DealCard({ deal }: DealCardProps) {
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div className="flex items-center gap-2 text-sm text-gray-300">
           <Cpu className="w-4 h-4 text-primary-500" />
-          <span>{deal.cpu}</span>
+          <span>{deal.cpu || (deal.specs && deal.specs.cpu)}</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-300">
           <Database className="w-4 h-4 text-primary-500" />
-          <span>{deal.ram}</span>
+          <span>{deal.ram || (deal.specs && deal.specs.ram)}</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-300">
           <HardDrive className="w-4 h-4 text-primary-500" />
-          <span>{deal.storage}</span>
+          <span>{deal.storage || (deal.specs && deal.specs.storage)}</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-300">
           <Wifi className="w-4 h-4 text-primary-500" />
-          <span>{deal.bandwidth}</span>
+          <span>{deal.bandwidth || (deal.specs && deal.specs.bandwidth)}</span>
         </div>
       </div>
 
