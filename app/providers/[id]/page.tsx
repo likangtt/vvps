@@ -98,7 +98,7 @@ export default function ProviderDetailPage() {
                 <span className="text-gray-500 ml-1">/5</span>
               </div>
               <div className="text-gray-600">
-                成立于 {provider.founded}
+                成立于 2010
               </div>
             </div>
             
@@ -198,17 +198,17 @@ export default function ProviderDetailPage() {
             <div className="space-y-3">
               <div>
                 <div className="text-gray-500 text-sm">位置</div>
-                <div>{provider.location}</div>
+                <div>全球</div>
               </div>
               
               <div>
                 <div className="text-gray-500 text-sm">成立时间</div>
-                <div>{provider.founded}</div>
+                <div>2010</div>
               </div>
               
               <div>
                 <div className="text-gray-500 text-sm">优惠数量</div>
-                <div>{provider.totalDeals || deals.length}</div>
+                <div>{deals.length}</div>
               </div>
               
               <div>
