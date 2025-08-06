@@ -39,6 +39,7 @@ export interface Provider {
   website?: string;
   locations?: string[];
   features?: string[];
+  tags?: string[];
 }
 
 // 定义User接口
