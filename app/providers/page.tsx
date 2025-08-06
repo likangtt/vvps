@@ -37,30 +37,37 @@ export default function ProvidersPage() {
         const providerMap = new Map()
         
         deals.forEach((deal: any) => {
-          if (!providerMap.has(deal.provider)) {
-            providerMap.set(deal.provider, {
-              id: deal.provider.toLowerCase().replace(/\s+/g, '-'),
-              name: deal.provider,
-              description: `${deal.provider} 提供高质量的VPS云服务器解决方案`,
-              location: deal.location.split('/')[0],
+          const providerName = typeof deal.provider === 'string' ? deal.provider : deal.provider.name;
+          const providerKey = providerName;
+          
+          if (!providerMap.has(providerKey)) {
+            const providerObj = typeof deal.provider === 'object' ? deal.provider : null;
+            
+            providerMap.set(providerKey, {
+              id: providerName.toLowerCase().replace(/\s+/g, '-'),
+              name: providerName,
+              description: providerObj?.description || `${providerName} 提供高质量的VPS云服务器解决方案`,
+              location: deal.location?.split('/')[0] || '全球',
               founded: '2010+',
               rating: 4.2 + Math.random() * 0.8,
               totalDeals: 0,
-              features: deal.tags.slice(0, 3),
-              website: deal.affiliateLink,
-              tags: deal.tags
+              features: (deal.tags || []).slice(0, 3),
+              website: deal.link || deal.affiliateLink || '#',
+              tags: deal.tags || []
             })
           }
           
-          const provider = providerMap.get(deal.provider)
+          const provider = providerMap.get(providerKey)
           provider.totalDeals += 1
           
           // 合并特性标签
-          deal.tags.forEach((tag: string) => {
-            if (!provider.features.includes(tag) && provider.features.length < 5) {
-              provider.features.push(tag)
-            }
-          })
+          if (deal.tags && Array.isArray(deal.tags)) {
+            deal.tags.forEach((tag: string) => {
+              if (!provider.features.includes(tag) && provider.features.length < 5) {
+                provider.features.push(tag)
+              }
+            })
+          }
         })
         
         const providersArray = Array.from(providerMap.values())
