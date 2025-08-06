@@ -47,11 +47,11 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel }:
 
   useEffect(() => {
     if (initialData) {
-      setFormData({
-        ...formData,
+      setFormData(prev => ({
+        ...prev,
         ...initialData,
         providerId: initialData.provider?.id || ''
-      });
+      }));
       setSelectedTags(initialData.tags || []);
       setSelectedFeatures(initialData.features || []);
     }
@@ -99,14 +99,14 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel }:
       tags: selectedTags,
       features: selectedFeatures,
       provider: selectedProvider,
-      price: parseFloat(formData.price),
+      price: parseFloat(formData.price || '0'),
       originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : undefined
     };
     
     onSubmit(submitData);
     
     // 如果不是编辑模式，重置表单
-    if (!initialData.id) {
+    if (!initialData || !initialData.id) {
       setFormData({
         id: '',
         title: '',
