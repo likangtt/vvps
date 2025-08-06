@@ -44,7 +44,7 @@ interface Deal {
 interface DealFormProps {
   providers: Provider[];
   initialData: Partial<Deal>;
-  onSubmit: (data: Deal) => void;
+  onSubmit: (data: Deal) => void | Promise<void>;
   onCancel?: () => void;
   isLoading?: boolean;
 }
