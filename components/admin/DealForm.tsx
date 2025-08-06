@@ -266,8 +266,10 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel, i
         tags: selectedTags,
         features: selectedFeatures,
         provider: selectedProvider,
-        price: parseFloat(formData.price || '0'),
-        originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : undefined,
+        price: typeof formData.price === 'string' ? parseFloat(formData.price || '0') : formData.price,
+        originalPrice: formData.originalPrice 
+          ? (typeof formData.originalPrice === 'string' ? parseFloat(formData.originalPrice) : formData.originalPrice) 
+          : undefined,
         specs: {
           cpu: formData.specs?.cpu || '',
           ram: formData.specs?.ram || '',
