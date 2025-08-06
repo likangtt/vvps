@@ -24,6 +24,10 @@ export interface Deal {
   link: string;
   couponCode?: string;
   expiryDate?: string;
+  featured?: boolean;
+  discount?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 // 定义Provider接口
