@@ -26,7 +26,8 @@ export default function ProviderDetailPage() {
           if (typeof deal.provider === 'object' && deal.provider !== null) {
             return deal.provider.id === params.id;
           }
-          return deal.providerId === params.id;
+          // Deal类型中没有providerId属性，所以我们只检查provider对象
+          return false;
         });
         
         setDeals(providerDeals);
