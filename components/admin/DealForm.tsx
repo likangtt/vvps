@@ -74,14 +74,13 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel, i
     features: [],
     link: '',
     couponCode: '',
-    expiryDate: '',
-    ...initialData
+    expiryDate: ''
   });
 
   // 标签和特性状态
-  const [selectedTags, setSelectedTags] = useState<string[]>(initialData.tags || []);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>(initialData.features || []);
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [newFeature, setNewFeature] = useState('');
   
   // 预设标签和特性选项
@@ -91,7 +90,7 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel, i
   // 初始化表单数据
   useEffect(() => {
     if (initialData) {
-      setFormData((prev: typeof formData) => ({
+      setFormData((prev) => ({
         ...prev,
         ...initialData,
         providerId: initialData.provider?.id || ''
@@ -109,7 +108,7 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel, i
     if (!formData.title.trim()) newErrors.title = '标题不能为空';
     if (!formData.description.trim()) newErrors.description = '描述不能为空';
     if (!formData.price) newErrors.price = '价格不能为空';
-    if (parseFloat(formData.price.toString()) <= 0) newErrors.price = '价格必须大于0';
+    if (formData.price && parseFloat(formData.price.toString()) <= 0) newErrors.price = '价格必须大于0';
     if (!formData.providerId) newErrors.providerId = '请选择提供商';
     if (!formData.location.trim()) newErrors.location = '位置不能为空';
     if (!formData.link.trim()) newErrors.link = '购买链接不能为空';
@@ -126,7 +125,8 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel, i
     }
     
     // 价格比较验证
-    if (formData.originalPrice && parseFloat(formData.originalPrice.toString()) > 0 && 
+    if (formData.originalPrice && formData.originalPrice !== '' && 
+        parseFloat(formData.originalPrice.toString()) > 0 && 
         parseFloat(formData.price.toString()) >= parseFloat(formData.originalPrice.toString())) {
       newErrors.originalPrice = '原价应该高于特价';
     }
@@ -163,7 +163,7 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel, i
       });
     }
     
-    setFormData((prev: typeof formData) => {
+    setFormData((prev) => {
       // 处理specs对象内的属性
       if (['cpu', 'ram', 'storage', 'bandwidth'].includes(name)) {
         // 清除specs相关错误
@@ -194,36 +194,36 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel, i
   // 标签处理函数
   const handleAddTag = () => {
     if (newTag && !selectedTags.includes(newTag)) {
-      setSelectedTags((prev: string[]) => [...prev, newTag]);
+      setSelectedTags((prev) => [...prev, newTag]);
       setNewTag('');
     }
   };
 
   const handleRemoveTag = (tag: string) => {
-    setSelectedTags((prev: string[]) => prev.filter(t => t !== tag));
+    setSelectedTags((prev) => prev.filter(t => t !== tag));
   };
 
   const handleAddCommonTag = (tag: string) => {
     if (!selectedTags.includes(tag)) {
-      setSelectedTags((prev: string[]) => [...prev, tag]);
+      setSelectedTags((prev) => [...prev, tag]);
     }
   };
 
   // 特性处理函数
   const handleAddFeature = () => {
     if (newFeature && !selectedFeatures.includes(newFeature)) {
-      setSelectedFeatures((prev: string[]) => [...prev, newFeature]);
+      setSelectedFeatures((prev) => [...prev, newFeature]);
       setNewFeature('');
     }
   };
 
   const handleRemoveFeature = (feature: string) => {
-    setSelectedFeatures((prev: string[]) => prev.filter(f => f !== feature));
+    setSelectedFeatures((prev) => prev.filter(f => f !== feature));
   };
   
   const handleAddCommonFeature = (feature: string) => {
     if (!selectedFeatures.includes(feature)) {
-      setSelectedFeatures((prev: string[]) => [...prev, feature]);
+      setSelectedFeatures((prev) => [...prev, feature]);
     }
   };
   
@@ -267,7 +267,7 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel, i
         features: selectedFeatures,
         provider: selectedProvider,
         price: typeof formData.price === 'string' ? parseFloat(formData.price || '0') : formData.price,
-        originalPrice: formData.originalPrice 
+        originalPrice: formData.originalPrice && formData.originalPrice !== '' 
           ? (typeof formData.originalPrice === 'string' ? parseFloat(formData.originalPrice) : formData.originalPrice) 
           : undefined,
         specs: {
@@ -475,7 +475,7 @@ export default function DealForm({ providers, initialData, onSubmit, onCancel, i
           </div>
         </div>
         
-        {formData.price && formData.originalPrice && parseFloat(formData.price.toString()) < parseFloat(formData.originalPrice.toString()) && (
+        {formData.price && formData.originalPrice && formData.originalPrice !== '' && parseFloat(formData.price.toString()) < parseFloat(formData.originalPrice.toString()) && (
           <div className="mt-3 bg-green-900/30 text-green-400 p-2 rounded text-sm flex items-center">
             <span className="font-medium">
               折扣: {Math.round((1 - parseFloat(formData.price.toString()) / parseFloat(formData.originalPrice.toString())) * 100)}% 优惠
