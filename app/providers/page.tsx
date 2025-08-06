@@ -99,7 +99,7 @@ export default function ProvidersPage() {
               <p className="text-gray-600 mb-4 line-clamp-2">{provider.description}</p>
               
               <div className="mb-4 flex flex-wrap gap-2">
-                {provider.tags.slice(0, 3).map((tag, index) => (
+                {provider.tags?.slice(0, 3).map((tag, index) => (
                   <span key={index} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
                     {tag}
                   </span>
