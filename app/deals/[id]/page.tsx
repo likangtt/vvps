@@ -30,10 +30,16 @@ interface Deal {
   currency?: string
   discount?: string
   location: string
-  cpu: string
-  ram: string
-  storage: string
-  bandwidth: string
+  cpu?: string
+  ram?: string
+  storage?: string
+  bandwidth?: string
+  specs?: {
+    cpu?: string
+    ram?: string
+    storage?: string
+    bandwidth?: string
+  }
   tags: string[]
   features?: string[]
   link?: string
