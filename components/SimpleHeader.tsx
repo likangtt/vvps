@@ -129,6 +129,20 @@ export default function SimpleHeader() {
           </button>
           
           <button
+            onClick={() => handleNavClick('/blog')}
+            className="nav-button"
+          >
+            {t('nav.blog')}
+          </button>
+          
+          <button
+            onClick={() => handleNavClick('/guides/vps-buying-guide')}
+            className="nav-button"
+          >
+            {t('nav.guides')}
+          </button>
+          
+          <button
             onClick={() => handleNavClick('/about')}
             className="nav-button"
           >

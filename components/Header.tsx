@@ -9,7 +9,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <header className="relative bg-red-500 border-b border-dark-700/50">
+    <header className="relative bg-dark-900 border-b border-dark-700/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
@@ -23,36 +23,13 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link 
-              href="/" 
-              className="text-gray-300 hover:text-primary-400 transition-colors font-medium"
-            >
-              首页
-            </Link>
-            <Link 
-              href="/deals" 
-              className="text-gray-300 hover:text-primary-400 transition-colors font-medium"
-            >
-              优惠
-            </Link>
-            <Link 
-              href="/providers" 
-              className="text-gray-300 hover:text-primary-400 transition-colors font-medium"
-            >
-              提供商
-            </Link>
-            <Link 
-              href="/about" 
-              className="text-gray-300 hover:text-primary-400 transition-colors font-medium"
-            >
-              关于
-            </Link>
-            <Link 
-              href="/contact" 
-              className="text-gray-300 hover:text-primary-400 transition-colors font-medium"
-            >
-              联系
-            </Link>
+            <Link href="/" className="nav-button">首页</Link>
+            <Link href="/deals" className="nav-button">优惠</Link>
+            <Link href="/providers" className="nav-button">提供商</Link>
+            <Link href="/blog" className="nav-button">博客</Link>
+            <Link href="/guides/vps-buying-guide" className="nav-button">指南</Link>
+            <Link href="/about" className="nav-button">关于</Link>
+            <Link href="/contact" className="nav-button">联系</Link>
             <Link 
               href="/admin" 
               className="flex items-center space-x-1 text-gray-300 hover:text-primary-400 transition-colors font-medium"
@@ -84,39 +61,25 @@ export default function Header() {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-dark-700/50">
             <nav className="flex flex-col space-y-4">
-              <Link 
-                href="/" 
-                className="text-gray-300 hover:text-primary-400 transition-colors font-medium px-2 py-1"
-                onClick={() => setIsMenuOpen(false)}
-              >
+              <Link href="/" className="nav-button" onClick={() => setIsMenuOpen(false)}>
                 首页
               </Link>
-              <Link 
-                href="/deals" 
-                className="text-gray-300 hover:text-primary-400 transition-colors font-medium px-2 py-1"
-                onClick={() => setIsMenuOpen(false)}
-              >
+              <Link href="/deals" className="nav-button" onClick={() => setIsMenuOpen(false)}>
                 优惠
               </Link>
-              <Link 
-                href="/providers" 
-                className="text-gray-300 hover:text-primary-400 transition-colors font-medium px-2 py-1"
-                onClick={() => setIsMenuOpen(false)}
-              >
+              <Link href="/providers" className="nav-button" onClick={() => setIsMenuOpen(false)}>
                 提供商
               </Link>
-              <Link 
-                href="/about" 
-                className="text-gray-300 hover:text-primary-400 transition-colors font-medium px-2 py-1"
-                onClick={() => setIsMenuOpen(false)}
-              >
+              <Link href="/blog" className="nav-button" onClick={() => setIsMenuOpen(false)}>
+                博客
+              </Link>
+              <Link href="/guides/vps-buying-guide" className="nav-button" onClick={() => setIsMenuOpen(false)}>
+                指南
+              </Link>
+              <Link href="/about" className="nav-button" onClick={() => setIsMenuOpen(false)}>
                 关于
               </Link>
-              <Link 
-                href="/contact" 
-                className="text-gray-300 hover:text-primary-400 transition-colors font-medium px-2 py-1"
-                onClick={() => setIsMenuOpen(false)}
-              >
+              <Link href="/contact" className="nav-button" onClick={() => setIsMenuOpen(false)}>
                 联系
               </Link>
               <Link 

@@ -1,266 +1,371 @@
-'use client';
+'use client'
 
-import React, { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
-import providersData from '@/data/providers.json';
-import dealsData from '@/data/deals.json';
+import { useEffect, useState } from 'react'
+import { notFound } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ArrowRight, Check, ExternalLink, Globe, Server, Shield, Award, Clock } from 'lucide-react'
+import SimpleHeader from '@/components/SimpleHeader'
+import Footer from '@/components/Footer'
+import LoadingSpinner from '@/components/LoadingSpinner'
+import DealCard from '@/components/DealCard'
 
-export default function ProviderDetailPage() {
-  const params = useParams();
-  const router = useRouter();
-  const [provider, setProvider] = useState<any>(null);
-  const [deals, setDeals] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+// 导入JSON数据
+import providersData from '@/data/providers.json'
+import dealsData from '@/data/deals.json'
+
+export default function ProviderPage({ params }: { params: { id: string } }) {
+  const [provider, setProvider] = useState<any>(null)
+  const [relatedDeals, setRelatedDeals] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (params.id) {
-      // 查找提供商数据
-      const foundProvider = providersData.find(p => p.id === params.id);
-      
-      if (foundProvider) {
-        setProvider(foundProvider);
-        
-        // 查找该提供商的所有优惠
-        const providerDeals = dealsData.filter(deal => {
-          if (typeof deal.provider === 'object' && deal.provider !== null) {
-            return deal.provider.id === params.id;
-          }
-          // Deal类型中没有providerId属性，所以我们只检查provider对象
-          return false;
-        });
-        
-        setDeals(providerDeals);
-      }
-      
-      setLoading(false);
+    // 在客户端加载数据
+    const providerData = (providersData as any[]).find(p => p.id === params.id)
+    
+    if (!providerData) {
+      notFound()
     }
-  }, [params.id]);
+    
+    setProvider(providerData)
+    
+    // 获取相关优惠
+    const deals = (dealsData as any[]).filter(
+      deal => typeof deal.provider === 'object' 
+        ? deal.provider.id === params.id 
+        : deal.provider === params.id
+    )
+    
+    setRelatedDeals(deals)
+    setLoading(false)
+  }, [params.id])
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-16 flex justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner />
       </div>
-    );
+    )
   }
 
   if (!provider) {
-    return (
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold mb-4">提供商未找到</h1>
-          <p className="mb-8">抱歉，我们找不到您请求的提供商信息。</p>
-          <Link href="/providers" className="text-blue-500 hover:text-blue-700">
-            返回提供商列表
-          </Link>
-        </div>
-      </div>
-    );
+    return notFound()
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* 返回按钮 */}
-      <div className="mb-6">
-        <button 
-          onClick={() => router.back()}
-          className="flex items-center text-blue-500 hover:text-blue-700"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          返回提供商列表
-        </button>
-      </div>
-      
-      {/* 提供商头部信息 */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-        <div className="flex flex-col md:flex-row items-start md:items-center">
-          <div className="w-24 h-24 bg-gray-100 rounded-md flex items-center justify-center overflow-hidden mr-6 mb-4 md:mb-0">
-            {provider.logo ? (
-              <img 
-                src={provider.logo} 
-                alt={`${provider.name} logo`}
-                className="max-w-full max-h-full object-contain"
-              />
-            ) : (
-              <span className="text-3xl font-bold text-gray-400">{provider.name.charAt(0)}</span>
-            )}
-          </div>
+    <div className="min-h-screen flex flex-col">
+      <SimpleHeader />
+      <main className="flex-grow pt-20">
+        {/* Hero Section */}
+        <section className="relative py-16 px-4">
+          <div className="absolute inset-0 grid-bg opacity-20"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-900/20 via-transparent to-purple-900/20"></div>
           
-          <div className="flex-1">
-            <h1 className="text-3xl font-bold mb-2">{provider.name}</h1>
-            <div className="flex items-center mb-4">
-              <div className="flex items-center mr-4">
-                <span className="text-yellow-500 mr-1">★</span>
-                <span className="font-medium">4.5</span>
-                <span className="text-gray-500 ml-1">/5</span>
+          <div className="relative z-10 max-w-6xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="flex-1">
+                <div className="inline-flex items-center px-4 py-2 bg-primary-500/10 border border-primary-500/20 rounded-full text-primary-400 text-sm font-medium mb-6">
+                  VPS服务商详情
+                </div>
+                
+                <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                  <span className="text-gradient">{provider.name}</span>
+                  <br />
+                  <span className="text-white">云服务器提供商</span>
+                </h1>
+                
+                <p className="text-xl text-gray-400 mb-8 leading-relaxed">
+                  {provider.description || `${provider.name}是一家知名的云服务器提供商，提供高性能、可靠的VPS服务，满足各种应用场景需求。`}
+                </p>
+                
+                <div className="flex flex-wrap gap-3 mb-8">
+                  {provider.tags && provider.tags.map((tag: string, index: number) => (
+                    <span
+                      key={index}
+                      className="bg-dark-700/50 text-gray-300 px-3 py-1.5 rounded text-sm border border-dark-600"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                  <a 
+                    href={provider.website || "#"} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="glow-button flex items-center space-x-2 text-lg px-8 py-4"
+                  >
+                    <span>访问官网</span>
+                    <ExternalLink className="w-5 h-5" />
+                  </a>
+                  
+                  <Link href={`/landing/${provider.id}`} className="px-8 py-4 border border-gray-600 text-gray-300 rounded-lg hover:border-primary-500 hover:text-primary-400 transition-all duration-300 text-lg">
+                    查看优惠码
+                  </Link>
+                </div>
               </div>
-              <div className="text-gray-600">
-                成立于 2010
-              </div>
-            </div>
-            
-            <div className="flex flex-wrap gap-2 mb-4">
-              {provider.tags?.map((tag: string, index: number) => (
-                <span key={index} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
-                  {tag}
-                </span>
-              ))}
-            </div>
-            
-            <a 
-              href={provider.website} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center text-blue-600 hover:text-blue-800"
-            >
-              访问官网
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      
-      {/* 提供商详细信息 */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-        <div className="md:col-span-2">
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 className="text-xl font-semibold mb-4">关于 {provider.name}</h2>
-            <p className="text-gray-700 mb-6 leading-relaxed">
-              {provider.description}
-            </p>
-            
-            <h3 className="text-lg font-medium mb-3">主要特点</h3>
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
-              {provider.features?.map((feature: string, index: number) => (
-                <li key={index} className="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          {/* 优惠列表 */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold mb-4">{provider.name} 的优惠</h2>
-            
-            {deals.length > 0 ? (
-              <div className="space-y-4">
-                {deals.map((deal) => (
-                  <div key={deal.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                    <h3 className="font-medium text-lg mb-2">{deal.title}</h3>
-                    <div className="flex items-center mb-2">
-                      <span className="text-green-600 font-bold text-lg">${deal.price}/月</span>
-                      {deal.originalPrice && (
-                        <span className="text-gray-500 line-through ml-2">${deal.originalPrice}</span>
-                      )}
-                      {deal.originalPrice && (
-                        <span className="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full ml-2">
-                          省 {Math.round((1 - parseFloat(deal.price) / parseFloat(deal.originalPrice)) * 100)}%
-                        </span>
-                      )}
+              
+              <div className="flex-1 flex justify-center">
+                <div className="cyber-card p-8 w-full max-w-md">
+                  {provider.logo ? (
+                    <div className="w-full h-32 relative mb-6">
+                      <Image 
+                        src={provider.logo} 
+                        alt={`${provider.name} Logo`} 
+                        fill
+                        className="object-contain"
+                      />
                     </div>
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">{deal.description}</p>
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm text-gray-500">
-                        {deal.location}
+                  ) : (
+                    <div className="w-full h-32 bg-dark-700 rounded-lg mb-6 flex items-center justify-center">
+                      <Server className="w-16 h-16 text-gray-600" />
+                    </div>
+                  )}
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <Globe className="w-5 h-5 text-primary-500" />
+                      <div>
+                        <p className="text-sm text-gray-400">官方网站</p>
+                        <p className="text-gray-300">{provider.website || '未提供'}</p>
                       </div>
-                      <Link 
-                        href={`/deals/${deal.id}`}
-                        className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-                      >
-                        查看详情
-                      </Link>
+                    </div>
+                    
+                    <div className="flex items-center gap-3">
+                      <Server className="w-5 h-5 text-primary-500" />
+                      <div>
+                        <p className="text-sm text-gray-400">数据中心</p>
+                        <p className="text-gray-300">{provider.locations?.join(', ') || '全球多个数据中心'}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3">
+                      <Shield className="w-5 h-5 text-primary-500" />
+                      <div>
+                        <p className="text-sm text-gray-400">安全认证</p>
+                        <p className="text-gray-300">{provider.certifications?.join(', ') || 'ISO 27001, GDPR合规'}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3">
+                      <Clock className="w-5 h-5 text-primary-500" />
+                      <div>
+                        <p className="text-sm text-gray-400">成立时间</p>
+                        <p className="text-gray-300">{provider.foundedYear || '未提供'}</p>
+                      </div>
                     </div>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-8 text-gray-500">
-                暂无该提供商的优惠信息
-              </div>
-            )}
-          </div>
-        </div>
-        
-        {/* 侧边栏信息 */}
-        <div className="space-y-6">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-lg font-semibold mb-4">提供商信息</h2>
-            
-            <div className="space-y-3">
-              <div>
-                <div className="text-gray-500 text-sm">位置</div>
-                <div>全球</div>
-              </div>
-              
-              <div>
-                <div className="text-gray-500 text-sm">成立时间</div>
-                <div>2010</div>
-              </div>
-              
-              <div>
-                <div className="text-gray-500 text-sm">优惠数量</div>
-                <div>{deals.length}</div>
-              </div>
-              
-              <div>
-                <div className="text-gray-500 text-sm">用户评分</div>
-                <div className="flex items-center">
-                  <div className="flex">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <svg 
-                        key={star}
-                        xmlns="http://www.w3.org/2000/svg" 
-                        className={`h-5 w-5 ${star <= Math.round(4.5) ? 'text-yellow-400' : 'text-gray-300'}`}
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <span className="ml-2 text-gray-700">4.5/5</span>
                 </div>
               </div>
             </div>
           </div>
-          
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-lg font-semibold mb-4">为什么选择 {provider.name}?</h2>
-            <ul className="space-y-2">
-              {provider.features?.slice(0, 5).map((feature: string, index: number) => (
-                <li key={index} className="flex items-start">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-500 mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>{feature}</span>
-                </li>
+        </section>
+        
+        {/* Features Section */}
+        <section className="py-16 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gradient mb-4">
+                {provider.name}的优势
+              </h2>
+              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                了解为什么{provider.name}是您云服务器需求的理想选择
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {(provider.features || [
+                {
+                  title: "高性能基础设施",
+                  description: "采用最新的硬件技术和网络架构，提供卓越的性能和稳定性",
+                  icon: "server"
+                },
+                {
+                  title: "全球数据中心",
+                  description: "战略性布局的全球数据中心网络，确保低延迟和高可用性",
+                  icon: "globe"
+                },
+                {
+                  title: "安全保障",
+                  description: "提供DDoS防护、防火墙和其他安全措施，保护您的数据和应用",
+                  icon: "shield"
+                }
+              ]).map((feature: any, index: number) => (
+                <div key={index} className="cyber-card p-6">
+                  <div className="w-12 h-12 bg-primary-500/20 rounded-lg flex items-center justify-center mb-4">
+                    {feature.icon === "server" && <Server className="w-6 h-6 text-primary-500" />}
+                    {feature.icon === "globe" && <Globe className="w-6 h-6 text-primary-500" />}
+                    {feature.icon === "shield" && <Shield className="w-6 h-6 text-primary-500" />}
+                    {feature.icon === "award" && <Award className="w-6 h-6 text-primary-500" />}
+                    {!feature.icon && <Check className="w-6 h-6 text-primary-500" />}
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
+                  <p className="text-gray-400">
+                    {feature.description}
+                  </p>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
-          
-          <div className="bg-blue-50 rounded-lg p-6 border border-blue-100">
-            <h2 className="text-lg font-semibold mb-2 text-blue-800">寻找最佳优惠?</h2>
-            <p className="text-blue-700 mb-4">
-              我们为您收集了{provider.name}的最新优惠和折扣码。
+        </section>
+        
+        {/* SEO Content Section */}
+        <section className="py-16 px-4 bg-dark-800">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gradient mb-4">
+                关于{provider.name}
+              </h2>
+              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                深入了解{provider.name}的服务和技术优势
+              </p>
+            </div>
+            
+            <div className="cyber-card p-8">
+              <div className="prose prose-invert max-w-none">
+                <p>
+                  {provider.name}是一家领先的云服务提供商，专注于提供高性能、可靠的虚拟专用服务器(VPS)解决方案。
+                  无论您是个人开发者、中小企业还是大型组织，{provider.name}都能为您提供满足需求的云计算资源。
+                </p>
+                
+                <h3>技术基础设施</h3>
+                <p>
+                  {provider.name}采用最先进的硬件设备和网络架构，包括高性能的Intel/AMD处理器、NVMe SSD存储和
+                  高带宽网络连接。这确保了您的应用程序能够获得卓越的性能和稳定性。
+                </p>
+                
+                <h3>全球覆盖</h3>
+                <p>
+                  通过战略性布局的全球数据中心网络，{provider.name}能够为全球用户提供低延迟的服务。
+                  无论您的目标用户在哪里，都能找到最接近他们的数据中心，优化访问速度和用户体验。
+                </p>
+                
+                <h3>安全与合规</h3>
+                <p>
+                  {provider.name}高度重视安全性，提供多层次的安全保障，包括DDoS防护、网络防火墙、
+                  数据加密和定期安全审计。同时，{provider.name}遵循严格的行业标准和合规要求，
+                  确保您的数据和应用程序得到全面保护。
+                </p>
+                
+                <h3>灵活的方案</h3>
+                <p>
+                  {provider.name}提供多种配置选项，从入门级到高性能企业级解决方案，满足不同规模和需求的客户。
+                  您可以根据实际需求选择适合的CPU、内存、存储和带宽配置，并且可以随时升级。
+                </p>
+                
+                <h3>客户支持</h3>
+                <p>
+                  {provider.name}提供专业的技术支持服务，帮助客户解决在使用过程中遇到的问题。
+                  无论是技术咨询、故障排除还是优化建议，{provider.name}的支持团队都能提供及时、专业的帮助。
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Related Deals Section */}
+        <section className="py-16 px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gradient mb-4">
+                {provider.name}最新优惠
+              </h2>
+              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                发现{provider.name}当前提供的最具性价比的VPS方案
+              </p>
+            </div>
+            
+            {relatedDeals.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {relatedDeals.map((deal: any) => (
+                  <DealCard key={deal.id} deal={deal} />
+                ))}
+              </div>
+            ) : (
+              <div className="cyber-card p-8 text-center">
+                <p className="text-gray-400 text-lg">
+                  目前没有{provider.name}的优惠信息，请稍后再查看。
+                </p>
+                <Link href="/deals" className="inline-block mt-4 px-6 py-3 bg-primary-500/20 text-primary-400 rounded-lg hover:bg-primary-500/30 transition-colors">
+                  查看所有优惠
+                </Link>
+              </div>
+            )}
+          </div>
+        </section>
+        
+        {/* FAQ Section */}
+        <section className="py-16 px-4 bg-dark-800">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gradient mb-4">
+                常见问题
+              </h2>
+              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                关于{provider.name}的常见问题解答
+              </p>
+            </div>
+            
+            <div className="space-y-6">
+              {(provider.faqs || [
+                {
+                  question: `${provider.name}的服务器位于哪些地区？`,
+                  answer: `${provider.name}在全球多个战略位置设有数据中心，包括北美、欧洲、亚洲和大洋洲等地区。您可以根据目标用户的地理位置选择最合适的数据中心。`
+                },
+                {
+                  question: `${provider.name}提供哪些类型的VPS？`,
+                  answer: `${provider.name}提供多种类型的VPS，包括标准型、高性能型、存储优化型和计算优化型等。每种类型都针对不同的应用场景进行了优化。`
+                },
+                {
+                  question: `如何获取${provider.name}的优惠码？`,
+                  answer: `您可以通过我们网站上的专属优惠页面获取${provider.name}的最新优惠码。这些优惠码通常可以为您节省10%-30%的费用。`
+                },
+                {
+                  question: `${provider.name}是否提供退款保证？`,
+                  answer: `是的，${provider.name}通常提供30天的退款保证。如果您对服务不满意，可以在购买后的30天内申请退款。`
+                }
+              ]).map((faq: any, index: number) => (
+                <div key={index} className="cyber-card p-6">
+                  <h3 className="text-xl font-bold text-white mb-3">{faq.question}</h3>
+                  <p className="text-gray-400">
+                    {faq.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        
+        {/* CTA Section */}
+        <section className="py-16 px-4 bg-gradient-to-br from-primary-900/30 via-dark-800 to-purple-900/30">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              开始使用{provider.name}云服务器
+            </h2>
+            <p className="text-xl text-gray-400 mb-8">
+              立即注册并享受我们提供的专属优惠
             </p>
-            <Link 
-              href={`/deals?provider=${provider.id}`}
-              className="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded-md transition-colors"
-            >
-              查看所有优惠
-            </Link>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href={provider.website || "#"} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="glow-button flex items-center justify-center space-x-2 text-lg px-8 py-4"
+              >
+                <span>访问官网</span>
+                <ExternalLink className="w-5 h-5" />
+              </a>
+              
+              <Link href={`/landing/${provider.id}`} className="px-8 py-4 border border-gray-600 text-gray-300 rounded-lg hover:border-primary-500 hover:text-primary-400 transition-all duration-300 text-lg">
+                查看优惠码
+              </Link>
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
+      <Footer />
     </div>
-  );
+  )
 }

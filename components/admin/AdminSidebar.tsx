@@ -46,6 +46,12 @@ export default function AdminSidebar() {
       active: pathname === '/admin/providers'
     },
     {
+      name: '博客管理',
+      href: '/admin/blog',
+      icon: FileText,
+      active: pathname.startsWith('/admin/blog')
+    },
+    {
       name: '数据统计',
       href: '/admin/stats',
       icon: BarChart3,
