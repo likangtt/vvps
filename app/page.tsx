@@ -1,35 +1,27 @@
 'use client'
 
-import { Suspense } from 'react'
-import SimpleHeader from '@/components/SimpleHeader'
-import Hero from '@/components/Hero'
-import DealsGrid from '@/components/DealsGrid'
-import LoadingSpinner from '@/components/LoadingSpinner'
-import Footer from '@/components/Footer'
-
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <SimpleHeader />
-      <main className="flex-grow pt-20">
-        <Hero />
-        <section className="py-16 px-4">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-gradient mb-4">
-                热门VPS优惠
-              </h2>
-              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                精选全球优质VPS服务商，为您提供最具性价比的云服务器方案
-              </p>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white p-4">
+      <h1 className="text-4xl font-bold mb-4">VPS优惠信息</h1>
+      <p className="text-xl mb-8">精选全球优质VPS服务商，为您提供最具性价比的云服务器方案</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl">
+        {[1, 2, 3, 4, 5, 6].map((item) => (
+          <div key={item} className="border border-gray-700 rounded-lg p-6 hover:border-blue-500 transition-colors">
+            <h2 className="text-xl font-bold mb-2">VPS优惠 #{item}</h2>
+            <p className="text-gray-400 mb-4">示例VPS优惠信息</p>
+            <div className="flex justify-between items-center">
+              <span className="text-blue-400 font-bold">$5.99/月</span>
+              <a 
+                href="#" 
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+              >
+                查看详情
+              </a>
             </div>
-            <Suspense fallback={<LoadingSpinner />}>
-              <DealsGrid />
-            </Suspense>
           </div>
-        </section>
-      </main>
-      <Footer />
+        ))}
+      </div>
     </div>
   )
 }
