@@ -52,6 +52,14 @@ interface DealCardProps {
 
 export default function DealCard({ deal }: DealCardProps) {
   const [showDetails, setShowDetails] = useState(false)
+  
+  // 调试信息
+  console.log('Deal信息:', {
+    id: deal.id,
+    title: deal.title,
+    link: deal.link,
+    affiliateLink: deal.affiliateLink
+  });
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -153,10 +161,18 @@ export default function DealCard({ deal }: DealCardProps) {
         </button>
         
         <a
-          href={deal.link || deal.affiliateLink}
+          href={deal.link || deal.affiliateLink || '#'}
           target="_blank"
           rel="noopener noreferrer"
           className="glow-button w-full flex items-center justify-center gap-2 text-sm"
+          onClick={(e) => {
+            if (!deal.link && !deal.affiliateLink) {
+              e.preventDefault();
+              alert('抱歉，该产品暂无购买链接');
+            } else {
+              console.log('跳转到:', deal.link || deal.affiliateLink);
+            }
+          }}
         >
           <span>立即购买</span>
           <ExternalLink className="w-4 h-4" />
@@ -193,10 +209,18 @@ export default function DealCard({ deal }: DealCardProps) {
               
               <div className="mt-4">
                 <a
-                  href={deal.link || deal.affiliateLink}
+                  href={deal.link || deal.affiliateLink || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="glow-button w-full flex items-center justify-center gap-2"
+                  onClick={(e) => {
+                    if (!deal.link && !deal.affiliateLink) {
+                      e.preventDefault();
+                      alert('抱歉，该产品暂无购买链接');
+                    } else {
+                      console.log('跳转到:', deal.link || deal.affiliateLink);
+                    }
+                  }}
                 >
                   <span>立即购买</span>
                   <ExternalLink className="w-4 h-4" />

@@ -1,9 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { Menu, X, Globe, Zap } from 'lucide-react'
 import { languages, getTranslation } from '../lib/i18n'
 
 export default function SimpleHeader() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [currentLanguage, setCurrentLanguage] = useState('zh-CN')
 
   // 从浏览器语言和localStorage加载语言设置
@@ -16,7 +19,6 @@ export default function SimpleHeader() {
     } else {
       // 如果没有保存的语言设置，则检测浏览器语言
       const browserLang = navigator.language || (navigator as any).userLanguage
-      console.log('检测到浏览器语言:', browserLang)
       
       // 匹配支持的语言
       if (browserLang.startsWith('zh')) {
@@ -56,124 +58,100 @@ export default function SimpleHeader() {
   // 翻译函数
   const t = (key: string) => getTranslation(key, currentLanguage)
 
-  // 多重导航方法
-  const handleNavClick = (url: string) => {
-    console.log('多语言导航点击:', url, '当前语言:', currentLanguage)
-    
-    try {
-      // 方法1: 直接设置location.href
-      window.location.href = url
-    } catch (error) {
-      console.log('方法1失败，尝试方法2:', error)
-      try {
-        // 方法2: 使用location.assign
-        window.location.assign(url)
-      } catch (error2) {
-        console.log('方法2失败，尝试方法3:', error2)
-        // 方法3: 使用history API
-        window.history.pushState({}, '', url)
-        window.location.reload()
-      }
-    }
-  }
-
   return (
-    <header style={{
-      position: 'fixed' as const,
-      top: 0,
-      left: 0,
-      right: 0,
-      zIndex: 999999,
-      backgroundColor: 'rgba(17, 24, 39, 0.8)',
-      backdropFilter: 'blur(8px)',
-      borderBottom: '1px solid #374151',
-      padding: '1rem 2rem'
-    }}>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        maxWidth: '1200px',
-        margin: '0 auto'
-      }}>
-        {/* Logo */}
-        <div style={{
-          fontSize: '1.5rem',
-          fontWeight: 'bold',
-          color: '#60a5fa !important'
-        }}>
-          ⚡ 特价VPS
-        </div>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-dark-900/80 backdrop-blur-sm border-b border-dark-700/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-2">
+            <span className="text-yellow-400 text-2xl">⚡</span>
+            <div>
+              <span className="text-blue-400 font-bold text-xl">特价</span>
+              <span className="text-blue-500 font-bold text-xl">VPS</span>
+            </div>
+          </Link>
 
-        {/* Navigation */}
-        <nav style={{ display: 'flex', gap: '2rem' }}>
-          <button
-            onClick={() => handleNavClick('/')}
-            className="nav-button"
-          >
-            {t('nav.home')}
-          </button>
-          
-          <button
-            onClick={() => handleNavClick('/deals')}
-            className="nav-button"
-          >
-            {t('nav.deals')}
-          </button>
-          
-          <button
-            onClick={() => handleNavClick('/providers')}
-            className="nav-button"
-          >
-            {t('nav.providers')}
-          </button>
-          
-          <button
-            onClick={() => handleNavClick('/blog')}
-            className="nav-button"
-          >
-            {t('nav.blog')}
-          </button>
-          
-          <button
-            onClick={() => handleNavClick('/guides/vps-buying-guide')}
-            className="nav-button"
-          >
-            {t('nav.guides')}
-          </button>
-          
-          <button
-            onClick={() => handleNavClick('/about')}
-            className="nav-button"
-          >
-            {t('nav.about')}
-          </button>
-          
-          <button
-            onClick={() => handleNavClick('/contact')}
-            className="nav-button"
-          >
-            {t('nav.contact')}
-          </button>
-        </nav>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-6">
+            <Link href="/" className="text-gray-300 hover:text-white transition-colors">
+              {t('nav.home')}
+            </Link>
+            <Link href="/deals" className="text-gray-300 hover:text-white transition-colors">
+              {t('nav.deals')}
+            </Link>
+            <Link href="/providers" className="text-gray-300 hover:text-white transition-colors">
+              {t('nav.providers')}
+            </Link>
+            <Link href="/blog" className="text-gray-300 hover:text-white transition-colors">
+              {t('nav.blog')}
+            </Link>
+          </nav>
 
-        {/* Right side buttons */}
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          {/* Desktop Right Side */}
+          <div className="hidden md:flex items-center space-x-4">
+            <button 
+              onClick={switchLanguage}
+              className="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors"
+            >
+              <Globe className="h-4 w-4" />
+              <span>{languages[currentLanguage as keyof typeof languages]}</span>
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
           <button
-            onClick={switchLanguage}
-            className="lang-button"
+            className="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-dark-800 transition-colors"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            🌐 {languages[currentLanguage as keyof typeof languages]}
-          </button>
-          
-          <button
-            onClick={() => alert('获取优惠功能')}
-            className="deals-button"
-          >
-            🛡️ {t('nav.getDeals')}
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
+
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <div className="md:hidden py-4 border-t border-dark-700/50">
+          <nav className="grid grid-cols-1 gap-2 px-4">
+            <Link 
+              href="/" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-800"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {t('nav.home')}
+            </Link>
+            <Link 
+              href="/deals" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-800"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {t('nav.deals')}
+            </Link>
+            <Link 
+              href="/providers" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-800"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {t('nav.providers')}
+            </Link>
+            <Link 
+              href="/blog" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-800"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {t('nav.blog')}
+            </Link>
+            <div className="px-3 py-2">
+              <button 
+                onClick={switchLanguage}
+                className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors"
+              >
+                <Globe className="h-4 w-4" />
+                <span>{languages[currentLanguage as keyof typeof languages]}</span>
+              </button>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   )
 }

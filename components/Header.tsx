@@ -24,28 +24,17 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link href="/" className="nav-button">首页</Link>
-            <Link href="/deals" className="nav-button">优惠</Link>
+            <Link href="/deals" className="nav-button">特价VPS</Link>
             <Link href="/providers" className="nav-button">提供商</Link>
             <Link href="/blog" className="nav-button">博客</Link>
-            <Link href="/guides/vps-buying-guide" className="nav-button">指南</Link>
-            <Link href="/about" className="nav-button">关于</Link>
-            <Link href="/contact" className="nav-button">联系</Link>
-            <Link 
-              href="/admin" 
-              className="flex items-center space-x-1 text-gray-300 hover:text-primary-400 transition-colors font-medium"
-            >
-              <Settings className="h-4 w-4" />
-              <span>管理</span>
-            </Link>
           </nav>
 
           {/* Right side actions */}
           <div className="hidden md:flex items-center space-x-4">
             <LanguageSwitcher />
-            <button className="glow-button flex items-center space-x-2">
-              <Shield className="h-4 w-4" />
-              <span>获取优惠</span>
-            </button>
+            <Link href="/admin" className="text-gray-400 hover:text-primary-400 transition-colors">
+              <Settings className="h-5 w-5" />
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -60,50 +49,49 @@ export default function Header() {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-dark-700/50">
-            <nav className="flex flex-col space-y-4">
-              <Link href="/" className="nav-button" onClick={() => setIsMenuOpen(false)}>
-                首页
-              </Link>
-              <Link href="/deals" className="nav-button" onClick={() => setIsMenuOpen(false)}>
-                优惠
-              </Link>
-              <Link href="/providers" className="nav-button" onClick={() => setIsMenuOpen(false)}>
-                提供商
-              </Link>
-              <Link href="/blog" className="nav-button" onClick={() => setIsMenuOpen(false)}>
-                博客
-              </Link>
-              <Link href="/guides/vps-buying-guide" className="nav-button" onClick={() => setIsMenuOpen(false)}>
-                指南
-              </Link>
-              <Link href="/about" className="nav-button" onClick={() => setIsMenuOpen(false)}>
-                关于
-              </Link>
-              <Link href="/contact" className="nav-button" onClick={() => setIsMenuOpen(false)}>
-                联系
-              </Link>
+            <nav className="grid grid-cols-1 gap-2">
               <Link 
-                href="/admin" 
-                className="flex items-center space-x-1 text-gray-300 hover:text-primary-400 transition-colors font-medium px-2 py-1"
+                href="/" 
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-800"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <Settings className="h-4 w-4" />
-                <span>管理</span>
+                首页
               </Link>
-              <div className="px-2 py-1">
+              <Link 
+                href="/deals" 
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-800"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                特价VPS
+              </Link>
+              <Link 
+                href="/providers" 
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-800"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                提供商
+              </Link>
+              <Link 
+                href="/blog" 
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-800"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                博客
+              </Link>
+              <div className="px-3 py-2">
                 <LanguageSwitcher />
               </div>
-              <button className="glow-button flex items-center justify-center space-x-2 mt-4">
-                <Shield className="h-4 w-4" />
-                <span>获取优惠</span>
-              </button>
+              <Link 
+                href="/admin" 
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-800"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                管理后台
+              </Link>
             </nav>
           </div>
         )}
       </div>
-
-      {/* Animated background effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary-600/5 via-transparent to-purple-600/5 opacity-50"></div>
     </header>
   )
 }
