@@ -15,7 +15,6 @@ SETUP.md
 # 构建缓存
 .next/
 node_modules/
-.vercel/
 
 # 日志文件
 *.log
