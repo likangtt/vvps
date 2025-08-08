@@ -190,7 +190,7 @@
     },
     "provider": {
       "id": "bandwagonhost",
-      "name": "BandwagonHost 搬瓦工",
+      "name": "BandwagonHost",
       "logo": "https://www.bwh88.net/templates/organicbandwagon/images/logo.png"
     },
     "tags": ["CN2 Route", "Alipay Support", "VPN Friendly"],

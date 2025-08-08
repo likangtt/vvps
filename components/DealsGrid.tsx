@@ -246,7 +246,7 @@ export default function DealsGrid() {
               onClick={() => {
                 setSearchQuery('')
                 setSearchFilters([])
-                setActiveFilter('全部')
+              setActiveFilter('All')
               }}
               className="text-primary-400 hover:text-primary-300 underline"
             >
