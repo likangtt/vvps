@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { languages, getTranslation } from '../lib/i18n'
 
 export default function SimpleHeader() {
-  const [currentLanguage, setCurrentLanguage] = useState('zh-CN')
+  const [currentLanguage, setCurrentLanguage] = useState('en')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [showLanguageMenu, setShowLanguageMenu] = useState(false)
@@ -37,21 +37,8 @@ export default function SimpleHeader() {
       const browserLang = navigator.language || (navigator as any).userLanguage
       console.log('检测到浏览器语言:', browserLang)
       
-      // 匹配支持的语言
-      if (browserLang.startsWith('zh')) {
-        setCurrentLanguage('zh-CN')
-      } else if (browserLang.startsWith('ja')) {
-        setCurrentLanguage('ja')
-      } else if (browserLang.startsWith('hi')) {
-        setCurrentLanguage('hi')
-      } else if (browserLang.startsWith('pt')) {
-        setCurrentLanguage('pt')
-      } else if (browserLang.startsWith('es')) {
-        setCurrentLanguage('es')
-      } else {
-        // 默认使用英语
-        setCurrentLanguage('en')
-      }
+      // 默认使用英语，不再根据浏览器语言自动选择
+      setCurrentLanguage('en')
       
       // 保存检测到的语言
       localStorage.setItem('language', currentLanguage)
@@ -141,7 +128,7 @@ export default function SimpleHeader() {
           fontWeight: 'bold',
           color: '#60a5fa !important'
         }}>
-          ⚡ 特价VPS
+          ⚡ VPS Deals
         </div>
 
         {/* 移动端汉堡菜单按钮 */}
