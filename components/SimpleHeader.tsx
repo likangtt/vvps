@@ -5,6 +5,24 @@ import { languages, getTranslation } from '../lib/i18n'
 
 export default function SimpleHeader() {
   const [currentLanguage, setCurrentLanguage] = useState('zh-CN')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // 检测屏幕尺寸
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    // 初始检查
+    checkIfMobile()
+    
+    // 监听窗口大小变化
+    window.addEventListener('resize', checkIfMobile)
+    
+    // 清理监听器
+    return () => window.removeEventListener('resize', checkIfMobile)
+  }, [])
 
   // 从浏览器语言和localStorage加载语言设置
   useEffect(() => {
@@ -60,6 +78,11 @@ export default function SimpleHeader() {
   const handleNavClick = (url: string) => {
     console.log('多语言导航点击:', url, '当前语言:', currentLanguage)
     
+    // 如果是移动端，点击后关闭菜单
+    if (isMobile) {
+      setMobileMenuOpen(false)
+    }
+    
     try {
       // 方法1: 直接设置location.href
       window.location.href = url
@@ -77,6 +100,20 @@ export default function SimpleHeader() {
     }
   }
 
+  // 汉堡菜单图标
+  const HamburgerIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 6H20M4 12H20M4 18H20" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+
+  // 关闭图标
+  const CloseIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 6L6 18M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+
   return (
     <header style={{
       position: 'fixed' as const,
@@ -87,7 +124,7 @@ export default function SimpleHeader() {
       backgroundColor: 'rgba(17, 24, 39, 0.8)',
       backdropFilter: 'blur(8px)',
       borderBottom: '1px solid #374151',
-      padding: '1rem 2rem'
+      padding: isMobile ? '0.75rem 1rem' : '1rem 2rem'
     }}>
       <div style={{
         display: 'flex',
@@ -98,18 +135,103 @@ export default function SimpleHeader() {
       }}>
         {/* Logo */}
         <div style={{
-          fontSize: '1.5rem',
+          fontSize: isMobile ? '1.25rem' : '1.5rem',
           fontWeight: 'bold',
           color: '#60a5fa !important'
         }}>
           ⚡ 特价VPS
         </div>
 
-        {/* Navigation */}
-        <nav style={{ display: 'flex', gap: '2rem' }}>
+        {/* 移动端汉堡菜单按钮 */}
+        {isMobile && (
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '0.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            {mobileMenuOpen ? <CloseIcon /> : <HamburgerIcon />}
+          </button>
+        )}
+
+        {/* 桌面端导航 */}
+        {!isMobile && (
+          <>
+            <nav style={{ display: 'flex', gap: '2rem' }}>
+              <button
+                onClick={() => handleNavClick('/')}
+                className="nav-button"
+              >
+                {t('nav.home')}
+              </button>
+              
+              <button
+                onClick={() => handleNavClick('/deals')}
+                className="nav-button"
+              >
+                {t('nav.deals')}
+              </button>
+              
+              <button
+                onClick={() => handleNavClick('/providers')}
+                className="nav-button"
+              >
+                {t('nav.providers')}
+              </button>
+              
+              <button
+                onClick={() => handleNavClick('/about')}
+                className="nav-button"
+              >
+                {t('nav.about')}
+              </button>
+            </nav>
+
+            {/* 右侧按钮 */}
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+              <button
+                onClick={switchLanguage}
+                className="lang-button"
+              >
+                🌐 {languages[currentLanguage as keyof typeof languages]}
+              </button>
+              
+              <button
+                onClick={() => alert('获取优惠功能')}
+                className="deals-button"
+              >
+                🛡️ {t('nav.getDeals')}
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* 移动端菜单 */}
+      {isMobile && mobileMenuOpen && (
+        <div style={{
+          position: 'absolute',
+          top: '100%',
+          left: 0,
+          right: 0,
+          backgroundColor: 'rgba(17, 24, 39, 0.95)',
+          backdropFilter: 'blur(8px)',
+          borderBottom: '1px solid #374151',
+          padding: '1rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.75rem'
+        }}>
           <button
             onClick={() => handleNavClick('/')}
             className="nav-button"
+            style={{ textAlign: 'left', width: '100%', padding: '0.75rem 1rem' }}
           >
             {t('nav.home')}
           </button>
@@ -117,6 +239,7 @@ export default function SimpleHeader() {
           <button
             onClick={() => handleNavClick('/deals')}
             className="nav-button"
+            style={{ textAlign: 'left', width: '100%', padding: '0.75rem 1rem' }}
           >
             {t('nav.deals')}
           </button>
@@ -124,6 +247,7 @@ export default function SimpleHeader() {
           <button
             onClick={() => handleNavClick('/providers')}
             className="nav-button"
+            style={{ textAlign: 'left', width: '100%', padding: '0.75rem 1rem' }}
           >
             {t('nav.providers')}
           </button>
@@ -131,35 +255,35 @@ export default function SimpleHeader() {
           <button
             onClick={() => handleNavClick('/about')}
             className="nav-button"
+            style={{ textAlign: 'left', width: '100%', padding: '0.75rem 1rem' }}
           >
             {t('nav.about')}
           </button>
-          
-          <button
-            onClick={() => handleNavClick('/contact')}
-            className="nav-button"
-          >
-            {t('nav.contact')}
-          </button>
-        </nav>
 
-        {/* Right side buttons */}
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          <button
-            onClick={switchLanguage}
-            className="lang-button"
-          >
-            🌐 {languages[currentLanguage as keyof typeof languages]}
-          </button>
-          
-          <button
-            onClick={() => alert('获取优惠功能')}
-            className="deals-button"
-          >
-            🛡️ {t('nav.getDeals')}
-          </button>
+          <div style={{ 
+            display: 'flex', 
+            gap: '0.5rem', 
+            marginTop: '0.5rem',
+            flexDirection: 'column'
+          }}>
+            <button
+              onClick={switchLanguage}
+              className="lang-button"
+              style={{ width: '100%', justifyContent: 'center', display: 'flex' }}
+            >
+              🌐 {languages[currentLanguage as keyof typeof languages]}
+            </button>
+            
+            <button
+              onClick={() => alert('获取优惠功能')}
+              className="deals-button"
+              style={{ width: '100%', justifyContent: 'center', display: 'flex' }}
+            >
+              🛡️ {t('nav.getDeals')}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </header>
   )
 }
