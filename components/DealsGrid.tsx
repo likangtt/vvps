@@ -71,7 +71,7 @@ export default function DealsGrid() {
             ram: specs.ram || '',
             storage: specs.storage || '',
             bandwidth: specs.bandwidth || '',
-            link: deal.affiliateLink || '',  // 将affiliateLink映射到link
+            link: deal.link || deal.affiliateLink || '',  // 保留原始link，如果没有则使用affiliateLink
             features: deal.features || []
           };
         }) : [];

@@ -152,15 +152,7 @@ export default function DealCard({ deal }: DealCardProps) {
           {showDetails ? '收起详情' : '查看详情'}
         </button>
         
-        <a
-          href={deal.link || deal.affiliateLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="glow-button w-full flex items-center justify-center gap-2 text-sm"
-        >
-          <span>立即购买</span>
-          <ExternalLink className="w-4 h-4" />
-        </a>
+        {/* 立即购买按钮已被移除 */}
       </div>
 
       {/* Details Modal/Expandable */}
@@ -191,17 +183,7 @@ export default function DealCard({ deal }: DealCardProps) {
                 </div>
               </div>
               
-              <div className="mt-4">
-                <a
-                  href={deal.link || deal.affiliateLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="glow-button w-full flex items-center justify-center gap-2"
-                >
-                  <span>立即购买</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              </div>
+              {/* 立即购买按钮已被移除 */}
             </div>
           </div>
         </div>

@@ -34,11 +34,6 @@ export default function Hero() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-          <a href="#deals" className="glow-button flex items-center space-x-2 text-lg px-8 py-4">
-            <span>查看优惠</span>
-            <ArrowRight className="w-5 h-5" />
-          </a>
-          
           <a href="/about" className="px-8 py-4 border border-gray-600 text-gray-300 rounded-lg hover:border-primary-500 hover:text-primary-400 transition-all duration-300 text-lg">
             了解更多
           </a>
