@@ -18,24 +18,24 @@ export default function Hero() {
         <div className="mb-8">
           <div className="inline-flex items-center px-4 py-2 bg-primary-500/10 border border-primary-500/20 rounded-full text-primary-400 text-sm font-medium mb-6">
             <Zap className="w-4 h-4 mr-2" />
-            发现最优质的VPS优惠
+            Discover the Best VPS Deals
           </div>
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
-            <span className="text-gradient">全球最佳</span>
+            <span className="text-gradient">World's Best</span>
             <br />
-            <span className="text-white">VPS优惠</span>
+            <span className="text-white">VPS Deals</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-            汇聚全球最新VPS服务器优惠信息，帮您找到性价比最高的云服务器方案
+            Aggregating the latest VPS server deals worldwide to help you find the most cost-effective cloud server solutions
           </p>
         </div>
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
           <a href="/about" className="px-8 py-4 border border-gray-600 text-gray-300 rounded-lg hover:border-primary-500 hover:text-primary-400 transition-all duration-300 text-lg">
-            了解更多
+            Learn More
           </a>
         </div>
 
@@ -46,7 +46,7 @@ export default function Hero() {
               <Globe className="w-8 h-8 text-primary-500" />
             </div>
             <div className="text-3xl font-bold text-white mb-2">21+</div>
-            <div className="text-gray-400">优质提供商</div>
+            <div className="text-gray-400">Quality Providers</div>
           </div>
           
           <div className="cyber-card p-6 text-center">
@@ -54,7 +54,7 @@ export default function Hero() {
               <TrendingUp className="w-8 h-8 text-primary-500" />
             </div>
             <div className="text-3xl font-bold text-white mb-2">99%</div>
-            <div className="text-gray-400">用户满意度</div>
+            <div className="text-gray-400">User Satisfaction</div>
           </div>
           
           <div className="cyber-card p-6 text-center">
@@ -62,7 +62,7 @@ export default function Hero() {
               <Shield className="w-8 h-8 text-primary-500" />
             </div>
             <div className="text-3xl font-bold text-white mb-2">24/7</div>
-            <div className="text-gray-400">实时更新</div>
+            <div className="text-gray-400">Real-time Updates</div>
           </div>
         </div>
       </div>

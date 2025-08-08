@@ -49,7 +49,7 @@ interface Deal {
 export default function DealsGrid() {
   const [deals, setDeals] = useState<Deal[]>([])
   const [filteredDeals, setFilteredDeals] = useState<Deal[]>([])
-  const [activeFilter, setActiveFilter] = useState('全部')
+  const [activeFilter, setActiveFilter] = useState('All')
   const [searchQuery, setSearchQuery] = useState('')
   const [searchFilters, setSearchFilters] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
@@ -79,28 +79,28 @@ export default function DealsGrid() {
         setDeals(dealsData)
         setFilteredDeals(dealsData)
       } catch (error) {
-        console.error('加载优惠信息失败:', error)
+        console.error('Failed to load deals:', error)
         // 如果无法加载JSON文件，使用默认数据
         const defaultDeals: Deal[] = [
           {
             id: "1",
-            title: "Vultr 高性能云服务器",
+            title: "Vultr High Performance Cloud Server",
             provider: "Vultr",
             price: "2.50",
             originalPrice: "5.00",
             currency: "$",
             discount: "50%",
-            location: "美国/日本/新加坡",
+            location: "USA/Japan/Singapore",
             cpu: "1 vCPU",
             ram: "512MB",
             storage: "10GB SSD",
             bandwidth: "500GB",
-            tags: ["美国机房", "SSD", "按小时计费"],
+            tags: ["US Datacenter", "SSD", "Hourly Billing"],
             link: "https://vultr.com",
             affiliateLink: "https://vultr.com",
             featured: true,
             expiryDate: "2024-12-31",
-            description: "Vultr 限时优惠活动",
+            description: "Vultr limited time promotion",
             createdAt: "2024-01-15T10:00:00Z",
             updatedAt: "2024-01-15T10:00:00Z"
           }
@@ -139,17 +139,17 @@ export default function DealsGrid() {
             case 'featured':
               return deal.featured
             case 'north-america':
-              return deal.location.includes('美国') || deal.location.includes('加拿大') || deal.tags.some(tag => tag.includes('北美'))
+              return deal.location.includes('USA') || deal.location.includes('Canada') || deal.tags.some(tag => tag.includes('North America'))
             case 'europe':
-              return deal.location.includes('德国') || deal.location.includes('法国') || deal.location.includes('英国') || deal.tags.some(tag => tag.includes('欧洲'))
+              return deal.location.includes('Germany') || deal.location.includes('France') || deal.location.includes('UK') || deal.tags.some(tag => tag.includes('Europe'))
             case 'ssd':
               return deal.tags.some(tag => tag.includes('SSD')) || 
                      (deal.specs && deal.specs.storage && deal.specs.storage.includes('SSD')) || 
                      (deal.storage && deal.storage.includes('SSD'))
             case 'high-performance':
-              return deal.tags.some(tag => tag.includes('高性能') || tag.includes('高速'))
+              return deal.tags.some(tag => tag.includes('High Performance') || tag.includes('High Speed'))
             case 'budget':
-              return deal.tags.some(tag => tag.includes('性价比') || tag.includes('超值'))
+              return deal.tags.some(tag => tag.includes('Budget') || tag.includes('Value'))
             default:
               return false
           }
@@ -160,7 +160,7 @@ export default function DealsGrid() {
     // 应用标签筛选
     if (activeFilter === '全部') {
       // 已经应用了搜索和筛选
-    } else if (activeFilter === '热门推荐') {
+    } else if (activeFilter === 'Featured') {
       filtered = filtered.filter(deal => deal.featured)
     } else {
       filtered = filtered.filter(deal => 
@@ -202,10 +202,10 @@ export default function DealsGrid() {
       {/* 结果统计 */}
       <div className="flex items-center justify-between">
         <div className="text-gray-400">
-          找到 <span className="text-primary-400 font-semibold">{filteredDeals.length}</span> 个优惠
+          Found <span className="text-primary-400 font-semibold">{filteredDeals.length}</span> deals
           {searchQuery && (
             <span className="ml-2">
-              关于 "<span className="text-white">{searchQuery}</span>"
+              for "<span className="text-white">{searchQuery}</span>"
             </span>
           )}
         </div>
@@ -219,7 +219,7 @@ export default function DealsGrid() {
             }}
             className="text-sm text-gray-400 hover:text-primary-400 transition-colors"
           >
-            清除搜索
+            Clear Search
           </button>
         )}
       </div>
@@ -237,8 +237,8 @@ export default function DealsGrid() {
           <div className="text-6xl mb-4">🔍</div>
           <div className="text-gray-400 text-lg mb-4">
             {searchQuery || searchFilters.length > 0 
-              ? '没有找到符合条件的优惠信息' 
-              : '暂无符合条件的优惠信息'
+              ? 'No deals found matching your criteria' 
+              : 'No deals available at the moment'
             }
           </div>
           <div className="space-x-4">
@@ -250,14 +250,14 @@ export default function DealsGrid() {
               }}
               className="text-primary-400 hover:text-primary-300 underline"
             >
-              查看全部优惠
+              View All Deals
             </button>
             {searchQuery && (
               <button 
                 onClick={() => setSearchQuery('')}
                 className="text-gray-400 hover:text-white underline"
               >
-                清除搜索
+                Clear Search
               </button>
             )}
           </div>

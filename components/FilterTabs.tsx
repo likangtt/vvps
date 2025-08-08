@@ -8,12 +8,12 @@ interface FilterTabsProps {
 export default function FilterTabs({ activeFilter, onFilterChange }: FilterTabsProps) {
   
   const filters = [
-    { key: 'filter.all', value: '全部' },
-    { key: 'filter.featured', value: '热门推荐' },
-    { key: 'filter.us', value: '美国机房' },
+    { key: 'filter.all', value: 'All' },
+    { key: 'filter.featured', value: 'Featured' },
+    { key: 'filter.us', value: 'US Datacenter' },
     { key: 'filter.ssd', value: 'SSD' },
     { key: 'filter.cn2', value: 'CN2' },
-    { key: 'filter.annual', value: '年付优惠' }
+    { key: 'filter.annual', value: 'Annual Discount' }
   ]
 
   return (

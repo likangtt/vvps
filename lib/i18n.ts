@@ -8,7 +8,7 @@ export const languages = {
   'es': 'Español'
 }
 
-export const defaultLanguage = 'zh-CN'
+export const defaultLanguage = 'en'
 
 // 翻译文本
 export const translations = {

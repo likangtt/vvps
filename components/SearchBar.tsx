@@ -54,12 +54,12 @@ export default function SearchBar({ onSearch, onFilter }: SearchBarProps) {
   const searchRef = useRef<HTMLDivElement>(null)
 
   const filterOptions = [
-    { id: 'featured', label: '热门推荐', color: 'bg-red-500/20 text-red-400' },
-    { id: 'north-america', label: '北美机房', color: 'bg-blue-500/20 text-blue-400' },
-    { id: 'europe', label: '欧洲机房', color: 'bg-green-500/20 text-green-400' },
-    { id: 'ssd', label: 'SSD存储', color: 'bg-purple-500/20 text-purple-400' },
-    { id: 'high-performance', label: '高性能', color: 'bg-yellow-500/20 text-yellow-400' },
-    { id: 'budget', label: '性价比', color: 'bg-pink-500/20 text-pink-400' }
+    { id: 'featured', label: 'Featured', color: 'bg-red-500/20 text-red-400' },
+    { id: 'north-america', label: 'North America', color: 'bg-blue-500/20 text-blue-400' },
+    { id: 'europe', label: 'Europe', color: 'bg-green-500/20 text-green-400' },
+    { id: 'ssd', label: 'SSD Storage', color: 'bg-purple-500/20 text-purple-400' },
+    { id: 'high-performance', label: 'High Performance', color: 'bg-yellow-500/20 text-yellow-400' },
+    { id: 'budget', label: 'Budget Friendly', color: 'bg-pink-500/20 text-pink-400' }
   ]
 
   useEffect(() => {
@@ -80,19 +80,19 @@ export default function SearchBar({ onSearch, onFilter }: SearchBarProps) {
       const mockSuggestions: Deal[] = [
         { 
           id: '1', 
-          title: 'Vultr 高性能云服务器', 
+          title: 'Vultr High Performance Cloud Server', 
           provider: 'Vultr', 
-          price: '$2.50/月', 
-          location: '美国', 
+          price: '$2.50/month', 
+          location: 'USA', 
           tags: ['SSD'] 
         },
         { 
           id: '2', 
-          title: 'DigitalOcean 开发者首选', 
+          title: 'DigitalOcean Developer Choice', 
           provider: 'DigitalOcean', 
-          price: '$4.00/月', 
-          location: '美国', 
-          tags: ['开发者友好'] 
+          price: '$4.00/month', 
+          location: 'USA', 
+          tags: ['Developer Friendly'] 
         }
       ].filter(deal => 
         deal.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -144,7 +144,7 @@ export default function SearchBar({ onSearch, onFilter }: SearchBarProps) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && handleSearch(query)}
-          placeholder="搜索VPS主机商、配置或位置..."
+          placeholder="Search VPS providers, specs or locations..."
           className="w-full pl-12 pr-20 py-4 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 transition-all"
         />
 
@@ -175,7 +175,7 @@ export default function SearchBar({ onSearch, onFilter }: SearchBarProps) {
       {showSuggestions && suggestions.length > 0 && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-gray-800 border border-gray-600 rounded-lg shadow-xl z-50">
           <div className="p-2">
-            <div className="text-xs text-gray-400 px-3 py-2">搜索建议</div>
+            <div className="text-xs text-gray-400 px-3 py-2">Search Suggestions</div>
             {suggestions.map((suggestion) => (
               <button
                 key={suggestion.id}
@@ -186,7 +186,7 @@ export default function SearchBar({ onSearch, onFilter }: SearchBarProps) {
                 <div className="text-sm text-gray-400">
                   {typeof suggestion.provider === 'string' 
                     ? suggestion.provider 
-                    : suggestion.provider?.name || '未知提供商'} • {suggestion.price}
+                    : suggestion.provider?.name || 'Unknown Provider'} • {suggestion.price}
                 </div>
               </button>
             ))}
@@ -198,7 +198,7 @@ export default function SearchBar({ onSearch, onFilter }: SearchBarProps) {
       {isFilterOpen && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-gray-800 border border-gray-600 rounded-lg shadow-xl z-50">
           <div className="p-4">
-            <div className="text-sm font-medium text-white mb-3">筛选条件</div>
+            <div className="text-sm font-medium text-white mb-3">Filter Options</div>
             <div className="grid grid-cols-2 gap-2">
               {filterOptions.map((option) => (
                 <button
@@ -224,7 +224,7 @@ export default function SearchBar({ onSearch, onFilter }: SearchBarProps) {
                   }}
                   className="text-sm text-gray-400 hover:text-white transition-colors"
                 >
-                  清除所有筛选
+                  Clear All Filters
                 </button>
               </div>
             )}

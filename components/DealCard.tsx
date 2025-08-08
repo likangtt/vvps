@@ -58,13 +58,13 @@ export default function DealCard({ deal }: DealCardProps) {
     // 如果链接是#，阻止默认行为
     if (deal.link === '#' || deal.affiliateLink === '#' || (!deal.link && !deal.affiliateLink)) {
       e.preventDefault()
-      alert('该产品暂无购买链接，请稍后再试')
+      alert('No purchase link available for this product. Please try again later.')
       return
     }
     
     // 否则，正常打开链接
     const url = deal.link || deal.affiliateLink || '#'
-    console.log('打开链接:', url)
+    console.log('Opening link:', url)
     
     // 确保在新标签页中打开
     window.open(url, '_blank', 'noopener,noreferrer')
@@ -72,7 +72,7 @@ export default function DealCard({ deal }: DealCardProps) {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
-    return date.toLocaleDateString('zh-CN')
+    return date.toLocaleDateString('en-US')
   }
 
   const isExpiringSoon = () => {
@@ -103,7 +103,7 @@ export default function DealCard({ deal }: DealCardProps) {
         {isExpiringSoon() && (
           <div className="flex items-center gap-1 bg-red-500/20 text-red-400 px-2 py-1 rounded text-xs">
             <Clock className="w-3 h-3" />
-            即将到期
+            Expiring Soon
           </div>
         )}
       </div>
@@ -166,7 +166,7 @@ export default function DealCard({ deal }: DealCardProps) {
           onClick={() => setShowDetails(!showDetails)}
           className="w-full py-2 px-4 bg-dark-700 hover:bg-dark-600 text-gray-300 rounded-lg transition-colors text-sm"
         >
-          {showDetails ? '收起详情' : '查看详情'}
+          {showDetails ? 'Hide Details' : 'View Details'}
         </button>
         
         <a
@@ -176,7 +176,7 @@ export default function DealCard({ deal }: DealCardProps) {
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 w-full py-2 px-4 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors text-sm"
         >
-          立即购买 <ExternalLink className="w-3 h-3" />
+          Buy Now <ExternalLink className="w-3 h-3" />
         </a>
       </div>
 
@@ -203,8 +203,8 @@ export default function DealCard({ deal }: DealCardProps) {
               
               <div className="mt-6 pt-4 border-t border-dark-700">
                 <div className="flex items-center justify-between text-sm text-gray-400">
-                  <span>到期时间: {deal.expiryDate ? formatDate(deal.expiryDate) : '无限期'}</span>
-                  <span>更新时间: {deal.updatedAt ? formatDate(deal.updatedAt) : '未知'}</span>
+                  <span>Expiry: {deal.expiryDate ? formatDate(deal.expiryDate) : 'Unlimited'}</span>
+                  <span>Updated: {deal.updatedAt ? formatDate(deal.updatedAt) : 'Unknown'}</span>
                 </div>
               </div>
               
@@ -216,7 +216,7 @@ export default function DealCard({ deal }: DealCardProps) {
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 py-2 px-6 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors text-sm"
                 >
-                  立即购买 <ExternalLink className="w-3 h-3" />
+                  Buy Now <ExternalLink className="w-3 h-3" />
                 </a>
               </div>
             </div>
