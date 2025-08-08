@@ -7,6 +7,7 @@ export default function SimpleHeader() {
   const [currentLanguage, setCurrentLanguage] = useState('zh-CN')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false)
 
   // 检测屏幕尺寸
   useEffect(() => {
@@ -57,15 +58,16 @@ export default function SimpleHeader() {
     }
   }, [])
 
-  // 切换语言
-  const switchLanguage = () => {
-    const langKeys = Object.keys(languages)
-    const currentIndex = langKeys.indexOf(currentLanguage)
-    const nextIndex = (currentIndex + 1) % langKeys.length
-    const nextLanguage = langKeys[nextIndex]
-    
-    setCurrentLanguage(nextLanguage)
-    localStorage.setItem('language', nextLanguage)
+  // 切换语言菜单显示状态
+  const toggleLanguageMenu = () => {
+    setShowLanguageMenu(!showLanguageMenu)
+  }
+  
+  // 选择特定语言
+  const selectLanguage = (lang: string) => {
+    setCurrentLanguage(lang)
+    localStorage.setItem('language', lang)
+    setShowLanguageMenu(false)
     
     // 刷新页面以应用新语言
     window.location.reload()
@@ -195,12 +197,51 @@ export default function SimpleHeader() {
 
             {/* 右侧按钮 */}
             <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-              <button
-                onClick={switchLanguage}
-                className="lang-button"
-              >
-                🌐 {languages[currentLanguage as keyof typeof languages]}
-              </button>
+              <div style={{ position: 'relative' }}>
+                <button
+                  onClick={toggleLanguageMenu}
+                  className="lang-button"
+                >
+                  🌐 {languages[currentLanguage as keyof typeof languages]}
+                </button>
+                
+                {showLanguageMenu && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '100%',
+                    right: 0,
+                    marginTop: '0.5rem',
+                    backgroundColor: 'rgba(17, 24, 39, 0.95)',
+                    backdropFilter: 'blur(8px)',
+                    border: '1px solid #374151',
+                    borderRadius: '0.5rem',
+                    padding: '0.5rem',
+                    zIndex: 1000,
+                    minWidth: '150px'
+                  }}>
+                    {Object.entries(languages).map(([code, name]) => (
+                      <button
+                        key={code}
+                        onClick={() => selectLanguage(code)}
+                        style={{
+                          display: 'block',
+                          width: '100%',
+                          textAlign: 'left',
+                          padding: '0.5rem 1rem',
+                          backgroundColor: currentLanguage === code ? 'rgba(96, 165, 250, 0.2)' : 'transparent',
+                          borderRadius: '0.25rem',
+                          marginBottom: '0.25rem',
+                          cursor: 'pointer',
+                          border: 'none',
+                          color: currentLanguage === code ? '#60a5fa' : 'white'
+                        }}
+                      >
+                        {name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </>
         )}
@@ -259,13 +300,52 @@ export default function SimpleHeader() {
             marginTop: '0.5rem',
             flexDirection: 'column'
           }}>
-            <button
-              onClick={switchLanguage}
-              className="lang-button"
-              style={{ width: '100%', justifyContent: 'center', display: 'flex' }}
-            >
-              🌐 {languages[currentLanguage as keyof typeof languages]}
-            </button>
+            <div style={{ position: 'relative', width: '100%' }}>
+              <button
+                onClick={toggleLanguageMenu}
+                className="lang-button"
+                style={{ width: '100%', justifyContent: 'center', display: 'flex' }}
+              >
+                🌐 {languages[currentLanguage as keyof typeof languages]}
+              </button>
+              
+              {showLanguageMenu && (
+                <div style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  right: 0,
+                  marginTop: '0.5rem',
+                  backgroundColor: 'rgba(17, 24, 39, 0.95)',
+                  backdropFilter: 'blur(8px)',
+                  border: '1px solid #374151',
+                  borderRadius: '0.5rem',
+                  padding: '0.5rem',
+                  zIndex: 1000
+                }}>
+                  {Object.entries(languages).map(([code, name]) => (
+                    <button
+                      key={code}
+                      onClick={() => selectLanguage(code)}
+                      style={{
+                        display: 'block',
+                        width: '100%',
+                        textAlign: 'left',
+                        padding: '0.5rem 1rem',
+                        backgroundColor: currentLanguage === code ? 'rgba(96, 165, 250, 0.2)' : 'transparent',
+                        borderRadius: '0.25rem',
+                        marginBottom: '0.25rem',
+                        cursor: 'pointer',
+                        border: 'none',
+                        color: currentLanguage === code ? '#60a5fa' : 'white'
+                      }}
+                    >
+                      {name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

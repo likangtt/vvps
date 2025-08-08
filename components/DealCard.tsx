@@ -52,6 +52,23 @@ interface DealCardProps {
 
 export default function DealCard({ deal }: DealCardProps) {
   const [showDetails, setShowDetails] = useState(false)
+  
+  // 处理购买按钮点击
+  const handleBuyClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // 如果链接是#，阻止默认行为
+    if (deal.link === '#' || deal.affiliateLink === '#' || (!deal.link && !deal.affiliateLink)) {
+      e.preventDefault()
+      alert('该产品暂无购买链接，请稍后再试')
+      return
+    }
+    
+    // 否则，正常打开链接
+    const url = deal.link || deal.affiliateLink || '#'
+    console.log('打开链接:', url)
+    
+    // 确保在新标签页中打开
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -154,6 +171,7 @@ export default function DealCard({ deal }: DealCardProps) {
         
         <a
           href={deal.link || deal.affiliateLink || '#'}
+          onClick={handleBuyClick}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 w-full py-2 px-4 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors text-sm"
@@ -193,6 +211,7 @@ export default function DealCard({ deal }: DealCardProps) {
               <div className="mt-4 flex justify-end">
                 <a
                   href={deal.link || deal.affiliateLink || '#'}
+                  onClick={handleBuyClick}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 py-2 px-6 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors text-sm"
