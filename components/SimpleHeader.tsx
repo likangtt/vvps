@@ -201,13 +201,6 @@ export default function SimpleHeader() {
               >
                 🌐 {languages[currentLanguage as keyof typeof languages]}
               </button>
-              
-              <button
-                onClick={() => alert('获取优惠功能')}
-                className="deals-button"
-              >
-                🛡️ {t('nav.getDeals')}
-              </button>
             </div>
           </>
         )}
@@ -272,14 +265,6 @@ export default function SimpleHeader() {
               style={{ width: '100%', justifyContent: 'center', display: 'flex' }}
             >
               🌐 {languages[currentLanguage as keyof typeof languages]}
-            </button>
-            
-            <button
-              onClick={() => alert('获取优惠功能')}
-              className="deals-button"
-              style={{ width: '100%', justifyContent: 'center', display: 'flex' }}
-            >
-              🛡️ {t('nav.getDeals')}
             </button>
           </div>
         </div>
