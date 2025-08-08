@@ -1,14 +1,14 @@
 [
   {
     "id": "vultr-high-performance-2cpu-4gb",
-    "title": "Vultr高性能2核4GB SSD云服务器",
-    "description": "Vultr高性能云实例，配备2个vCPU、4GB内存和80GB SSD存储，适合中小型网站、开发环境和轻量级应用程序。全球17个数据中心可选，按小时计费，灵活扩展。",
+    "title": "Vultr High Performance 2 CPU 4GB SSD Cloud Server",
+    "description": "Vultr high-performance cloud instance with 2 vCPUs, 4GB RAM, and 80GB SSD storage, suitable for small to medium websites, development environments, and lightweight applications. Choose from 17 global data centers, hourly billing, flexible scaling.",
     "price": 24,
     "originalPrice": 30,
     "currency": "USD",
-    "location": "全球17个数据中心",
+    "location": "17 Global Data Centers",
     "specs": {
-      "cpu": "2核",
+      "cpu": "2 Cores",
       "ram": "4GB",
       "storage": "80GB SSD",
       "bandwidth": "3TB"
@@ -18,22 +18,22 @@
       "name": "Vultr",
       "logo": "https://www.vultr.com/media/logo_onwhite.svg"
     },
-    "tags": ["高性能", "SSD", "按小时计费"],
-    "features": ["全球数据中心", "DDoS防护", "IPv6支持", "快速部署"],
+    "tags": ["High Performance", "SSD", "Hourly Billing"],
+    "features": ["Global Data Centers", "DDoS Protection", "IPv6 Support", "Quick Deployment"],
     "link": "https://www.vultr.com/products/cloud-compute/",
     "couponCode": "VULTRSAVE25",
     "expiryDate": "2023-12-31"
   },
   {
     "id": "digitalocean-premium-2cpu-4gb",
-    "title": "DigitalOcean Premium 2核4GB云服务器",
-    "description": "DigitalOcean Premium Droplet，配备2个vCPU、4GB内存和80GB SSD存储，适合开发者和小型应用。提供简单易用的控制面板和API，支持一键部署。",
+    "title": "DigitalOcean Premium 2 CPU 4GB Cloud Server",
+    "description": "DigitalOcean Premium Droplet with 2 vCPUs, 4GB RAM, and 80GB SSD storage, perfect for developers and small applications. Features an easy-to-use control panel and API with one-click deployments.",
     "price": 24,
     "originalPrice": 28,
     "currency": "USD",
-    "location": "美国/欧洲/亚洲",
+    "location": "USA/Europe/Asia",
     "specs": {
-      "cpu": "2核",
+      "cpu": "2 Cores",
       "ram": "4GB",
       "storage": "80GB SSD",
       "bandwidth": "4TB"
@@ -43,22 +43,22 @@
       "name": "DigitalOcean",
       "logo": "https://www.digitalocean.com/_next/static/media/logo.87a8f3b8.svg"
     },
-    "tags": ["开发者友好", "SSD", "简单控制面板"],
-    "features": ["团队协作", "丰富API", "一键部署", "监控工具"],
+    "tags": ["Developer Friendly", "SSD", "Simple Control Panel"],
+    "features": ["Team Collaboration", "Rich API", "One-Click Deployment", "Monitoring Tools"],
     "link": "https://www.digitalocean.com/pricing",
     "couponCode": "DOSPECIAL100",
     "expiryDate": "2023-11-30"
   },
   {
     "id": "linode-dedicated-4cpu-8gb",
-    "title": "Linode 4核8GB专用云服务器",
-    "description": "Linode专用云实例，配备4个vCPU、8GB内存和160GB SSD存储，适合中型网站和应用。提供稳定可靠的服务和优秀的技术支持。",
+    "title": "Linode 4 CPU 8GB Dedicated Cloud Server",
+    "description": "Linode dedicated cloud instance with 4 vCPUs, 8GB RAM, and 160GB SSD storage, ideal for medium-sized websites and applications. Offers stable, reliable service with excellent technical support.",
     "price": 48,
     "originalPrice": 60,
     "currency": "USD",
-    "location": "全球11个机房",
+    "location": "11 Global Data Centers",
     "specs": {
-      "cpu": "4核",
+      "cpu": "4 Cores",
       "ram": "8GB",
       "storage": "160GB SSD",
       "bandwidth": "5TB"
@@ -68,22 +68,22 @@
       "name": "Linode",
       "logo": "https://www.linode.com/wp-content/uploads/2018/10/linode-logo-blk-rgb-web.svg"
     },
-    "tags": ["企业级", "稳定可靠", "技术支持"],
-    "features": ["企业级硬件", "高性能网络", "安全防护", "备份服务"],
+    "tags": ["Enterprise Grade", "Stable & Reliable", "Technical Support"],
+    "features": ["Enterprise Hardware", "High-Performance Network", "Security Protection", "Backup Service"],
     "link": "https://www.linode.com/pricing/",
     "couponCode": "LINODE20",
     "expiryDate": "2023-12-15"
   },
   {
     "id": "aws-lightsail-1cpu-2gb",
-    "title": "AWS Lightsail 1核2GB入门云服务器",
-    "description": "AWS Lightsail入门级云实例，配备1个vCPU、2GB内存和50GB SSD存储，适合个人网站和小型项目。提供简单定价和AWS生态系统集成。",
+    "title": "AWS Lightsail 1 CPU 2GB Starter Cloud Server",
+    "description": "AWS Lightsail entry-level cloud instance with 1 vCPU, 2GB RAM, and 50GB SSD storage, suitable for personal websites and small projects. Offers simple pricing and AWS ecosystem integration.",
     "price": 10,
     "originalPrice": 12,
     "currency": "USD",
-    "location": "美国东部/西部",
+    "location": "US East/West",
     "specs": {
-      "cpu": "1核",
+      "cpu": "1 Core",
       "ram": "2GB",
       "storage": "50GB SSD",
       "bandwidth": "2TB"
@@ -93,22 +93,22 @@
       "name": "AWS Lightsail",
       "logo": "https://d1.awsstatic.com/lightsail/aws-lightsail-logo-large.61f0c7d7f3c8a7a59f0c6b9fd32a5dcd5a6a5d77.png"
     },
-    "tags": ["北美机房", "AWS生态", "入门级"],
-    "features": ["AWS生态集成", "简单定价", "易于使用", "可扩展性"],
+    "tags": ["North America", "AWS Ecosystem", "Entry Level"],
+    "features": ["AWS Integration", "Simple Pricing", "Easy to Use", "Scalability"],
     "link": "https://aws.amazon.com/lightsail/pricing/",
     "couponCode": "",
     "expiryDate": "2023-12-31"
   },
   {
     "id": "hostinger-vps-2cpu-4gb",
-    "title": "Hostinger VPS 2核4GB超值服务器",
-    "description": "Hostinger VPS服务器，配备2个vCPU、4GB内存和50GB SSD存储，适合小型网站和应用。提供超高性价比和用户友好的控制面板。",
+    "title": "Hostinger VPS 2 CPU 4GB Value Server",
+    "description": "Hostinger VPS server with 2 vCPUs, 4GB RAM, and 50GB SSD storage, suitable for small websites and applications. Offers excellent value for money and a user-friendly control panel.",
     "price": 14.99,
     "originalPrice": 24.99,
     "currency": "USD",
-    "location": "美国/加拿大",
+    "location": "USA/Canada",
     "specs": {
-      "cpu": "2核",
+      "cpu": "2 Cores",
       "ram": "4GB",
       "storage": "50GB SSD",
       "bandwidth": "2TB"
@@ -118,22 +118,22 @@
       "name": "Hostinger",
       "logo": "https://assets.hostinger.com/images/logo-hostinger-5c2f2c3b0c.svg"
     },
-    "tags": ["北美机房", "性价比", "新手友好"],
-    "features": ["性价比高", "新手友好", "退款保证", "免费SSL"],
+    "tags": ["North America", "Value", "Beginner Friendly"],
+    "features": ["Great Value", "Beginner Friendly", "Money-Back Guarantee", "Free SSL"],
     "link": "https://www.hostinger.com/vps-hosting",
     "couponCode": "VPSSAVE40",
     "expiryDate": "2023-11-15"
   },
   {
     "id": "hetzner-cx21-2cpu-4gb",
-    "title": "Hetzner CX21 2核4GB超高性价比云服务器",
-    "description": "Hetzner CX21云实例，配备2个vCPU、4GB内存和40GB SSD存储，提供超高性价比的欧洲服务器。绿色能源驱动，德国工程品质。",
+    "title": "Hetzner CX21 2 CPU 4GB High-Value Cloud Server",
+    "description": "Hetzner CX21 cloud instance with 2 vCPUs, 4GB RAM, and 40GB SSD storage, offering exceptional value European servers. Powered by green energy with German engineering quality.",
     "price": 5.83,
     "originalPrice": null,
     "currency": "EUR",
-    "location": "德国/芬兰",
+    "location": "Germany/Finland",
     "specs": {
-      "cpu": "2核",
+      "cpu": "2 Cores",
       "ram": "4GB",
       "storage": "40GB SSD",
       "bandwidth": "20TB"
@@ -143,22 +143,22 @@
       "name": "Hetzner Cloud",
       "logo": "https://www.hetzner.com/themes/hetzner/images/logo/hetzner-logo.svg"
     },
-    "tags": ["欧洲机房", "超高性价比", "绿色能源"],
-    "features": ["绿色能源", "德国工程", "超高性价比", "简洁API"],
+    "tags": ["Europe", "Exceptional Value", "Green Energy"],
+    "features": ["Green Energy", "German Engineering", "Exceptional Value", "Clean API"],
     "link": "https://www.hetzner.com/cloud",
     "couponCode": "",
     "expiryDate": ""
   },
   {
     "id": "contabo-vps-s-4cpu-8gb",
-    "title": "Contabo VPS S 4核8GB大内存服务器",
-    "description": "Contabo VPS S，配备4个vCPU、8GB内存和200GB SSD存储，提供超大配置和高性价比。适合需要大内存的应用和数据库服务器。",
+    "title": "Contabo VPS S 4 CPU 8GB High-Memory Server",
+    "description": "Contabo VPS S with 4 vCPUs, 8GB RAM, and 200GB SSD storage, offering large configurations at great value. Ideal for memory-intensive applications and database servers.",
     "price": 5.99,
     "originalPrice": null,
     "currency": "EUR",
-    "location": "德国/英国",
+    "location": "Germany/UK",
     "specs": {
-      "cpu": "4核",
+      "cpu": "4 Cores",
       "ram": "8GB",
       "storage": "200GB SSD",
       "bandwidth": "32TB"
@@ -168,22 +168,22 @@
       "name": "Contabo",
       "logo": "https://contabo.com/img/logo_white.svg"
     },
-    "tags": ["欧洲机房", "高配置", "大带宽"],
-    "features": ["高配置", "大带宽", "DDoS防护", "SSD存储"],
+    "tags": ["Europe", "High Specs", "Large Bandwidth"],
+    "features": ["High Specs", "Large Bandwidth", "DDoS Protection", "SSD Storage"],
     "link": "https://contabo.com/en/vps/",
     "couponCode": "",
     "expiryDate": ""
   },
   {
     "id": "bandwagonhost-cn2-gia-1cpu-2gb",
-    "title": "搬瓦工 CN2 GIA 1核2GB 优化线路VPS",
-    "description": "搬瓦工CN2 GIA优化线路VPS，配备1个vCPU、2GB内存和40GB SSD存储，提供优化的中国大陆访问速度。支持支付宝付款，适合建站和科学上网。",
+    "title": "BandwagonHost CN2 GIA 1 CPU 2GB Optimized Route VPS",
+    "description": "BandwagonHost CN2 GIA optimized route VPS with 1 vCPU, 2GB RAM, and 40GB SSD storage, offering optimized access speeds to mainland China. Supports Alipay payments, suitable for websites and VPN services.",
     "price": 49.99,
     "originalPrice": 59.99,
     "currency": "USD",
-    "location": "美国洛杉矶",
+    "location": "Los Angeles, USA",
     "specs": {
-      "cpu": "1核",
+      "cpu": "1 Core",
       "ram": "2GB",
       "storage": "40GB SSD",
       "bandwidth": "1TB"
@@ -193,22 +193,22 @@
       "name": "BandwagonHost 搬瓦工",
       "logo": "https://www.bwh88.net/templates/organicbandwagon/images/logo.png"
     },
-    "tags": ["CN2线路", "支持支付宝", "科学上网"],
-    "features": ["CN2 GIA线路", "支持支付宝", "快照备份", "KVM虚拟化"],
+    "tags": ["CN2 Route", "Alipay Support", "VPN Friendly"],
+    "features": ["CN2 GIA Route", "Alipay Support", "Snapshot Backup", "KVM Virtualization"],
     "link": "https://bandwagonhost.com/aff.php?aff=63096",
     "couponCode": "BWH3HYATVBJW",
     "expiryDate": "2023-12-31"
   },
   {
     "id": "racknerd-special-2cpu-4gb",
-    "title": "RackNerd 2核4GB 年付特惠VPS",
-    "description": "RackNerd年付特惠VPS，配备2个vCPU、4GB内存和60GB SSD存储，提供高性价比的美国服务器。企业级网络和稳定的VPS服务。",
+    "title": "RackNerd 2 CPU 4GB Annual Special VPS",
+    "description": "RackNerd annual special VPS with 2 vCPUs, 4GB RAM, and 60GB SSD storage, offering high-value American servers. Enterprise-grade network and stable VPS service.",
     "price": 38.88,
     "originalPrice": 48.88,
     "currency": "USD",
-    "location": "美国/加拿大",
+    "location": "USA/Canada",
     "specs": {
-      "cpu": "2核",
+      "cpu": "2 Cores",
       "ram": "4GB",
       "storage": "60GB SSD",
       "bandwidth": "4TB"
@@ -218,22 +218,22 @@
       "name": "RackNerd",
       "logo": "https://www.racknerd.com/assets/images/logo/racknerd-logo.png"
     },
-    "tags": ["北美机房", "年付优惠", "高性价比"],
-    "features": ["年付优惠", "DDoS防护", "退款保证", "技术支持"],
+    "tags": ["North America", "Annual Discount", "Great Value"],
+    "features": ["Annual Discount", "DDoS Protection", "Money-Back Guarantee", "Technical Support"],
     "link": "https://www.racknerd.com/",
     "couponCode": "RACKNERD40",
     "expiryDate": "2023-11-30"
   },
   {
     "id": "cloudcone-hourly-2cpu-4gb",
-    "title": "CloudCone 2核4GB 按小时计费VPS",
-    "description": "CloudCone按小时计费VPS，配备2个vCPU、4GB内存和50GB SSD存储，提供灵活的按需付费模式。洛杉矶数据中心，适合临时项目和测试环境。",
+    "title": "CloudCone 2 CPU 4GB Hourly Billing VPS",
+    "description": "CloudCone hourly billing VPS with 2 vCPUs, 4GB RAM, and 50GB SSD storage, offering flexible pay-as-you-go pricing. Los Angeles data center, ideal for temporary projects and testing environments.",
     "price": 17.95,
     "originalPrice": 21.95,
     "currency": "USD",
-    "location": "美国洛杉矶",
+    "location": "Los Angeles, USA",
     "specs": {
-      "cpu": "2核",
+      "cpu": "2 Cores",
       "ram": "4GB",
       "storage": "50GB SSD",
       "bandwidth": "3TB"
@@ -243,8 +243,8 @@
       "name": "CloudCone",
       "logo": "https://cloudcone.com/wp-content/uploads/2019/03/cc-logo-1.png"
     },
-    "tags": ["北美机房", "按小时计费", "SSD"],
-    "features": ["按小时计费", "快照备份", "资源监控", "API控制"],
+    "tags": ["North America", "Hourly Billing", "SSD"],
+    "features": ["Hourly Billing", "Snapshot Backup", "Resource Monitoring", "API Control"],
     "link": "https://cloudcone.com/cloud-servers/",
     "couponCode": "SAVE25NOW",
     "expiryDate": "2023-12-15"
