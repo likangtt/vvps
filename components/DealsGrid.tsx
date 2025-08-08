@@ -158,7 +158,7 @@ export default function DealsGrid() {
     }
 
     // 应用标签筛选
-    if (activeFilter === '全部') {
+    if (activeFilter === 'All') {
       // 已经应用了搜索和筛选
     } else if (activeFilter === 'Featured') {
       filtered = filtered.filter(deal => deal.featured)
@@ -215,7 +215,7 @@ export default function DealsGrid() {
             onClick={() => {
               setSearchQuery('')
               setSearchFilters([])
-              setActiveFilter('全部')
+              setActiveFilter('All')
             }}
             className="text-sm text-gray-400 hover:text-primary-400 transition-colors"
           >
