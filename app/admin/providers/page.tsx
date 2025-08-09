@@ -244,22 +244,22 @@ export default function AdminProvidersPage() {
         ) : providers.length === 0 ? (
           <p className="text-center py-8 text-gray-400">No provider data available</p>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
+          <div className="overflow-x-auto w-full">
+            <table className="w-full table-fixed">
               <thead className="bg-dark-800/50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">ID</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Logo</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Website</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Tags</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Actions</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider w-1/12">ID</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider w-1/12">Logo</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider w-2/12">Name</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider w-3/12">Website</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider w-4/12">Tags</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider w-1/12">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-dark-700">
                 {providers.map(provider => (
                   <tr key={provider.id} className="hover:bg-dark-800/30">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{provider.id}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 truncate">{provider.id}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {provider.logo && (
                         <img 
@@ -274,19 +274,20 @@ export default function AdminProvidersPage() {
                         />
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{provider.name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white truncate">{provider.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm truncate">
                       <a 
                         href={provider.website} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-primary-400 hover:text-primary-300"
+                        className="text-primary-400 hover:text-primary-300 truncate block"
+                        title={provider.website}
                       >
                         {provider.website}
                       </a>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex flex-wrap gap-1">
+                    <td className="px-6 py-4">
+                      <div className="flex flex-wrap gap-1 max-w-full">
                         {provider.tags && provider.tags.map((tag, index) => (
                           <span 
                             key={index}
