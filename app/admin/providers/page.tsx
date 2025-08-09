@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Provider, Deal } from '@/types';
+import { Provider, Deal } from '@/types/index';
 
 export default function AdminProvidersPage() {
   const [providers, setProviders] = useState<Provider[]>([]);
@@ -112,7 +112,7 @@ export default function AdminProvidersPage() {
   };
 
   const handleDelete = (id: string) => {
-    if (window.confirm('确定要删除这个提供商吗？')) {
+    if (window.confirm('Are you sure you want to delete this provider?')) {
       setProviders(prev => prev.filter(provider => provider.id !== id));
     }
   };
@@ -122,30 +122,30 @@ export default function AdminProvidersPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-white mb-2">提供商管理</h1>
-          <p className="text-gray-400">管理VPS服务提供商信息</p>
+          <h1 className="text-2xl font-bold text-white mb-2">Provider Management</h1>
+          <p className="text-gray-400">Manage VPS service provider information</p>
         </div>
       </div>
       
       <div className="cyber-card p-6">
         <h2 className="text-xl font-semibold text-white mb-4">
-          {editingId ? '编辑提供商' : '添加新提供商'}
+          {editingId ? 'Edit Provider' : 'Add New Provider'}
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block mb-1 text-gray-300">提供商ID</label>
+            <label className="block mb-1 text-gray-300">Provider ID</label>
             <input
               type="text"
               name="id"
               value={newProvider.id}
               onChange={handleInputChange}
-              placeholder="自动生成，可选填"
+              placeholder="Auto-generated, optional"
               className="cyber-input w-full"
             />
           </div>
           
           <div>
-            <label className="block mb-1 text-gray-300">名称 *</label>
+            <label className="block mb-1 text-gray-300">Name *</label>
             <input
               type="text"
               name="name"
@@ -168,7 +168,7 @@ export default function AdminProvidersPage() {
           </div>
           
           <div>
-            <label className="block mb-1 text-gray-300">官网</label>
+            <label className="block mb-1 text-gray-300">Website</label>
             <input
               type="url"
               name="website"
@@ -179,7 +179,7 @@ export default function AdminProvidersPage() {
           </div>
           
           <div>
-            <label className="block mb-1 text-gray-300">描述</label>
+            <label className="block mb-1 text-gray-300">Description</label>
             <textarea
               name="description"
               value={newProvider.description}
@@ -190,13 +190,13 @@ export default function AdminProvidersPage() {
           </div>
           
           <div>
-            <label className="block mb-1 text-gray-300">标签（用逗号分隔）</label>
+            <label className="block mb-1 text-gray-300">Tags (comma separated)</label>
             <input
               type="text"
               name="tags"
               value={newProvider.tags?.join(', ') || ''}
               onChange={handleTagsChange}
-              placeholder="例如: 高性价比, 亚洲优化, 支持支付宝"
+              placeholder="Example: High Value, Asia Optimized, Alipay Support"
               className="cyber-input w-full"
             />
           </div>
@@ -218,14 +218,14 @@ export default function AdminProvidersPage() {
                 }}
                 className="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded transition-colors"
               >
-                取消
+                Cancel
               </button>
             )}
             <button
               type="submit"
               className="glow-button"
             >
-              {editingId ? '更新提供商' : '添加提供商'}
+              {editingId ? 'Update Provider' : 'Add Provider'}
             </button>
           </div>
         </form>
@@ -233,16 +233,16 @@ export default function AdminProvidersPage() {
       
       <div className="cyber-card">
         <div className="p-6 border-b border-dark-700">
-          <h2 className="text-lg font-semibold text-white">提供商列表</h2>
+          <h2 className="text-lg font-semibold text-white">Provider List</h2>
         </div>
         
         {loading ? (
           <div className="text-center py-8">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>
-            <p className="mt-2 text-gray-400">加载中...</p>
+            <p className="mt-2 text-gray-400">Loading...</p>
           </div>
         ) : providers.length === 0 ? (
-          <p className="text-center py-8 text-gray-400">暂无提供商数据</p>
+          <p className="text-center py-8 text-gray-400">No provider data available</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -250,10 +250,10 @@ export default function AdminProvidersPage() {
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">ID</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Logo</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">名称</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">官网</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">标签</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">操作</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Name</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Website</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Tags</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-dark-700">
@@ -303,13 +303,13 @@ export default function AdminProvidersPage() {
                           onClick={() => handleEdit(provider)}
                           className="text-yellow-400 hover:text-yellow-300 p-1 rounded"
                         >
-                          编辑
+                          Edit
                         </button>
                         <button
                           onClick={() => handleDelete(provider.id || '')}
                           className="text-red-400 hover:text-red-300 p-1 rounded"
                         >
-                          删除
+                          Delete
                         </button>
                       </div>
                     </td>
