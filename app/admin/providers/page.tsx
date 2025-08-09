@@ -261,21 +261,30 @@ export default function AdminProvidersPage() {
                   <tr key={provider.id} className="hover:bg-dark-800/30">
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 truncate">{provider.id}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="h-8 flex items-center">
+                      <div className="h-8 flex items-center justify-center">
                         {provider.logo ? (
-                          <img 
-                            src={provider.logo} 
-                            alt={provider.name} 
-                            className="h-8 w-auto max-w-[100px] object-contain"
-                            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                              const img = e.target as HTMLImageElement;
-                              img.onerror = null;
-                              img.src = 'https://via.placeholder.com/150x50?text=No+Logo';
-                              img.className = 'h-6 w-auto opacity-50';
-                            }}
-                          />
+                          <div className="bg-dark-700/50 rounded p-1 h-8 w-24 flex items-center justify-center">
+                            <img 
+                              src={provider.logo} 
+                              alt={provider.name} 
+                              className="h-6 w-auto max-w-[80px] object-contain"
+                              onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                                const img = e.target as HTMLImageElement;
+                                img.style.display = 'none';
+                                const parent = img.parentElement;
+                                if (parent) {
+                                  const span = document.createElement('span');
+                                  span.className = 'text-xs text-gray-400';
+                                  span.textContent = 'No Logo';
+                                  parent.appendChild(span);
+                                }
+                              }}
+                            />
+                          </div>
                         ) : (
-                          <span className="text-xs text-gray-400">No Logo</span>
+                          <div className="bg-dark-700/50 rounded p-1 h-8 w-24 flex items-center justify-center">
+                            <span className="text-xs text-gray-400">No Logo</span>
+                          </div>
                         )}
                       </div>
                     </td>
