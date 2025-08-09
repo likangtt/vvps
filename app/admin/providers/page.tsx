@@ -261,18 +261,23 @@ export default function AdminProvidersPage() {
                   <tr key={provider.id} className="hover:bg-dark-800/30">
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 truncate">{provider.id}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {provider.logo && (
-                        <img 
-                          src={provider.logo} 
-                          alt={provider.name} 
-                          className="h-8 w-auto"
-                          onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                            const img = e.target as HTMLImageElement;
-                            img.onerror = null;
-                            img.src = 'https://via.placeholder.com/150x50?text=Logo';
-                          }}
-                        />
-                      )}
+                      <div className="h-8 flex items-center">
+                        {provider.logo ? (
+                          <img 
+                            src={provider.logo} 
+                            alt={provider.name} 
+                            className="h-8 w-auto max-w-[100px] object-contain"
+                            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                              const img = e.target as HTMLImageElement;
+                              img.onerror = null;
+                              img.src = 'https://via.placeholder.com/150x50?text=No+Logo';
+                              img.className = 'h-6 w-auto opacity-50';
+                            }}
+                          />
+                        ) : (
+                          <span className="text-xs text-gray-400">No Logo</span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white truncate">{provider.name}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm truncate">
