@@ -315,13 +315,19 @@ export default function AdminProvidersPage() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center space-x-2">
                         <button
-                          onClick={() => handleEdit(provider)}
+                          onClick={(e) => {
+                            e.stopPropagation(); // 阻止事件冒泡
+                            handleEdit(provider);
+                          }}
                           className="text-yellow-400 hover:text-yellow-300 p-1 rounded"
                         >
                           Edit
                         </button>
                         <button
-                          onClick={() => handleDelete(provider.id || '')}
+                          onClick={(e) => {
+                            e.stopPropagation(); // 阻止事件冒泡
+                            handleDelete(provider.id || '');
+                          }}
                           className="text-red-400 hover:text-red-300 p-1 rounded"
                         >
                           Delete
