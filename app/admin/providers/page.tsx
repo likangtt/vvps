@@ -317,9 +317,11 @@ export default function AdminProvidersPage() {
                         <button
                           onClick={(e) => {
                             e.stopPropagation(); // 阻止事件冒泡
+                            e.preventDefault(); // 阻止默认行为
+                            console.log('Edit button clicked', provider); // 添加调试日志
                             handleEdit(provider);
                           }}
-                          className="text-yellow-400 hover:text-yellow-300 p-1 rounded"
+                          className="text-yellow-400 hover:text-yellow-300 p-1 rounded bg-dark-700/50"
                         >
                           Edit
                         </button>
