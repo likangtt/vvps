@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航测试页面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: white;
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #dc2626;
+            padding: 1rem 2rem;
+            z-index: 999999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #60a5fa;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: none;
+            font-size: 1rem;
+        }
+        
+        .nav-link:hover {
+            border-color: #3b82f6;
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            margin-top: 100px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .test-info {
+            background-color: #374151;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .status {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 4px;
+            background-color: #065f46;
+            color: #10b981;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">⚡ VPS优惠</div>
+            <nav class="nav-links">
+                <a href="http://localhost:3000/" class="nav-link" onclick="testNavigation('首页', 'http://localhost:3000/')">首页</a>
+                <a href="http://localhost:3000/deals" class="nav-link" onclick="testNavigation('优惠', 'http://localhost:3000/deals')">优惠</a>
+                <a href="http://localhost:3000/providers" class="nav-link" onclick="testNavigation('提供商', 'http://localhost:3000/providers')">提供商</a>
+                <a href="http://localhost:3000/about" class="nav-link" onclick="testNavigation('关于', 'http://localhost:3000/about')">关于</a>
+                <a href="http://localhost:3000/contact" class="nav-link" onclick="testNavigation('联系', 'http://localhost:3000/contact')">联系</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content">
+        <h1>🔧 导航功能测试页面</h1>
+        
+        <div class="test-info">
+            <h2>测试说明</h2>
+            <p>这是一个独立的HTML页面，用于测试导航功能是否正常工作。</p>
+            <p>请点击上方红色导航栏中的任意链接进行测试。</p>
+        </div>
+
+        <div class="status" id="status">
+            等待测试...
+        </div>
+
+        <div class="test-info">
+            <h3>测试步骤：</h3>
+            <ol style="text-align: left; max-width: 600px; margin: 0 auto;">
+                <li>将鼠标悬停在导航链接上，观察是否有蓝色边框和上移效果</li>
+                <li>点击任意导航链接</li>
+                <li>观察页面是否跳转到对应的Next.js页面</li>
+                <li>检查浏览器控制台是否有错误信息</li>
+            </ol>
+        </div>
+
+        <div class="test-info">
+            <h3>备用测试按钮：</h3>
+            <button onclick="forceNavigation('http://localhost:3000/')" style="margin: 0.5rem; padding: 1rem 2rem; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">强制跳转首页</button>
+            <button onclick="forceNavigation('http://localhost:3000/deals')" style="margin: 0.5rem; padding: 1rem 2rem; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer;">强制跳转优惠页</button>
+        </div>
+    </div>
+
+    <script>
+        function testNavigation(pageName, url) {
+            console.log(`测试导航: ${pageName} -> ${url}`);
+            document.getElementById('status').innerHTML = `正在跳转到: ${pageName} (${url})`;
+            
+            // 延迟跳转，让用户看到状态更新
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+            
+            return false; // 阻止默认行为，使用我们的自定义跳转
+        }
+        
+        function forceNavigation(url) {
+            console.log(`强制导航: ${url}`);
+            document.getElementById('status').innerHTML = `强制跳转到: ${url}`;
+            
+            // 尝试多种跳转方法
+            try {
+                window.location.href = url;
+            } catch (e) {
+                try {
+                    window.location.assign(url);
+                } catch (e2) {
+                    try {
+                        window.open(url, '_self');
+                    } catch (e3) {
+                        alert('所有跳转方法都失败了，请手动在地址栏输入: ' + url);
+                    }
+                }
+            }
+        }
+        
+        // 页面加载完成后的状态更新
+        window.addEventListener('load', function() {
+            document.getElementById('status').innerHTML = '✅ 页面加载完成，可以开始测试导航功能';
+        });
+        
+        // 监听所有点击事件
+        document.addEventListener('click', function(e) {
+            console.log('点击事件:', e.target);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply bg-dark-900 text-gray-100 font-sans antialiased;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+    background-size: 100% 100%;
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .cyber-card {
+    @apply bg-dark-800/50 backdrop-blur-sm border border-dark-700/50 rounded-lg;
+    @apply hover:border-primary-500/50 transition-all duration-300;
+    @apply relative overflow-hidden;
+  }
+  
+  .cyber-card::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-primary-500/5 to-transparent;
+    @apply translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-1000;
+  }
+  
+  .glow-button {
+    @apply bg-gradient-to-r from-primary-600 to-primary-500;
+    @apply hover:from-primary-500 hover:to-primary-400;
+    @apply text-white font-medium px-6 py-3 rounded-lg;
+    @apply transition-all duration-300 transform hover:scale-105;
+    @apply shadow-lg hover:shadow-primary-500/25;
+  }
+  
+  .cyber-input {
+    @apply bg-dark-800/50 border border-dark-600 rounded-lg px-4 py-3;
+    @apply text-gray-100 placeholder-gray-400;
+    @apply focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20;
+    @apply transition-all duration-300;
+  }
+  
+  .grid-bg {
+    background-image: 
+      linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent;
+  }
+  
+  .border-gradient {
+    border-image: linear-gradient(45deg, #0ea5e9, #8b5cf6) 1;
+  }
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-dark-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary-500;
+}
+
+/* 导航按钮样式 */
+.nav-button {
+  color: white !important;
+  text-decoration: none !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 4px !important;
+  border: none !important;
+  background: transparent !important;
+  cursor: pointer !important;
+  font-size: 1rem !important;
+  border-bottom: 2px solid transparent !important;
+  transition: all 0.2s ease !important;
+  user-select: none;
+  outline: none;
+}
+
+.nav-button:hover {
+  border-bottom: 2px solid #3b82f6;
+  background-color: rgba(59, 130, 246, 0.1);
+  transform: translateY(-1px);
+}
+
+.lang-button {
+  color: white !important;
+  background: transparent !important;
+  border: 1px solid #374151 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  font-size: 0.875rem !important;
+  transition: all 0.2s ease !important;
+  user-select: none;
+  outline: none;
+}
+
+.lang-button:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.deals-button {
+  background-color: #3b82f6 !important;
+  color: white !important;
+  border: none !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  font-size: 0.875rem !important;
+  font-weight: bold !important;
+  transition: all 0.2s ease !important;
+  user-select: none;
+  outline: none;
+}
+
+.deals-button:hover {
+  background-color: #2563eb !important;
+}
+
+/* Markdown 样式 */
+.markdown-content {
+  @apply text-gray-300 leading-relaxed;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  @apply text-gray-100 font-bold mb-4 mt-6;
+}
+
+.markdown-content h1 { @apply text-2xl; }
+.markdown-content h2 { @apply text-xl; }
+.markdown-content h3 { @apply text-lg; }
+
+.markdown-content p {
+  @apply mb-4;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  @apply mb-4 pl-6;
+}
+
+.markdown-content li {
+  @apply mb-2;
+}
+
+.markdown-content code {
+  @apply bg-dark-800 text-primary-400 px-2 py-1 rounded text-sm;
+}
+
+.markdown-content pre {
+  @apply bg-dark-800 p-4 rounded-lg overflow-x-auto mb-4;
+}
+
+.markdown-content blockquote {
+  @apply border-l-4 border-primary-500 pl-4 italic text-gray-400 mb-4;
+}
+
+.markdown-content a {
+  @apply text-primary-400 hover:text-primary-300 underline;
+}

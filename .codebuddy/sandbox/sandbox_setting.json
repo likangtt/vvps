@@ -1,0 +1,20 @@
+{
+  "path": "c:\\Users\\Administrator\\Desktop\\112",
+  "desc": "这是一个VPS优惠信息展示网站，基于Next.js构建，提供全球VPS服务商的优惠信息展示和搜索筛选功能",
+  "id": "b2e244ec872146be83e3469fa564021f",
+  "data": {
+    "spaceKey": "b2e244ec872146be83e3469fa564021f",
+    "connections": {
+      "webIDE": "https://b2e244ec872146be83e3469fa564021f.ap-singapore.cloudstudio.club",
+      "preview": "",
+      "api": "https://b2e244ec872146be83e3469fa564021f--api.ap-singapore.cloudstudio.club",
+      "pty": "https://b2e244ec872146be83e3469fa564021f--pty.ap-singapore.cloudstudio.club"
+    }
+  },
+  "config": {
+    "api": "https://b2e244ec872146be83e3469fa564021f--api.ap-singapore.cloudstudio.club",
+    "pty": "https://b2e244ec872146be83e3469fa564021f--pty.ap-singapore.cloudstudio.club",
+    "region": "ap-shanghai",
+    "spaceKey": "b2e244ec872146be83e3469fa564021f"
+  }
+}

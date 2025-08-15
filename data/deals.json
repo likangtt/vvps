@@ -1,0 +1,252 @@
+[
+  {
+    "id": "vultr-high-performance-2cpu-4gb",
+    "title": "Vultr High Performance 2 CPU 4GB SSD Cloud Server",
+    "description": "Vultr high-performance cloud instance with 2 vCPUs, 4GB RAM, and 80GB SSD storage, suitable for small to medium websites, development environments, and lightweight applications. Choose from 17 global data centers, hourly billing, flexible scaling.",
+    "price": 24,
+    "originalPrice": 30,
+    "currency": "USD",
+    "location": "17 Global Data Centers",
+    "specs": {
+      "cpu": "2 Cores",
+      "ram": "4GB",
+      "storage": "80GB SSD",
+      "bandwidth": "3TB"
+    },
+    "provider": {
+      "id": "vultr",
+      "name": "Vultr",
+      "logo": "https://www.vultr.com/media/logo_onwhite.svg"
+    },
+    "tags": ["High Performance", "SSD", "Hourly Billing"],
+    "features": ["Global Data Centers", "DDoS Protection", "IPv6 Support", "Quick Deployment"],
+    "link": "https://www.vultr.com/products/cloud-compute/",
+    "couponCode": "VULTRSAVE25",
+    "expiryDate": "2023-12-31"
+  },
+  {
+    "id": "digitalocean-premium-2cpu-4gb",
+    "title": "DigitalOcean Premium 2 CPU 4GB Cloud Server",
+    "description": "DigitalOcean Premium Droplet with 2 vCPUs, 4GB RAM, and 80GB SSD storage, perfect for developers and small applications. Features an easy-to-use control panel and API with one-click deployments.",
+    "price": 24,
+    "originalPrice": 28,
+    "currency": "USD",
+    "location": "USA/Europe/Asia",
+    "specs": {
+      "cpu": "2 Cores",
+      "ram": "4GB",
+      "storage": "80GB SSD",
+      "bandwidth": "4TB"
+    },
+    "provider": {
+      "id": "digitalocean",
+      "name": "DigitalOcean",
+      "logo": "https://www.digitalocean.com/_next/static/media/logo.87a8f3b8.svg"
+    },
+    "tags": ["Developer Friendly", "SSD", "Simple Control Panel"],
+    "features": ["Team Collaboration", "Rich API", "One-Click Deployment", "Monitoring Tools"],
+    "link": "https://www.digitalocean.com/pricing",
+    "couponCode": "DOSPECIAL100",
+    "expiryDate": "2023-11-30"
+  },
+  {
+    "id": "linode-dedicated-4cpu-8gb",
+    "title": "Linode 4 CPU 8GB Dedicated Cloud Server",
+    "description": "Linode dedicated cloud instance with 4 vCPUs, 8GB RAM, and 160GB SSD storage, ideal for medium-sized websites and applications. Offers stable, reliable service with excellent technical support.",
+    "price": 48,
+    "originalPrice": 60,
+    "currency": "USD",
+    "location": "11 Global Data Centers",
+    "specs": {
+      "cpu": "4 Cores",
+      "ram": "8GB",
+      "storage": "160GB SSD",
+      "bandwidth": "5TB"
+    },
+    "provider": {
+      "id": "linode",
+      "name": "Linode",
+      "logo": "https://www.linode.com/wp-content/uploads/2018/10/linode-logo-blk-rgb-web.svg"
+    },
+    "tags": ["Enterprise Grade", "Stable & Reliable", "Technical Support"],
+    "features": ["Enterprise Hardware", "High-Performance Network", "Security Protection", "Backup Service"],
+    "link": "https://www.linode.com/pricing/",
+    "couponCode": "LINODE20",
+    "expiryDate": "2023-12-15"
+  },
+  {
+    "id": "aws-lightsail-1cpu-2gb",
+    "title": "AWS Lightsail 1 CPU 2GB Starter Cloud Server",
+    "description": "AWS Lightsail entry-level cloud instance with 1 vCPU, 2GB RAM, and 50GB SSD storage, suitable for personal websites and small projects. Offers simple pricing and AWS ecosystem integration.",
+    "price": 10,
+    "originalPrice": 12,
+    "currency": "USD",
+    "location": "US East/West",
+    "specs": {
+      "cpu": "1 Core",
+      "ram": "2GB",
+      "storage": "50GB SSD",
+      "bandwidth": "2TB"
+    },
+    "provider": {
+      "id": "aws-lightsail",
+      "name": "AWS Lightsail",
+      "logo": "https://d1.awsstatic.com/lightsail/aws-lightsail-logo-large.61f0c7d7f3c8a7a59f0c6b9fd32a5dcd5a6a5d77.png"
+    },
+    "tags": ["North America", "AWS Ecosystem", "Entry Level"],
+    "features": ["AWS Integration", "Simple Pricing", "Easy to Use", "Scalability"],
+    "link": "https://aws.amazon.com/lightsail/pricing/",
+    "couponCode": "",
+    "expiryDate": "2023-12-31"
+  },
+  {
+    "id": "hostinger-vps-2cpu-4gb",
+    "title": "Hostinger VPS 2 CPU 4GB Value Server",
+    "description": "Hostinger VPS server with 2 vCPUs, 4GB RAM, and 50GB SSD storage, suitable for small websites and applications. Offers excellent value for money and a user-friendly control panel.",
+    "price": 14.99,
+    "originalPrice": 24.99,
+    "currency": "USD",
+    "location": "USA/Canada",
+    "specs": {
+      "cpu": "2 Cores",
+      "ram": "4GB",
+      "storage": "50GB SSD",
+      "bandwidth": "2TB"
+    },
+    "provider": {
+      "id": "hostinger",
+      "name": "Hostinger",
+      "logo": "https://assets.hostinger.com/images/logo-hostinger-5c2f2c3b0c.svg"
+    },
+    "tags": ["North America", "Value", "Beginner Friendly"],
+    "features": ["Great Value", "Beginner Friendly", "Money-Back Guarantee", "Free SSL"],
+    "link": "https://www.hostinger.com/vps-hosting",
+    "couponCode": "VPSSAVE40",
+    "expiryDate": "2023-11-15"
+  },
+  {
+    "id": "hetzner-cx21-2cpu-4gb",
+    "title": "Hetzner CX21 2 CPU 4GB High-Value Cloud Server",
+    "description": "Hetzner CX21 cloud instance with 2 vCPUs, 4GB RAM, and 40GB SSD storage, offering exceptional value European servers. Powered by green energy with German engineering quality.",
+    "price": 5.83,
+    "originalPrice": null,
+    "currency": "EUR",
+    "location": "Germany/Finland",
+    "specs": {
+      "cpu": "2 Cores",
+      "ram": "4GB",
+      "storage": "40GB SSD",
+      "bandwidth": "20TB"
+    },
+    "provider": {
+      "id": "hetzner",
+      "name": "Hetzner Cloud",
+      "logo": "https://www.hetzner.com/themes/hetzner/images/logo/hetzner-logo.svg"
+    },
+    "tags": ["Europe", "Exceptional Value", "Green Energy"],
+    "features": ["Green Energy", "German Engineering", "Exceptional Value", "Clean API"],
+    "link": "https://www.hetzner.com/cloud",
+    "couponCode": "",
+    "expiryDate": ""
+  },
+  {
+    "id": "contabo-vps-s-4cpu-8gb",
+    "title": "Contabo VPS S 4 CPU 8GB High-Memory Server",
+    "description": "Contabo VPS S with 4 vCPUs, 8GB RAM, and 200GB SSD storage, offering large configurations at great value. Ideal for memory-intensive applications and database servers.",
+    "price": 5.99,
+    "originalPrice": null,
+    "currency": "EUR",
+    "location": "Germany/UK",
+    "specs": {
+      "cpu": "4 Cores",
+      "ram": "8GB",
+      "storage": "200GB SSD",
+      "bandwidth": "32TB"
+    },
+    "provider": {
+      "id": "contabo",
+      "name": "Contabo",
+      "logo": "https://contabo.com/img/logo_white.svg"
+    },
+    "tags": ["Europe", "High Specs", "Large Bandwidth"],
+    "features": ["High Specs", "Large Bandwidth", "DDoS Protection", "SSD Storage"],
+    "link": "https://contabo.com/en/vps/",
+    "couponCode": "",
+    "expiryDate": ""
+  },
+  {
+    "id": "bandwagonhost-cn2-gia-1cpu-2gb",
+    "title": "BandwagonHost CN2 GIA 1 CPU 2GB Optimized Route VPS",
+    "description": "BandwagonHost CN2 GIA optimized route VPS with 1 vCPU, 2GB RAM, and 40GB SSD storage, offering optimized access speeds to mainland China. Supports Alipay payments, suitable for websites and VPN services.",
+    "price": 49.99,
+    "originalPrice": 59.99,
+    "currency": "USD",
+    "location": "Los Angeles, USA",
+    "specs": {
+      "cpu": "1 Core",
+      "ram": "2GB",
+      "storage": "40GB SSD",
+      "bandwidth": "1TB"
+    },
+    "provider": {
+      "id": "bandwagonhost",
+      "name": "BandwagonHost",
+      "logo": "https://www.bwh88.net/templates/organicbandwagon/images/logo.png"
+    },
+    "tags": ["CN2 Route", "Alipay Support", "VPN Friendly"],
+    "features": ["CN2 GIA Route", "Alipay Support", "Snapshot Backup", "KVM Virtualization"],
+    "link": "https://bandwagonhost.com/aff.php?aff=63096",
+    "couponCode": "BWH3HYATVBJW",
+    "expiryDate": "2023-12-31"
+  },
+  {
+    "id": "racknerd-special-2cpu-4gb",
+    "title": "RackNerd 2 CPU 4GB Annual Special VPS",
+    "description": "RackNerd annual special VPS with 2 vCPUs, 4GB RAM, and 60GB SSD storage, offering high-value American servers. Enterprise-grade network and stable VPS service.",
+    "price": 38.88,
+    "originalPrice": 48.88,
+    "currency": "USD",
+    "location": "USA/Canada",
+    "specs": {
+      "cpu": "2 Cores",
+      "ram": "4GB",
+      "storage": "60GB SSD",
+      "bandwidth": "4TB"
+    },
+    "provider": {
+      "id": "racknerd",
+      "name": "RackNerd",
+      "logo": "https://www.racknerd.com/assets/images/logo/racknerd-logo.png"
+    },
+    "tags": ["North America", "Annual Discount", "Great Value"],
+    "features": ["Annual Discount", "DDoS Protection", "Money-Back Guarantee", "Technical Support"],
+    "link": "https://www.racknerd.com/",
+    "couponCode": "RACKNERD40",
+    "expiryDate": "2023-11-30"
+  },
+  {
+    "id": "cloudcone-hourly-2cpu-4gb",
+    "title": "CloudCone 2 CPU 4GB Hourly Billing VPS",
+    "description": "CloudCone hourly billing VPS with 2 vCPUs, 4GB RAM, and 50GB SSD storage, offering flexible pay-as-you-go pricing. Los Angeles data center, ideal for temporary projects and testing environments.",
+    "price": 17.95,
+    "originalPrice": 21.95,
+    "currency": "USD",
+    "location": "Los Angeles, USA",
+    "specs": {
+      "cpu": "2 Cores",
+      "ram": "4GB",
+      "storage": "50GB SSD",
+      "bandwidth": "3TB"
+    },
+    "provider": {
+      "id": "cloudcone",
+      "name": "CloudCone",
+      "logo": "https://cloudcone.com/wp-content/uploads/2019/03/cc-logo-1.png"
+    },
+    "tags": ["North America", "Hourly Billing", "SSD"],
+    "features": ["Hourly Billing", "Snapshot Backup", "Resource Monitoring", "API Control"],
+    "link": "https://cloudcone.com/cloud-servers/",
+    "couponCode": "SAVE25NOW",
+    "expiryDate": "2023-12-15"
+  }
+]
