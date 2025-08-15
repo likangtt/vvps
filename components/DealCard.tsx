@@ -53,20 +53,20 @@ interface DealCardProps {
 export default function DealCard({ deal }: DealCardProps) {
   const [showDetails, setShowDetails] = useState(false)
   
-  // 处理购买按钮点击
+  // Handle buy button click
   const handleBuyClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // 如果链接是#，阻止默认行为
+    // If the link is #, prevent default behavior
     if (deal.link === '#' || deal.affiliateLink === '#' || (!deal.link && !deal.affiliateLink)) {
       e.preventDefault()
       alert('No purchase link available for this product. Please try again later.')
       return
     }
     
-    // 否则，正常打开链接
+    // Otherwise, open the link normally
     const url = deal.link || deal.affiliateLink || '#'
     console.log('Opening link:', url)
     
-    // 确保在新标签页中打开
+    // Make sure to open in a new tab
     window.open(url, '_blank', 'noopener,noreferrer')
   }
 

@@ -1,14 +1,10 @@
 'use client'
 
-import SimpleHeader from '@/components/SimpleHeader'
-import Footer from '@/components/Footer'
 import DealsGrid from '@/components/DealsGrid'
 
 export default function DealsPage() {
   return (
     <div className="min-h-screen bg-dark-900">
-      <SimpleHeader />
-      
       <div className="max-w-7xl mx-auto px-4 py-16">
         {/* Page Title */}
         <div className="text-center mb-12">
@@ -24,7 +20,6 @@ export default function DealsPage() {
         <DealsGrid />
       </div>
 
-      <Footer />
     </div>
   )
 }

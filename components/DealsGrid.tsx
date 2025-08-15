@@ -55,15 +55,15 @@ export default function DealsGrid() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // 模拟从API或JSON文件加载数据
+    // Simulate loading data from API or JSON file
     const loadDeals = async () => {
       try {
-        // 模拟API调用
+        // Simulate API call
         const dealsModule = await import('../data/deals.json')
-        // 使用类型断言，但先进行类型检查和转换
+        // Use type assertion, but first perform type checking and conversion
         const rawData = dealsModule.default
         const dealsData = Array.isArray(rawData) ? rawData.map((deal: any) => {
-          // 处理specs对象，将其扁平化
+          // Process specs object, flatten it
           const specs = deal.specs || {}
           return {
             ...deal,
@@ -71,7 +71,7 @@ export default function DealsGrid() {
             ram: specs.ram || '',
             storage: specs.storage || '',
             bandwidth: specs.bandwidth || '',
-            link: deal.link || deal.affiliateLink || '',  // 保留原始link，如果没有则使用affiliateLink
+            link: deal.link || deal.affiliateLink || '',  // Keep original link, if not available use affiliateLink
             features: deal.features || []
           };
         }) : [];
@@ -80,7 +80,7 @@ export default function DealsGrid() {
         setFilteredDeals(dealsData)
       } catch (error) {
         console.error('Failed to load deals:', error)
-        // 如果无法加载JSON文件，使用默认数据
+        // If unable to load JSON file, use default data
         const defaultDeals: Deal[] = [
           {
             id: "1",
@@ -118,7 +118,7 @@ export default function DealsGrid() {
   useEffect(() => {
     let filtered = deals
 
-    // 应用搜索查询
+    // Apply search query
     if (searchQuery) {
       filtered = filtered.filter(deal =>
         deal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -131,7 +131,7 @@ export default function DealsGrid() {
       )
     }
 
-    // 应用筛选条件
+    // Apply filters
     if (searchFilters.length > 0) {
       filtered = filtered.filter(deal => {
         return searchFilters.some(filter => {
@@ -157,9 +157,9 @@ export default function DealsGrid() {
       })
     }
 
-    // 应用标签筛选
+    // Apply tag filtering
     if (activeFilter === 'All') {
-      // 已经应用了搜索和筛选
+      // Search and filters already applied
     } else if (activeFilter === 'Featured') {
       filtered = filtered.filter(deal => deal.featured)
     } else {
@@ -190,16 +190,16 @@ export default function DealsGrid() {
 
   return (
     <div className="space-y-8">
-      {/* 搜索栏 */}
+      {/* Search Bar */}
       <SearchBar onSearch={handleSearch} onFilter={handleFilter} />
       
-      {/* 筛选标签 */}
+      {/* Filter Tabs */}
       <FilterTabs 
         activeFilter={activeFilter} 
         onFilterChange={setActiveFilter}
       />
       
-      {/* 结果统计 */}
+      {/* Results Count */}
       <div className="flex items-center justify-between">
         <div className="text-gray-400">
           Found <span className="text-primary-400 font-semibold">{filteredDeals.length}</span> deals
@@ -224,14 +224,14 @@ export default function DealsGrid() {
         )}
       </div>
       
-      {/* 优惠卡片网格 */}
+      {/* Deals Card Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredDeals.map((deal) => (
           <DealCard key={deal.id} deal={deal} />
         ))}
       </div>
 
-      {/* 无结果提示 */}
+      {/* No Results Message */}
       {filteredDeals.length === 0 && !loading && (
         <div className="text-center py-20">
           <div className="text-6xl mb-4">🔍</div>

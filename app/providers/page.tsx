@@ -2,8 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import SimpleHeader from '@/components/SimpleHeader';
-import Footer from '@/components/Footer';
 import providersData from '@/data/providers.json';
 import { Provider } from '@/types';
 
@@ -42,8 +40,6 @@ export default function ProvidersPage() {
 
   return (
     <div className="min-h-screen bg-dark-900">
-      <SimpleHeader />
-      
       <div className="max-w-7xl mx-auto px-4 py-16">
         {/* Page Title */}
         <div className="text-center mb-12">
@@ -146,7 +142,6 @@ export default function ProvidersPage() {
         )}
       </div>
 
-      <Footer />
     </div>
   );
 }
