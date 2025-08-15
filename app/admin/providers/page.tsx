@@ -104,11 +104,26 @@ export default function AdminProvidersPage() {
   };
 
   const handleEdit = (provider: Provider) => {
-    setNewProvider({
-      ...provider,
-      tags: provider.tags || []
-    });
-    setEditingId(provider.id || null);
+    console.log('handleEdit called with provider:', provider);
+    try {
+      // 创建一个新对象，避免引用问题
+      const providerCopy = {
+        ...provider,
+        tags: [...(provider.tags || [])]
+      };
+      setNewProvider(providerCopy);
+      setEditingId(provider.id || null);
+      
+      // 滚动到表单位置
+      const formElement = document.querySelector('.cyber-card');
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      console.log('Edit operation completed successfully');
+    } catch (error) {
+      console.error('Error in handleEdit:', error);
+    }
   };
 
   const handleDelete = (id: string) => {
@@ -315,10 +330,13 @@ export default function AdminProvidersPage() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center space-x-2">
                         <button
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.preventDefault();
+                            console.log('Edit button clicked for provider:', provider);
                             handleEdit(provider);
                           }}
                           className="text-yellow-400 hover:text-yellow-300 p-1 rounded bg-dark-700/50"
+                          type="button"
                         >
                           Edit
                         </button>
