@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     description: 'Discover the best VPS cloud server deals worldwide and find the solution that best fits your needs. Featuring 21 top VPS providers from North America and Europe.',
   },
   verification: {
-    google: 'google-site-verification-code', // 部署后需要替换为实际的验证码
+    google: 'google-site-verification-code', // Replace with actual verification code after deployment
   },
 }
 
