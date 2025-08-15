@@ -9,7 +9,7 @@ import { Provider } from '@/types';
 
 export default function ProvidersPage() {
   const router = useRouter();
-  const [filter, setFilter] = useState('全部');
+  const [filter, setFilter] = useState('All');
   const [providers, setProviders] = useState<Provider[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -17,7 +17,7 @@ export default function ProvidersPage() {
     // 根据筛选条件过滤提供商
     let filtered = [...providersData];
     
-      if (filter !== '全部') {
+      if (filter !== 'All') {
         filtered = filtered.filter(provider => {
           // 由于Provider接口中没有location属性，我们暂时返回true显示所有提供商
           return true;
@@ -37,25 +37,25 @@ export default function ProvidersPage() {
     setProviders(filtered);
   }, [filter, searchTerm]);
 
-  // 区域筛选选项
-  const regions = ['全部', '北美', '欧洲', '亚太'];
+  // Region filter options
+  const regions = ['All', 'North America', 'Europe', 'Asia Pacific'];
 
   return (
     <div className="min-h-screen bg-dark-900">
       <SimpleHeader />
       
       <div className="max-w-7xl mx-auto px-4 py-16">
-        {/* 页面标题 */}
+        {/* Page Title */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gradient mb-6">
-            VPS提供商
+            VPS Providers
           </h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            发现全球优质的VPS云服务器提供商，比较服务特色和优惠方案
+            Discover quality VPS cloud server providers worldwide, compare service features and deals
           </p>
         </div>
         
-        {/* 搜索和筛选 */}
+        {/* Search and Filter */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div className="flex space-x-2">
             {regions.map(region => (
@@ -76,7 +76,7 @@ export default function ProvidersPage() {
           <div className="w-full md:w-64">
             <input
               type="text"
-              placeholder="搜索提供商..."
+              placeholder="Search providers..."
               className="cyber-input w-full"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -84,7 +84,7 @@ export default function ProvidersPage() {
           </div>
         </div>
         
-        {/* 提供商列表 */}
+        {/* Provider List */}
         {providers.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {providers.map((provider) => (
@@ -124,7 +124,7 @@ export default function ProvidersPage() {
                     onClick={() => router.push(`/providers/${provider.id}`)}
                     className="text-primary-400 hover:text-primary-300 flex items-center transition-colors"
                   >
-                    查看详情
+                    View Details
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
@@ -135,12 +135,12 @@ export default function ProvidersPage() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-400 text-lg">没有找到匹配的提供商</p>
+            <p className="text-gray-400 text-lg">No matching providers found</p>
             <button 
-              onClick={() => {setFilter('全部'); setSearchTerm('');}}
+              onClick={() => {setFilter('All'); setSearchTerm('');}}
               className="mt-4 text-primary-400 hover:text-primary-300 transition-colors"
             >
-              清除筛选条件
+              Clear Filters
             </button>
           </div>
         )}

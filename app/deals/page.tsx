@@ -10,17 +10,17 @@ export default function DealsPage() {
       <SimpleHeader />
       
       <div className="max-w-7xl mx-auto px-4 py-16">
-        {/* 页面标题 */}
+        {/* Page Title */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gradient mb-6">
-            所有优惠
+            All Deals
           </h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            发现全球最优质的VPS云服务器优惠，找到最适合您需求的解决方案
+            Discover the best VPS cloud server deals worldwide and find the solution that best fits your needs
           </p>
         </div>
 
-        {/* 优惠网格 */}
+        {/* Deals Grid */}
         <DealsGrid />
       </div>
 
