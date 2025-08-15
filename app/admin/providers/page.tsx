@@ -17,26 +17,26 @@ export default function AdminProvidersPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
 
   useEffect(() => {
-    // 模拟API调用
+    // Simulate API call
     setTimeout(() => {
       import('@/data/deals.json')
         .then(module => {
-          // 从deals.json中提取唯一的提供商
+          // Extract unique providers from deals.json
           const rawData = module.default;
           const dealsData = Array.isArray(rawData) ? rawData as unknown as Deal[] : [];
           const uniqueProviders: Provider[] = [];
           const providerNames = new Set<string>();
           
           dealsData.forEach((deal: Deal) => {
-            // 确保deal.provider存在
+            // Ensure deal.provider exists
             if (!deal.provider) {
-              return; // 跳过没有provider信息的deal
+              return; // Skip deals without provider information
             }
             const providerName = typeof deal.provider === 'string' ? deal.provider : deal.provider.name;
             if (!providerNames.has(providerName)) {
               providerNames.add(providerName);
               
-              // 创建Provider对象
+              // Create Provider object
               const provider: Provider = {
                 id: typeof deal.provider === 'string' ? deal.provider : (deal.provider?.id || providerName),
                 name: providerName,
@@ -79,7 +79,7 @@ export default function AdminProvidersPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (editingId) {
-      // 更新现有提供商
+      // Update existing provider
       setProviders(prev => 
         prev.map(provider => 
           provider.id === editingId ? { ...newProvider, id: editingId } : provider
@@ -87,12 +87,12 @@ export default function AdminProvidersPage() {
       );
       setEditingId(null);
     } else {
-      // 添加新提供商
+      // Add new provider
       const id = newProvider.id || `provider-${Date.now()}`;
       setProviders(prev => [...prev, { ...newProvider, id }]);
     }
     
-    // 重置表单
+    // Reset form
     setNewProvider({
       id: '',
       name: '',
@@ -315,10 +315,7 @@ export default function AdminProvidersPage() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center space-x-2">
                         <button
-                          onClick={(e) => {
-                            e.stopPropagation(); // 阻止事件冒泡
-                            e.preventDefault(); // 阻止默认行为
-                            console.log('Edit button clicked', provider); // 添加调试日志
+                          onClick={() => {
                             handleEdit(provider);
                           }}
                           className="text-yellow-400 hover:text-yellow-300 p-1 rounded bg-dark-700/50"
@@ -326,8 +323,7 @@ export default function AdminProvidersPage() {
                           Edit
                         </button>
                         <button
-                          onClick={(e) => {
-                            e.stopPropagation(); // 阻止事件冒泡
+                          onClick={() => {
                             handleDelete(provider.id || '');
                           }}
                           className="text-red-400 hover:text-red-300 p-1 rounded"
